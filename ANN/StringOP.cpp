@@ -4,7 +4,8 @@
 #include <fstream>
 #include "math.h"
 #include <algorithm>
-#include <sstream> 
+#include <sstream>
+#include <stdlib.h>
 
 //#include "RxnNetwork.h"
 
@@ -28,7 +29,7 @@ CStringOP::CStringOP(void)
 	phase = 0;
 	particle_type = -2;
 	number = -1;
-		 
+
 }
 
 
@@ -47,7 +48,7 @@ CStringOP::CStringOP(string S)
 			  6:lnt
 			  7:lgs
 	*/
-	expression = S; 
+	expression = S;
 	constant = false;
 	parameter = false;
 	concentration = false;
@@ -85,12 +86,12 @@ CStringOP::CStringOP(string S)
 				{
 					prntcnt--;
 					if (prntcnt == 0)
-					{	
+					{
 						terms.push_back(CStringOP(S.substr(i+1,j-i-1)));
 						terms_count++;
 						i=j;
 						j=S.size() + 1;
-						
+
 					}
 				}
 			}
@@ -149,14 +150,14 @@ CStringOP::CStringOP(string S)
 				{
 					prntcnt--;
 					if (prntcnt == 0)
-					{	
+					{
 						terms.push_back(CStringOP(S.substr(i+5,j-i-5)));
 						terms_count++;
 						terms[terms.size()-1].function = 1;
 						terms[terms.size()-1].number = nn;
 						i=j;
 						j=S.size() + 1;
-						
+
 					}
 				}
 			}
@@ -166,7 +167,7 @@ CStringOP::CStringOP(string S)
 		{
 			int j=i+1;
 			while ((j<S.size()) && (isnumber(S[min(j,(int)S.size()-1)]) == true)) j++;
-			terms.push_back(CStringOP());	
+			terms.push_back(CStringOP());
 			terms[terms_count].value = atof(S.substr(i,j-i).c_str());
 			terms_count++;
 			terms[terms_count-1].constant = true;
@@ -178,7 +179,7 @@ CStringOP::CStringOP(string S)
 			int j=i+1;
 			while (S[j] != ']') j++;
 			{
-				terms.push_back(CStringOP());	
+				terms.push_back(CStringOP());
 				if (split(S.substr(i+2,j-i-2),':').size()>0) terms[terms_count].number = atoi(S.substr(i+2,j-i-2).c_str());
 				terms_count++;
 				terms[terms_count-1].parameter = true;
@@ -192,7 +193,7 @@ CStringOP::CStringOP(string S)
 			int j=i+1;
 			while (S[j] != ']') j++;
 			{
-				terms.push_back(CStringOP());	
+				terms.push_back(CStringOP());
 				if (split(S.substr(i+2,j-i-2),':').size()>0) terms[terms_count].number = ATOI(split(S.substr(i+2,j-i-2),':'))[0];
 				if (split(S.substr(i+2,S.size()-1),':').size()==2)
 				{	terms[terms_count].phase = ATOI(split(S.substr(i+2,j-i-2),':'))[1];
@@ -219,12 +220,12 @@ CStringOP::CStringOP(string S)
 			int j=i+1;
 			while (S[j] != ']') j++;
 			{
-				terms.push_back(CStringOP());	
-				if (split(S.substr(i+2,S.size()-1),':').size()==1) 
+				terms.push_back(CStringOP());
+				if (split(S.substr(i+2,S.size()-1),':').size()==1)
 				{	terms[terms_count].phase = ATOI(split(S.substr(i+2,S.size()-1),':'))[0];
 					terms[terms_count].particle_type = -1;
 				}
-				if (split(S.substr(i+2,S.size()-1),':').size()==2) 
+				if (split(S.substr(i+2,S.size()-1),':').size()==2)
 				{
 					terms[terms_count].phase = ATOI(split(S.substr(i+2,S.size()-1),':'))[1];
 					terms[terms_count].particle_type = ATOI(split(S.substr(i+2,S.size()-1),':'))[0];
@@ -241,12 +242,12 @@ CStringOP::CStringOP(string S)
 			int j=i+1;
 			while (S[j] != ']') j++;
 			{
-				terms.push_back(CStringOP());	
+				terms.push_back(CStringOP());
 				if (isintegernumber(S.substr(i + 2, j-i-2)) == true)
 					terms[terms_count].number = atoi(S.substr(i + 2, j-i-2).c_str());
 				else
 					terms[terms_count].number = quan(S.substr(i + 2, j-i-2));
-				
+
 
 				terms_count++;
 				terms[terms_count-1].s_block = true;
@@ -261,7 +262,7 @@ CStringOP::CStringOP(string S)
 			int j=i+1;
 			while (S[j] != ']') j++;
 			{
-				terms.push_back(CStringOP());	
+				terms.push_back(CStringOP());
 				if (isintegernumber(S.substr(i + 2, j-i-2)) == true)
 					terms[terms_count].number = atoi(S.substr(i + 2, j - i - 2).c_str());
 				else
@@ -279,7 +280,7 @@ CStringOP::CStringOP(string S)
 			int j=i+1;
 			while (S[j] != ']') j++;
 			{
-				terms.push_back(CStringOP());	
+				terms.push_back(CStringOP());
 				if (isintegernumber(S.substr(i + 2, j-i-2)) == true)
 					terms[terms_count].number = atoi(S.substr(i + 2, j-i-2).c_str());
 				else
@@ -292,15 +293,15 @@ CStringOP::CStringOP(string S)
 
 		}
 
-		
+
 
 		if ((i<S.size()) && (S[min(i,(int)S.size()-1)]=='f'))
 		{
 			int j=i+1;
 			while (S[j] != ']') j++;
 			{
-				terms.push_back(CStringOP());	
-				
+				terms.push_back(CStringOP());
+
 				if (isintegernumber(S.substr(i + 2, j - i - 2)) == true)
 					terms[terms_count].number = atoi(S.substr(i + 2, j - i - 2).c_str());
 				else
@@ -313,10 +314,10 @@ CStringOP::CStringOP(string S)
 
 		}
 	}
-	
+
 	nterms = terms_count;
 	nopts = op_count;
-	
+
 }
 
 
@@ -330,7 +331,7 @@ CStringOP::CStringOP(string S)
 	5:lne
 	6:lnt
 	7:lgs
-	
+
 	expression = S;
 	constant = false;
 	parameter = false;
@@ -625,14 +626,14 @@ int opertr(char a)
 		case ':':
 			return 5;
 	}
-	return 999;			
+	return 999;
 }
 
 int getoperator(string S)
 {
 	int k=-1;
 	for (int i=0; i<S.size(); i++)
-		if (opertr(S[i])!=999) 
+		if (opertr(S[i])!=999)
 			{	k=opertr(S[i]);
 				break;}
 	return k;
@@ -773,11 +774,11 @@ vector<string> split(const string &s, const vector<char> &del)
 
 }
 
-vector<string> split(const string &s, char del=',') 
+vector<string> split(const string &s, char del=',')
 {
 	int lastdel=0;
 	vector<string> strings;
-	for (int i=0; i<s.size(); i++)   
+	for (int i=0; i<s.size(); i++)
 	{
 		if (s[i]==del)
 		{
@@ -797,15 +798,15 @@ vector<string> split_curly_semicolon(string s)
 	return split(s,del2);
 }
 
-vector<int> look_up(string s, char del)  //Returns a vector with indices of "del" 
+vector<int> look_up(string s, char del)  //Returns a vector with indices of "del"
 {
 	int lastdel=0;		//not used
 	int j=0;			// j is Not Used- can be deleted
 	vector<int> out;
-	for (int i=0; i<s.size(); i++)   
+	for (int i=0; i<s.size(); i++)
 		if (s[i]==del)
 			out.push_back(i);
-		
+
 	return out;
 
 }
@@ -815,7 +816,7 @@ vector<int> ATOI(vector<string> ii)
 	vector<int> res;
 	for (int i=0; i<ii.size(); i++)
 		res.push_back(atoi(ii[i].c_str()));
-	
+
 	return res;
 }
 
@@ -824,7 +825,7 @@ vector<double> ATOF(vector<string> ii)
 	vector<double> res;
 	for (int i=0; i<ii.size(); i++)
 		res.push_back(atof(ii[i].c_str()));
-	
+
 	return res;
 }
 
@@ -932,7 +933,7 @@ void writestring(ofstream& f, string s)
 void writestring(string filename, string s)
 {
 	FILE *FILEBTC;
-	FILEBTC = fopen((filename).c_str(), "a");  
+	FILEBTC = fopen((filename).c_str(), "a");
 	fprintf(FILEBTC, s.c_str());
 	fprintf(FILEBTC, "\n");
 	fclose(FILEBTC);
@@ -970,38 +971,10 @@ string numbertostring(double x)
 double pipe_poly(double x)
 {
 	double out;
-	if (x < 0) out=0; 
+	if (x < 0) out=0;
 	else if (x >1) out=1;
 	else out = -2.0255*pow(x,4)+1.9813*pow(x,3)+1.0318*pow(x,2)+0.0388*x;
 	return out;
-}
-
-string numbertostring(int x)
-{
-	char buffer[33];
-	return string(_itoa(x,buffer,10));
-}
-
-string numbertostring(vector<int> x)
-{
-	string xx;
-	for (int i = 0; i < x.size(); i++)
-	{
-		xx = xx + numbertostring(x[i]);
-		if (i < x.size() - 1) xx = xx + ", ";
-	}
-	return xx;
-}
-
-string numbertostring(vector<double> x)
-{
-	string xx;
-	for (int i = 0; i < x.size(); i++)
-	{
-		xx = xx + numbertostring(x[i]);
-		if (i < x.size() - 1) xx = xx + ", ";
-	}
-	return xx;
 }
 
 double mon(double x, double y)

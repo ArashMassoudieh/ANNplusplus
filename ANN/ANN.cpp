@@ -1,11 +1,10 @@
 // ANN.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include "ANN_class.h"
 #include "ML.h"
 
-CVector poly(CVector params)
+CVector poly(const CVector &params)
 {
 	CVector out;
 	for (double x = 0; x < 2; x += 0.1)
@@ -38,11 +37,11 @@ int main()
 		input_ts.BTC[0].append((i-100.0)/100.0);
 
 	ANN.input = &input_ts;
-	
+
 	CVector OBS = ANN.calc_output_v(weights);
 	CBTCSet OBS_BTC;
 	OBS_BTC.append(CBTC(OBS));
-		
+
 	ANN.training_data = OBS_BTC;
 	CBTC(OBS).writefile("observed.txt");
 
@@ -52,7 +51,7 @@ int main()
 
 	CVector estimated_weights = ANN.train(0.0001);
 	CBTC(ANN.calc_output_v(estimated_weights)).writefile("modeled.txt");*/
-	
+
 	CVector params(4); params[0] = 2; params[1] = 0.1; params[2] = 0.03; params[3] = 0.001;
 	CVector Y_obs = poly(params);
 	CML ML;
@@ -61,9 +60,11 @@ int main()
 	ML.func = &poly;
 	ML.Obs = Y_obs;
 	CVector params_0(4);
+
 	CVector p_best = ML.optimize(params_0);
-	
-	
+	cout<<p_best.toString()<<endl;
+
+
 	return 0;
 }
 

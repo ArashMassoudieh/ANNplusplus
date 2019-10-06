@@ -44,18 +44,18 @@ ANN_class::ANN_class(vector<int> n_nodes)
 	for (int i = 0; i < n_layers; i++)
 	{
 		nodes[i].resize(n_nodes[i] + 1);
-		nodes[i][0].activation_function= "1";
+		nodes[i][0].activation_function= CNode::activationfunc::sigmoid;
 	}
-		
+
 }
 
-vector<double> ANN_class::calc_output(vector<double> input)
+vector<double> ANN_class::calc_output(const vector<double> &input)
 {
 	for (int j = 0; j < nodes[0].size(); j++)
 	{
 		if (j==0)
 			nodes[0][j].input_val = 1;
-		else	
+		else
 			nodes[0][j].input_val = input[j-1];
 
 		nodes[0][j].out();
@@ -67,7 +67,7 @@ vector<double> ANN_class::calc_output(vector<double> input)
 			double sum = 0;
 			for (int k = 0; k < nodes[i - 1].size(); k++)
 				sum += nodes[i - 1][k].output_val*weights[i-1][k][j];
-			
+
 			nodes[i][j].input_val = sum;
 			nodes[i][j].out();
 		}
@@ -77,11 +77,11 @@ vector<double> ANN_class::calc_output(vector<double> input)
 	for (int i = 1; i < nodes[nodes.size() - 1].size(); i++)
 		X[i-1] = nodes[nodes.size() - 1][i].output_val;
 
-	return X; 
+	return X;
 }
 
 
-void ANN_class::setparams(CVector X)
+void ANN_class::setparams(const CVector &X)
 {
 	int counter = 0;
 	for (int i = 0; i<weights.size(); i++)
@@ -109,7 +109,7 @@ CVector ANN_class::weights_to_vector()
 }
 
 
-CVector ANN_class::train(double tol)
+CVector ANN_class::train(const double &tol)
 {
 	CML ML;
 	ML.epsilon = 1e-6;
@@ -118,19 +118,19 @@ CVector ANN_class::train(double tol)
 	ML.func_ann = &ANN_class::calc_output_v;
 	CVector optimized_parameters = ML.optimize(weights_to_vector(),this);
 	return optimized_parameters;
-	
+
 }
 
-CVector ANN_class::calc_output_v(CVector weights)
+CVector ANN_class::calc_output_v(const CVector &weights)
 {
 	setparams(weights);
-	CVector out; 
+	CVector out;
 	for (int i = 0; i < input->BTC[0].n; i++)
 	{
 		CVector out1 = calc_output(input->getrow(i));
 		out.append(out1);
 	}
-	return out; 
+	return out;
 
 }
 
@@ -169,5 +169,5 @@ CBTC ANN_class::output()
 	}
 
 	return BTC;
-	
+
 }

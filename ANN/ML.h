@@ -1,25 +1,33 @@
-#pragma once
+#ifndef _CML
+#define _CML
+
 #include <vector>
 #include "Vector.h"
 #include "Matrix.h"
 #include "ANN_class.h"
+
+#define Matrix CMatrix
+#define Vector CVector
+
 
 class CML
 {
 public:
 	CML();
 	~CML();
-	CVector Obs; 
-	CVector (ANN_class::*func_ann)(CVector X);
-	CVector(*func)(CVector X);
-	CVector CML::optimize(CVector X_0);
-	CMatrix CML::Jacobian(CVector X_0);
-	CVector CML::Error(CVector X_0);
+	Vector Obs;
+	Vector (ANN_class::*func_ann)(const Vector &X);
+	Vector(*func)(const CVector &X);
+	Vector optimize(const CVector &X_0);
+	Matrix Jacobian(const CVector &X_0);
+	Vector Error(const CVector &X_0);
 
-	CVector CML::optimize(CVector X_0, ANN_class *ANN);
-	CMatrix CML::Jacobian(CVector X_0, ANN_class *ANN);
-	CVector CML::Error(CVector X_0, ANN_class *ANN);
+	Vector optimize(const CVector &X_0, ANN_class *ANN);
+	Matrix Jacobian(const CVector &X_0, ANN_class *ANN);
+	Vector Error(const CVector &X_0, ANN_class *ANN);
 	double epsilon;
 	double tol;
 };
+
+#endif // _CML
 

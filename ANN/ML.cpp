@@ -1,6 +1,7 @@
 #include "ML.h"
 
 
+double one=1;
 
 CML::CML()
 {
@@ -12,7 +13,7 @@ CML::~CML()
 }
 
 
-CVector CML::optimize(CVector X_0)
+Vector CML::optimize(const Vector &X_0)
 {
 	CVector X = X_0;
 	double err_nrm = Error(X_0).norm2();
@@ -24,10 +25,12 @@ CVector CML::optimize(CVector X_0)
 		CMatrix J = Jacobian(X);
 		CVector error = Error(X);
 		err_nrm = error.norm2();
+
 		CVector numerator = J*error;
 		CMatrix denum1 = J*Transpose(J);
-		CMatrix denum2 = diag_mat(J*Transpose(J));
-		CVector dx = numerator / (denum1 + lambda*denum2);
+		CMatrix denum2 = diag_mat(denum1);
+		CMatrix denum = denum1 + lambda*denum2;
+		CVector dx = numerator / denum;
 		if (Error(X - dx).norm2() > err_nrm)
 			lambda *= 2;
 		else
@@ -35,21 +38,22 @@ CVector CML::optimize(CVector X_0)
 			X -= dx;
 			if (Error(X - dx).norm2()/ err_nrm>0.9) lambda/=2;
 		}
-		err_nrm_dev = (J*Error(X_0)).norm2();
+		err_nrm_dev = (J*Error(X)).norm2();
+		cout<<err_nrm<<","<<err_nrm_dev<<endl;
 	}
-	return X; 
+	return X;
 }
 
 
-CMatrix CML::Jacobian(CVector X_0)
+Matrix CML::Jacobian(const Vector &X_0)
 {
-	CMatrix J;
-	CVector F_base = (*func)(X_0);
+	Matrix J;
+	Vector F_base = (*func)(X_0);
 	for (int i = 0; i < X_0.getsize(); i++)
 	{
-		CVector X = X_0;
+		Vector X = X_0;
 		X[i] += epsilon;
-		CVector F2 = (*func)(X);
+		Vector F2 = (*func)(X);
 		J.matr.push_back((F2 - F_base) / epsilon);
 	}
 	J.setnumcolrows();
@@ -57,26 +61,27 @@ CMatrix CML::Jacobian(CVector X_0)
 
 }
 
-CVector CML::Error(CVector X_0)
+Vector CML::Error(const Vector &X_0)
 {
 	return (*func)(X_0) - Obs;
-	
+
 }
 
-CVector CML::optimize(CVector X_0, ANN_class *ANN)
+Vector CML::optimize(const Vector &X_0, ANN_class *ANN)
 {
 	CVector X = X_0;
 	double err_nrm = Error(X_0, ANN).norm2();
 	double lambda = 1;
 	while (err_nrm > tol)
 	{
-		CMatrix J = Jacobian(X, ANN);
-		CVector error = Error(X, ANN);
+		Matrix J = Jacobian(X, ANN);
+		Vector error = Error(X, ANN);
 		err_nrm = error.norm2();
-		CVector numerator = J*error;
-		CMatrix denum1 = J*Transpose(J);
-		CMatrix denum2 = diag_mat(max(J*Transpose(J),1));
-		CVector dx = numerator / (denum1 + lambda*denum2);
+		Vector numerator = J*error;
+		Matrix denum1 = J*Transpose(J);
+		Matrix denum2 = diag_mat(denum1);
+		Matrix denum = denum1 + lambda*denum2;
+		Vector dx = numerator / denum;
 		if (Error(X - dx, ANN).norm2() > err_nrm)
 			lambda *= 2;
 		else
@@ -89,15 +94,15 @@ CVector CML::optimize(CVector X_0, ANN_class *ANN)
 }
 
 
-CMatrix CML::Jacobian(CVector X_0, ANN_class *ANN)
+Matrix CML::Jacobian(const Vector &X_0, ANN_class *ANN)
 {
-	CMatrix J;
-	CVector F_base = (*ANN.*func_ann)(X_0); 
+	Matrix J;
+	Vector F_base = (*ANN.*func_ann)(X_0);
 	for (int i = 0; i < X_0.getsize(); i++)
 	{
-		CVector X = X_0;
+		Vector X = X_0;
 		X[i] += epsilon;
-		CVector F2 = (*ANN.*func_ann)(X);
+		Vector F2 = (*ANN.*func_ann)(X);
 		J.matr.push_back((F2 - F_base) / epsilon);
 	}
 	J.setnumcolrows();
@@ -105,7 +110,7 @@ CMatrix CML::Jacobian(CVector X_0, ANN_class *ANN)
 
 }
 
-CVector CML::Error(CVector X_0, ANN_class *ANN)
+CVector CML::Error(const Vector &X_0, ANN_class *ANN)
 {
 	return (*ANN.*func_ann)(X_0) - Obs;
 

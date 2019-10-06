@@ -1,0 +1,194 @@
+# depslib dependency file v1.0
+1570281342 source:/home/arash/Projects/ANNplusplus/ANN/QuickSort.cpp
+	"QuickSort.h"
+	<iostream>
+	<algorithm>
+	<vector>
+	"time.h"
+
+1570281342 /home/arash/Projects/ANNplusplus/ANN/QuickSort.h
+	<vector>
+
+1570371719 source:/home/arash/Projects/ANNplusplus/ANN/Node.cpp
+	"Node.h"
+	<math.h>
+
+1570371729 /home/arash/Projects/ANNplusplus/ANN/Node.h
+	<string>
+	<vector>
+
+1570314282 source:/home/arash/Projects/ANNplusplus/ANN/Matrix.cpp
+	"Matrix.h"
+	"math.h"
+	<iostream>
+	"armadillo"
+	"Vector.h"
+	"Expression.h"
+	"qstring.h"
+	"qmap.h"
+	"qvariant.h"
+
+1570314379 /home/arash/Projects/ANNplusplus/ANN/Matrix.h
+	<vector>
+	<iostream>
+	<math.h>
+	"armadillo"
+	<QMap>
+	"Matrix_arma.h"
+	"Vector_arma.h"
+
+1570314210 /home/arash/Projects/ANNplusplus/ANN/Matrix_arma.h
+	"Vector_arma.h"
+	<iostream>
+	<math.h>
+	"armadillo"
+
+1536281175 /home/arash/Projects/ANNplusplus/ANN/Vector_arma.h
+	<iostream>
+	<vector>
+	"armadillo"
+
+1570374067 /home/arash/Projects/ANNplusplus/ANN/Vector.h
+	<iostream>
+	<vector>
+	"QuickSort.h"
+	"armadillo"
+
+1569419414 /home/arash/Projects/ANNplusplus/ANN/Expression.h
+	<string>
+	<vector>
+	<algorithm>
+
+1570373294 source:/home/arash/Projects/ANNplusplus/ANN/Vector.cpp
+	"Vector.h"
+	"math.h"
+	"Matrix.h"
+	<cfloat>
+	"Vector_arma.h"
+
+1569419414 source:/home/arash/Projects/ANNplusplus/ANN/BTC.cpp
+	"BTC.h"
+	"math.h"
+	"string.h"
+	<iostream>
+	<fstream>
+	"Expression.h"
+	"NormalDist.h"
+	"qfile.h"
+	"qdatastream.h"
+
+1536281175 /home/arash/Projects/ANNplusplus/ANN/BTC.h
+	<map>
+	<string>
+	<vector>
+	"QuickSort.h"
+	"NormalDist.h"
+	"qlist.h"
+	"qmap.h"
+	"qvariant.h"
+
+1536281175 /home/arash/Projects/ANNplusplus/ANN/NormalDist.h
+	"Vector.h"
+	"Matrix.h"
+	"NormalDist.h"
+
+1570313231 source:/home/arash/Projects/ANNplusplus/ANN/BTCSet.cpp
+	"BTCSet.h"
+	"string.h"
+	<fstream>
+	"Expression.h"
+	"DistributionNUnif.h"
+	<iostream>
+	"Vector.h"
+	"Matrix.h"
+	<omp.h>
+	"qdebug.h"
+	"qdatastream.h"
+
+1570312968 /home/arash/Projects/ANNplusplus/ANN/BTCSet.h
+	"BTC.h"
+	<vector>
+	"Vector.h"
+
+1536281175 /home/arash/Projects/ANNplusplus/ANN/DistributionNUnif.h
+	<vector>
+
+1536281175 source:/home/arash/Projects/ANNplusplus/ANN/NormalDist.cpp
+	"Vector.h"
+	"Matrix.h"
+	"NormalDist.h"
+	<cstdlib>
+	"math.h"
+
+1570281428 source:/home/arash/Projects/ANNplusplus/ANNpp/main.cpp
+	<iostream>
+
+1570373918 source:/home/arash/Projects/ANNplusplus/ANN/ANN.cpp
+	"ANN_class.h"
+	"ML.h"
+
+1570372485 /home/arash/Projects/ANNplusplus/ANN/ANN_class.h
+	<vector>
+	"Node.h"
+	"Vector.h"
+	"Matrix.h"
+	"BTCSet.h"
+
+1570373491 /home/arash/Projects/ANNplusplus/ANN/ML.h
+	<vector>
+	"Vector.h"
+	"Matrix.h"
+	"ANN_class.h"
+
+1570314198 source:/home/arash/Projects/ANNplusplus/ANN/Matrix_arma.cpp
+	"Matrix_arma.h"
+	"Vector_arma.h"
+	"math.h"
+	<iostream>
+	"armadillo"
+	<vector>
+	"Vector.h"
+
+1570282671 source:/home/arash/Projects/ANNplusplus/ANN/StringOP.cpp
+	"StringOP.h"
+	<string>
+	<iostream>
+	<fstream>
+	"math.h"
+	<algorithm>
+	<sstream>
+	<stdlib.h>
+
+1570281656 /home/arash/Projects/ANNplusplus/ANN/StringOP.h
+	<vector>
+	<string>
+
+1569419414 source:/home/arash/Projects/ANNplusplus/ANN/Vector_arma.cpp
+	"Vector_arma.h"
+	"math.h"
+	"Matrix_arma.h"
+	<cfloat>
+	"Vector.h"
+	"Expression.h"
+
+1570283103 source:/home/arash/Projects/ANNplusplus/src/utils.cpp
+	"utils.h"
+	<fstream>
+	<sstream>
+
+1570283059 /home/arash/Projects/ANNplusplus/include/utils.h
+	<string>
+	<vector>
+
+1570373668 source:/home/arash/Projects/ANNplusplus/ANN/ML.cpp
+	"ML.h"
+
+1570372974 source:/home/arash/Projects/ANNplusplus/ANN/ANN_class.cpp
+	"ANN_class.h"
+	"ML.h"
+
+1536281175 source:/home/arash/Projects/ANNplusplus/ANN/DistributionNUnif.cpp
+	"DistributionNUnif.h"
+	"math.h"
+	<stdlib.h>
+
