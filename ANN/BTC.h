@@ -96,6 +96,8 @@ public:
 	CTimeSeries(double a, double b, const vector<double>&x);
 	CTimeSeries(double a, double b, const CTimeSeries &btc);
 	CTimeSeries(const vector<double> &t, const vector<double> &C);
+	CTimeSeries(const CVector &CC);
+	CTimeSeries(const CVector_arma &CC);
 	CTimeSeries(vector<double>&, int writeInterval = 1);
 	bool error = false;
 

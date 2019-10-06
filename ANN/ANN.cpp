@@ -20,7 +20,7 @@ CVector poly(const CVector &params)
 
 int main()
 {
-	/*vector<int> layers(3);
+	vector<int> layers(3);
 	layers[0] = 1;
 	layers[1] = 3;
 	layers[2] = 1;
@@ -40,7 +40,7 @@ int main()
 
 	CVector OBS = ANN.calc_output_v(weights);
 	CBTCSet OBS_BTC;
-	OBS_BTC.append(CBTC(OBS));
+	OBS_BTC.append(CTimeSeries(OBS));
 
 	ANN.training_data = OBS_BTC;
 	CBTC(OBS).writefile("observed.txt");
@@ -50,8 +50,8 @@ int main()
 	ANN.setparams(weights);
 
 	CVector estimated_weights = ANN.train(0.0001);
-	CBTC(ANN.calc_output_v(estimated_weights)).writefile("modeled.txt");*/
-
+	CTimeSeries(ANN.calc_output_v(estimated_weights)).writefile("modeled.txt");
+    estimated_weights.writetofile("weights.txt");
 	CVector params(4); params[0] = 2; params[1] = 0.1; params[2] = 0.03; params[3] = 0.001;
 	CVector Y_obs = poly(params);
 	CML ML;

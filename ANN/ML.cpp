@@ -71,24 +71,27 @@ Vector CML::optimize(const Vector &X_0, ANN_class *ANN)
 {
 	CVector X = X_0;
 	double err_nrm = Error(X_0, ANN).norm2();
+	CMatrix J = Jacobian(X, ANN);
+	double err_nrm_dev = (J*Error(X_0,ANN)).norm2();
 	double lambda = 1;
-	while (err_nrm > tol)
+	while (err_nrm_dev > tol)
 	{
-		Matrix J = Jacobian(X, ANN);
+		J = Jacobian(X, ANN);
 		Vector error = Error(X, ANN);
 		err_nrm = error.norm2();
 		Vector numerator = J*error;
 		Matrix denum1 = J*Transpose(J);
 		Matrix denum2 = diag_mat(denum1);
-		Matrix denum = denum1 + lambda*denum2;
-		Vector dx = numerator / denum;
+		Vector dx = numerator / (denum1 + lambda*denum2);
 		if (Error(X - dx, ANN).norm2() > err_nrm)
 			lambda *= 2;
 		else
 		{
-			X -= dx;
 			if (Error(X - dx, ANN).norm2() / err_nrm>0.9) lambda /= 2;
+			X -= dx;
 		}
+		err_nrm_dev = (J*Error(X)).norm2();
+		cout<<err_nrm<<","<<err_nrm_dev<<endl;
 	}
 	return X;
 }

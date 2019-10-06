@@ -138,6 +138,11 @@ CVector& CMatrix::operator[](int i)
 	return matr[i];
 }
 
+CVector CMatrix::operator[](int i) const
+{
+	return matr[i];
+}
+
 CMatrix::~CMatrix()
 {
 	matr.clear();
@@ -342,7 +347,7 @@ CVector gauss0(CMatrix M, CVector V)
 	return b;
 }
 
-CVector operator/(CVector &V, CMatrix &M)
+CVector operator/(const CVector &V, const CMatrix &M)
 {
 	return solve_ar(M,V);
 }
@@ -730,7 +735,7 @@ void CMatrix::print(string s)
 	}
 }
 
-CVector solve_ar(CMatrix &M, CVector &V)
+CVector solve_ar(const CMatrix &M, const CVector &V)
 {
 
 	mat A(M.getnumrows(),M.getnumcols());

@@ -17,7 +17,7 @@
 	<string>
 	<vector>
 
-1570314282 source:/home/arash/Projects/ANNplusplus/ANN/Matrix.cpp
+1570396966 source:/home/arash/Projects/ANNplusplus/ANN/Matrix.cpp
 	"Matrix.h"
 	"math.h"
 	<iostream>
@@ -28,7 +28,7 @@
 	"qmap.h"
 	"qvariant.h"
 
-1570314379 /home/arash/Projects/ANNplusplus/ANN/Matrix.h
+1570396977 /home/arash/Projects/ANNplusplus/ANN/Matrix.h
 	<vector>
 	<iostream>
 	<math.h>
@@ -59,14 +59,15 @@
 	<vector>
 	<algorithm>
 
-1570373294 source:/home/arash/Projects/ANNplusplus/ANN/Vector.cpp
+1570374168 source:/home/arash/Projects/ANNplusplus/ANN/Vector.cpp
 	"Vector.h"
 	"math.h"
 	"Matrix.h"
 	<cfloat>
 	"Vector_arma.h"
+	"utils.h"
 
-1569419414 source:/home/arash/Projects/ANNplusplus/ANN/BTC.cpp
+1570396362 source:/home/arash/Projects/ANNplusplus/ANN/BTC.cpp
 	"BTC.h"
 	"math.h"
 	"string.h"
@@ -77,7 +78,7 @@
 	"qfile.h"
 	"qdatastream.h"
 
-1536281175 /home/arash/Projects/ANNplusplus/ANN/BTC.h
+1570396089 /home/arash/Projects/ANNplusplus/ANN/BTC.h
 	<map>
 	<string>
 	<vector>
@@ -123,7 +124,7 @@
 1570281428 source:/home/arash/Projects/ANNplusplus/ANNpp/main.cpp
 	<iostream>
 
-1570373918 source:/home/arash/Projects/ANNplusplus/ANN/ANN.cpp
+1570397147 source:/home/arash/Projects/ANNplusplus/ANN/ANN.cpp
 	"ANN_class.h"
 	"ML.h"
 
@@ -180,7 +181,7 @@
 	<string>
 	<vector>
 
-1570373668 source:/home/arash/Projects/ANNplusplus/ANN/ML.cpp
+1570397540 source:/home/arash/Projects/ANNplusplus/ANN/ML.cpp
 	"ML.h"
 
 1570372974 source:/home/arash/Projects/ANNplusplus/ANN/ANN_class.cpp

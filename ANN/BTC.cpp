@@ -79,6 +79,30 @@ CTimeSeries::CTimeSeries(const CTimeSeries &CC)
 
 }
 
+CTimeSeries::CTimeSeries(const CVector &CC)
+{
+	n=CC.num;
+	for (int i=0; i<CC.num; i++)
+    {
+        C.push_back(CC[i]);
+        t.push_back(i);
+    }
+	structured = true;
+
+}
+
+CTimeSeries::CTimeSeries(const CVector_arma &CC)
+{
+	n=CC.num;
+	for (int i=0; i<CC.num; i++)
+    {
+        double Val = C[i];
+        C.push_back(Val);
+        t.push_back(i);
+    }
+	structured = true;
+}
+
 CTimeSeries::CTimeSeries(string Filename)
 {
 	n = 0;
@@ -119,20 +143,6 @@ CTimeSeries::CTimeSeries(string Filename)
 	error = (n == 0) ? true : false;
 	file.close();
 }
-
-/*CTimeSeries CTimeSeries::operator = (const CTimeSeries &CC)
-{
-	n=CC.n;
-	t = new double[n];
-	C = new double[n];
-	for (int i=0; i<n; i++)
-	{
-		t[i] = CC.t[i];
-		C[i] = CC.C[i];
-	}
-
-	return *this;
-}*/
 
 CTimeSeries& CTimeSeries::operator = (const CTimeSeries &CC)
 {
