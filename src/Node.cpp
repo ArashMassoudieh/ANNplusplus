@@ -1,6 +1,6 @@
 #include "Node.h"
 #include <math.h>
-
+#include "Link.h"
 
 CNode::CNode()
 {
@@ -39,8 +39,13 @@ double CNode::getinputval()
 	double sum = 0; 
 	for (int i = 0; i < linksto.size(); i++)
 	{
-
+		if (linksto[i]->GetSource()!=nullptr)
+			sum += linksto[i]->GetSource()->output_val * linksto[i]->GetWeight(); 
+		else
+			sum += linksto[i]->GetWeight();
 	}
+	input_val = sum; 
+	return sum; 
 }
 
 CNode::CNode(const CNode &m)
