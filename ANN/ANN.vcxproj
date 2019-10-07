@@ -109,7 +109,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;ARMA_USE_LAPACK;ARMA_USE_BLAS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\armadillo_bits;.\armadillo-header;%(AdditionalIncludeDirectories);C:\Users\massoudieh\Dropbox\ANN\armadillo_bits;C:\Users\massoudieh\Dropbox\ANN\armadillo-header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\armadillo_bits;.\armadillo-header;%(AdditionalIncludeDirectories);C:\Projects\ANN\armadillo_bits;C:\Projects\ANN\\armadillo-header;C:\Projects\ANN\ANNPlusPlus\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,30 +173,42 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ANN_class.h" />
-    <ClInclude Include="BTC.h" />
-    <ClInclude Include="BTCSet.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="ML.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="QuickSort.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="StringOP.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="Vector.h" />
+    <ClCompile Include="..\src\ANN.cpp" />
+    <ClCompile Include="..\src\ANN_class.cpp" />
+    <ClCompile Include="..\src\BTC.cpp" />
+    <ClCompile Include="..\src\BTCSet.cpp" />
+    <ClCompile Include="..\src\DistributionNUnif.cpp" />
+    <ClCompile Include="..\src\Link.cpp" />
+    <ClCompile Include="..\src\Matrix.cpp" />
+    <ClCompile Include="..\src\Matrix_arma.cpp" />
+    <ClCompile Include="..\src\ML.cpp" />
+    <ClCompile Include="..\src\Node.cpp" />
+    <ClCompile Include="..\src\NormalDist.cpp" />
+    <ClCompile Include="..\src\QuickSort.cpp" />
+    <ClCompile Include="..\src\stdafx.cpp" />
+    <ClCompile Include="..\src\StringOP.cpp" />
+    <ClCompile Include="..\src\utils.cpp" />
+    <ClCompile Include="..\src\Vector.cpp" />
+    <ClCompile Include="..\src\Vector_arma.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ANN.cpp" />
-    <ClCompile Include="ANN_class.cpp" />
-    <ClCompile Include="BTC.cpp" />
-    <ClCompile Include="BTCSet.cpp" />
-    <ClCompile Include="Matrix.cpp" />
-    <ClCompile Include="ML.cpp" />
-    <ClCompile Include="Node.cpp" />
-    <ClCompile Include="QuickSort.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="StringOP.cpp" />
-    <ClCompile Include="Vector.cpp" />
+    <ClInclude Include="..\include\ANN_class.h" />
+    <ClInclude Include="..\include\BTC.h" />
+    <ClInclude Include="..\include\BTCSet.h" />
+    <ClInclude Include="..\include\DistributionNUnif.h" />
+    <ClInclude Include="..\include\Link.h" />
+    <ClInclude Include="..\include\Matrix.h" />
+    <ClInclude Include="..\include\Matrix_arma.h" />
+    <ClInclude Include="..\include\ML.h" />
+    <ClInclude Include="..\include\Node.h" />
+    <ClInclude Include="..\include\NormalDist.h" />
+    <ClInclude Include="..\include\QuickSort.h" />
+    <ClInclude Include="..\include\stdafx.h" />
+    <ClInclude Include="..\include\StringOP.h" />
+    <ClInclude Include="..\include\targetver.h" />
+    <ClInclude Include="..\include\utils.h" />
+    <ClInclude Include="..\include\Vector.h" />
+    <ClInclude Include="..\include\Vector_arma.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

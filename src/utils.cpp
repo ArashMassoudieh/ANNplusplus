@@ -1,6 +1,7 @@
 #include "utils.h"
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 
 int aquiutils::lookup(const vector<string> &s, const string &s1)
 {
