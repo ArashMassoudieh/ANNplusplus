@@ -14,7 +14,9 @@ public:
 	ANN_class(vector<int> n_nodes, CNode::activationfunc act = CNode::activationfunc::sigmoid);
 	~ANN_class();
 	CNode* node(string id);
+	CNode* node(int i) { return &Nodes[i]; }
 	Link* link(string id);
+	Link* link(int i) { return &Links[i];}
 	CNode* node(int layer, int num);
 	ANN_class& operator=(const ANN_class &m);
 	ANN_class(const ANN_class &m);
@@ -39,5 +41,6 @@ private:
 	vector<CNode> Nodes;
 	vector<Link> Links;
 	vector<vector<CNode*>> layers;
+	CMatrix UpdateDerivatives();
 };
 

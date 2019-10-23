@@ -1,6 +1,7 @@
 #include "Node.h"
 #include <math.h>
 #include "Link.h"
+#include "ANN_class.h"
 
 CNode::CNode()
 {
@@ -46,6 +47,41 @@ double CNode::getinputval()
 	}
 	input_val = sum; 
 	return sum; 
+}
+
+double CNode::derivative(bool update)
+{
+	if (update)
+		deriv = (out(input_val + epsilon) - out(input_val)) / epsilon;
+	return deriv;
+}
+
+void CNode::set_derivatives_vs_weights()
+{
+	derivative_vs_weights_vals = CVector(parent->num_weights);
+	derivative(true);
+	for (int i = 0; i < linksto.size(); i++) set_derivatives_vs_weights(i);
+}
+
+void CNode::set_derivatives_vs_weights(int i)
+{
+	if (IsLinksTo(i))
+	{
+		derivative_vs_weights_vals[i] = derivative() * parent->link(i)->Val(); 
+	}
+	else
+	{
+		for (int j = 0; j < linksto.size(); j++)
+			derivative_vs_weights_vals[i] = derivative() * linksto[j]->GetWeight() * linksto[j]->GetSource()->derivatives_vs_weights()[i];
+	}
+}
+
+bool CNode::IsLinksTo(int i)
+{
+	for (int j = 0; j < linksto.size(); j++)
+		if (parent->link(i)->GetID() == linksto[j]->GetID())
+			return true; 
+	return false; 
 }
 
 CNode::CNode(const CNode &m)

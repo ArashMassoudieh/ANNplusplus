@@ -210,6 +210,7 @@ bool ANN_class::Append(CNode& _node)
 	else
 	{
 		Nodes.push_back(_node);
+		node(_node.GetID())->SetParent(this);
 		return true;
 	}
 }
@@ -224,6 +225,7 @@ bool ANN_class::Append(Link& _link)
 	else
 	{
 		Links.push_back(_link);
+		link(_link.GetID())->SetParent(this);
 		return true;
 	}
 }
@@ -250,6 +252,21 @@ bool ANN_class::SetPointers()
 	}
 	return true; 
 
+}
+
+CMatrix ANN_class::UpdateDerivatives()
+{
+	CMatrix Gradient(Links.size(), layers[layers.size() - 1].size);
+	for (int i = 0; i < layers.size(); i++)
+	{
+		for (int j = 0; j < layers[i].size(); j++)
+			layers[i][j]->derivatives_vs_weights(); 
+	}
+	for (int i = 0; i < layers[layers.size() - 1].size(); i++)
+		for (int j = 0; j < Links.size(); j++)
+			Gradient[i] = layers[layers.size() - 1][i]->derivatives_vs_weights();
+
+	return Gradient; 
 }
 
 CVector ANN_class::calc_output_v(const CVector &weights)

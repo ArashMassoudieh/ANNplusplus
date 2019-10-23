@@ -6,6 +6,7 @@
 using namespace std; 
 
 class CNode;
+class ANN_class;
 
 class Link
 {
@@ -14,6 +15,7 @@ private:
 	CNode* Target;
 	double weight; 
 	string ID; 
+	ANN_class* parent; 
 public:
 	string SourceID, TargetID;
 	CNode* GetSource() { return Source; }
@@ -29,7 +31,8 @@ public:
 	Link(const Link& m);
 	Link(string s, string sourceID, string targetID);
 	Link& operator=(const Link& m);
-
+	ANN_class* Parent() const { return parent; }
+	void SetParent(ANN_class* p) { parent = p; }
 };
 
 #endif // ! Link_H

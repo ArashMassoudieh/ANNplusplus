@@ -9,7 +9,10 @@ double Link::GetSourceVal()
 
 double Link::Val()
 {
-	return GetSourceVal(); 
+	if (Source == nullptr)
+		return 1; 
+	else
+		return GetSourceVal(); 
 }
 
 Link::Link(const Link& m)
