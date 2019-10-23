@@ -24,13 +24,16 @@ int main()
 	layers[0] = 1;
 	layers[1] = 3;
 	layers[2] = 1;
-	ANN_class ANN(layers);
+	ANN_class ANN(layers,CNode::activationfunc::sigmoid);
 	vector<double> input(1);
 	input[0] = 1;
 	vector<double> out = ANN.calc_output(input);
 	CVector weights;
 	for (int i = 0; i < ANN.num_weights(); i++)
 		weights.append(0.2*i*pow(-1,i));
+
+	ANN.ApplyWeights(weights);
+	out = ANN.calc_output(input);
 
 	CBTCSet input_ts(1);
 	for (int i = 0; i < 200; i++)

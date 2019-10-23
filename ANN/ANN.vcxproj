@@ -64,6 +64,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Folders.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -109,16 +110,16 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;ARMA_USE_LAPACK;ARMA_USE_BLAS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\armadillo_bits;.\armadillo-header;%(AdditionalIncludeDirectories);C:\Projects\ANN\armadillo_bits;C:\Projects\ANN\\armadillo-header;C:\Projects\ANN\ANNPlusPlus\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\armadillo_bits;.\armadillo-header;%(AdditionalIncludeDirectories);$(Project_Dir)\armadillo_bits;$(Project_Dir)\armadillo-header;$(Project_Dir)\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\massoudieh\Dropbox\ANN\lapack-blas_lib_win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(Project_Dir)\lapack-blas_lib_win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>lapack_win64_MT.lib;blas_win64_MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "C:\Users\massoudieh\Dropbox\ANN\lapack-blas_lib_win64\*.dll" "$(OutDir)"</Command>
+      <Command>copy "$(Project_Dir)\lapack-blas_lib_win64\*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,7 +156,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;ARMA_USE_LAPACK;ARMA_USE_BLAS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\massoudieh\Dropbox\ANN\armadillo_bits;C:\Users\massoudieh\Dropbox\ANN\armadillo-header;%(AdditionalIncludeDirectories);C:\Users\massoudieh\Dropbox\ANN\armadillo_bits;C:\Users\massoudieh\Dropbox\ANN\armadillo-header</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Project_Dir)\armadillo_bits;$(Project_Dir)\armadillo-header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

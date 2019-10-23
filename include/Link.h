@@ -23,7 +23,7 @@ public:
 	double GetSourceVal(); 
 	void SetWeight(double w) { weight = w; }
 	double GetWeight() { return weight; }
-	string GetID() { return ID; }
+	string GetID() const { return ID; } 
 	bool SetID(string id) { ID = id;  }
 	double Val();
 	Link(const Link& m);

@@ -14,7 +14,7 @@ double Link::Val()
 
 Link::Link(const Link& m)
 {
-	ID = m.GetID; 
+	ID = m.GetID(); 
 	weight = m.weight; 
 	SourceID = m.SourceID;
 	TargetID = m.TargetID;
@@ -34,4 +34,6 @@ Link& Link::operator=(const Link& m)
 	weight = weight;
 	SourceID = m.SourceID;
 	TargetID = m.TargetID; 
+
+	return *this; 
 }

@@ -72,14 +72,17 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 			actfun = act;
 		for (unsigned int j = 0; j < n_nodes[i]; j++)
 		{
-			CNode n = CNode(aquiutils::numbertostring(int(i)) + "," + aquiutils::numbertostring(int(j)), act);
+			CNode n = CNode(aquiutils::numbertostring(int(i)) + "," + aquiutils::numbertostring(int(j)), actfun);
 			n.layerno = i;
 			n.numinlayer = j;
 			Append(n);
-			layers[i].push_back(node(aquiutils::numbertostring(int(i)) + "," + aquiutils::numbertostring(int(j))));
 		}
 
 	}
+
+	for (unsigned int i = 0; i < n_layers; i++)
+		for (unsigned int j = 0; j < n_nodes[i]; j++)
+			layers[i].push_back(node(aquiutils::numbertostring(int(i)) + "," + aquiutils::numbertostring(int(j))));
 
 	for (unsigned int i = 0; i < n_layers - 1; i++)
 	{
@@ -87,13 +90,13 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 		{
 			for (unsigned int k = 0; k < n_nodes[i + 1]; k++)
 			{
-				Link l = Link(aquiutils::numbertostring(int(i)) + "," + aquiutils::numbertostring(int(j)) + "-" + aquiutils::numbertostring(int(i + 1)) + "," + aquiutils::numbertostring(int(k)), node(i, j)->GetID(), node(i, k)->GetID());
+				Link l = Link(aquiutils::numbertostring(int(i)) + "," + aquiutils::numbertostring(int(j)) + "-" + aquiutils::numbertostring(int(i + 1)) + "," + aquiutils::numbertostring(int(k)), node(i, j)->GetID(), node(i+1, k)->GetID());
 				Append(l);
 			}
 		}
 		for (unsigned int k = 0; k < n_nodes[i + 1]; k++)
 		{
-			Link l = Link("intercept-" + aquiutils::numbertostring(int(i + 1)) + "," + aquiutils::numbertostring(int(k)), nullptr, node(i, k)->GetID());
+			Link l = Link("intercept-" + aquiutils::numbertostring(int(i + 1)) + "," + aquiutils::numbertostring(int(k)), "", node(i+1, k)->GetID());
 			Append(l);
 		}
 	}
@@ -103,31 +106,33 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 
 vector<double> ANN_class::calc_output(const vector<double> &input)
 {
-	for (int j = 0; j < nodes[0].size(); j++)
+	for (int j = 0; j < layers[0].size(); j++)
 	{
-		if (j==0)
-			nodes[0][j].input_val = 1;
-		else
-			nodes[0][j].input_val = input[j-1];
-
-		nodes[0][j].out();
+		layers[0][j]->input_val = input[j];
+		layers[0][j]->out();
 	}
-	for (int i = 1; i < nodes.size(); i++)
+	for (int i = 1; i < layers.size(); i++)
 	{
-		for (int j = 0; j < nodes[i].size(); j++)
+		for (int j = 0; j < layers[i].size(); j++)
 		{
 			double sum = 0;
-			for (int k = 0; k < nodes[i - 1].size(); k++)
-				sum += nodes[i - 1][k].output_val*weights[i-1][k][j];
+			for (int k = 0; k < layers[i][j]->linksto.size(); k++)
+			{
+				if (layers[i][j]->linksto[k]->GetSource()==nullptr)
+					sum += layers[i][j]->linksto[k]->GetWeight();
+				else
+					sum += layers[i][j]->linksto[k]->GetWeight() * layers[i][j]->linksto[k]->GetSource()->output_val;
 
-			nodes[i][j].input_val = sum;
-			nodes[i][j].out();
+			}
+
+			layers[i][j]->input_val = sum;
+			layers[i][j]->out();
 		}
 	}
 
-	vector<double> X(nodes[nodes.size() - 1].size()-1);
-	for (int i = 1; i < nodes[nodes.size() - 1].size(); i++)
-		X[i-1] = nodes[nodes.size() - 1][i].output_val;
+	vector<double> X(layers[layers.size() - 1].size());
+	for (int i = 1; i < layers[layers.size() - 1].size(); i++)
+		X[i-1] = layers[layers.size() - 1][i]->output_val;
 
 	return X;
 }
@@ -135,7 +140,7 @@ vector<double> ANN_class::calc_output(const vector<double> &input)
 
 bool ANN_class::applyinput(CBTCSet* _input)
 {
-	if (layers[0].size != _input->nvars)
+	if (layers[0].size() != _input->nvars)
 	{
 		cout << "Number of inputs should be equal to the number of nodes in the first layer!" << endl;
 		return false;
@@ -167,6 +172,21 @@ CVector ANN_class::weights_to_vector()
 	return X;
 }
 
+bool ANN_class::ApplyWeights(const CVector &weights)
+{
+	if (weights.num != Links.size())
+	{
+		cout << "The size of the weight vector is different than the number of links" << endl; 
+		return false;
+	}
+	else
+	{
+		for (int i = 0; i < Links.size(); i++)
+			Links[i].SetWeight(weights[i]);
+		return true; 
+	}
+}
+
 
 CVector ANN_class::train(const double &tol)
 {
@@ -183,17 +203,29 @@ CVector ANN_class::train(const double &tol)
 bool ANN_class::Append(CNode& _node)
 {
 	if (node(_node.GetID()) != nullptr)
+	{
 		cout << "Node " + _node.GetID() + " Already exists!" << endl;
+		return false; 
+	}
 	else
+	{
 		Nodes.push_back(_node);
+		return true;
+	}
 }
 
 bool ANN_class::Append(Link& _link)
 {
 	if (link(_link.GetID()) != nullptr)
+	{
 		cout << "Link " + _link.GetID() + " Already exists!" << endl;
+		return false;
+	}
 	else
+	{
 		Links.push_back(_link);
+		return true;
+	}
 }
 
 bool ANN_class::SetPointers()
@@ -203,16 +235,20 @@ bool ANN_class::SetPointers()
 		if (node(Links[i].SourceID) != nullptr)
 		{
 			node(Links[i].SourceID)->linksfrom.push_back(&Links[i]);
-			Links[i].SetSource = node(Links[i].SourceID); 
+			Links[i].SetSource(node(Links[i].SourceID)); 
 		}
+		else
+			Links[i].SetSource(nullptr);
 		if (node(Links[i].TargetID) != nullptr)
 		{
 			node(Links[i].TargetID)->linksto.push_back(&Links[i]);
-			Links[i].SetTarget = node(Links[i].TargetID);
+			Links[i].SetTarget(node(Links[i].TargetID));
 		}
+		else
+			Links[i].SetTarget(nullptr);
 		
 	}
-
+	return true; 
 
 }
 

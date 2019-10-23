@@ -24,6 +24,7 @@ public:
 	bool applyinput(CBTCSet* _input);
 	bool setparams(const CVector &X);
 	CVector weights_to_vector();
+	bool ApplyWeights(const CVector &weights);
 	int num_layers();
 	int num_inputs();
 	int num_outputs();
