@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -31,8 +33,41 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="../ANN" />
+			<Add directory="../include" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Linker>
+			<Add option="-llapack" />
+			<Add option="-lblas" />
+			<Add option="-larmadillo" />
+		</Linker>
+		<Unit filename="../ANN/ANN.cpp" />
+		<Unit filename="../ANN/ANN_class.cpp" />
+		<Unit filename="../ANN/ANN_class.h" />
+		<Unit filename="../ANN/BTC.cpp" />
+		<Unit filename="../ANN/BTC.h" />
+		<Unit filename="../ANN/BTCSet.cpp" />
+		<Unit filename="../ANN/BTCSet.h" />
+		<Unit filename="../ANN/DistributionNUnif.cpp" />
+		<Unit filename="../ANN/ML.cpp" />
+		<Unit filename="../ANN/ML.h" />
+		<Unit filename="../ANN/Matrix.cpp" />
+		<Unit filename="../ANN/Matrix.h" />
+		<Unit filename="../ANN/Matrix_arma.cpp" />
+		<Unit filename="../ANN/Matrix_arma.h" />
+		<Unit filename="../ANN/Node.cpp" />
+		<Unit filename="../ANN/Node.h" />
+		<Unit filename="../ANN/NormalDist.cpp" />
+		<Unit filename="../ANN/QuickSort.cpp" />
+		<Unit filename="../ANN/QuickSort.h" />
+		<Unit filename="../ANN/StringOP.cpp" />
+		<Unit filename="../ANN/StringOP.h" />
+		<Unit filename="../ANN/Vector.cpp" />
+		<Unit filename="../ANN/Vector.h" />
+		<Unit filename="../ANN/Vector_arma.cpp" />
+		<Unit filename="../ANN/Vector_arma.h" />
+		<Unit filename="../include/utils.h" />
+		<Unit filename="../src/utils.cpp" />
 		<Extensions>
 			<envvars />
 			<code_completion />

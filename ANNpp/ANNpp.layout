@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<FileVersion major="1" minor="0" />
+	<ActiveTarget name="Debug" />
+	<File name="../ANN/Matrix.cpp" open="1" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6497" topLine="342" />
+		</Cursor>
+	</File>
+	<File name="../ANN/ML.h" open="1" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Node.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="191" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Matrix_arma.cpp" open="1" top="0" tabpos="25" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="401" topLine="3" />
+		</Cursor>
+	</File>
+	<File name="../ANN/ANN_class.cpp" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1730" topLine="84" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Vector.h" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2162" topLine="56" />
+		</Cursor>
+	</File>
+	<File name="../ANN/ANN.cpp" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1049" topLine="31" />
+		</Cursor>
+	</File>
+	<File name="../include/utils.h" open="1" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="67" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Matrix.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="857" topLine="33" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Vector_arma.cpp" open="1" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="../ANN/ML.cpp" open="1" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2020" topLine="91" />
+		</Cursor>
+	</File>
+	<File name="../ANN/BTCSet.cpp" open="1" top="0" tabpos="29" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="9841" topLine="407" />
+		</Cursor>
+	</File>
+	<File name="../ANN/ANN_class.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="700" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Matrix_arma.h" open="1" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4138" topLine="64" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Vector_arma.h" open="1" top="0" tabpos="27" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="33" />
+		</Cursor>
+	</File>
+	<File name="../ANN/StringOP.cpp" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="22738" topLine="955" />
+		</Cursor>
+	</File>
+	<File name="../ANN/BTCSet.h" open="1" top="0" tabpos="28" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="101" topLine="63" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Vector.cpp" open="1" top="0" tabpos="32" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="9609" topLine="670" />
+		</Cursor>
+	</File>
+	<File name="../ANN/BTC.cpp" open="1" top="0" tabpos="34" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1535" topLine="86" />
+		</Cursor>
+	</File>
+	<File name="../src/utils.cpp" open="1" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="43" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../ANN/Node.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="509" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../ANN/BTC.h" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="89" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../ANN/StringOP.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="878" topLine="36" />
+		</Cursor>
+	</File>
+</CodeBlocks_layout_file>

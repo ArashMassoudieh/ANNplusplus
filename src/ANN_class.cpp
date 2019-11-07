@@ -3,6 +3,7 @@
 #include "utils.h"
 #include <vector>
 
+
 using namespace std;
 
 
@@ -45,8 +46,8 @@ CNode* ANN_class::node(int layer, int num)
 
 ANN_class& ANN_class::operator=(const ANN_class &m)
 {
-	Links = m.Links; 
-	Nodes = m.Nodes; 
+	Links = m.Links;
+	Nodes = m.Nodes;
 	input = m.input;
 
 	return *this;
@@ -65,8 +66,8 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 	layers.resize(n_layers);
 	for (unsigned int i = 0; i < n_layers; i++)
 	{
-		CNode::activationfunc actfun; 
-		if (i == 0) 
+		CNode::activationfunc actfun;
+		if (i == 0)
 			actfun = CNode::activationfunc::one;
 		else
 			actfun = act;
@@ -100,7 +101,7 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 			Append(l);
 		}
 	}
-	SetPointers(); 
+	SetPointers();
 
 }
 
@@ -160,8 +161,8 @@ bool ANN_class::setparams(const CVector &X)
 
 	for (int i = 0; i<Links.size(); i++)
 		Links[i].SetWeight(X[i]);
-	
-	return true; 
+
+	return true;
 }
 
 CVector ANN_class::weights_to_vector()
@@ -176,14 +177,14 @@ bool ANN_class::ApplyWeights(const CVector &weights)
 {
 	if (weights.num != Links.size())
 	{
-		cout << "The size of the weight vector is different than the number of links" << endl; 
+		cout << "The size of the weight vector is different than the number of links" << endl;
 		return false;
 	}
 	else
 	{
 		for (int i = 0; i < Links.size(); i++)
 			Links[i].SetWeight(weights[i]);
-		return true; 
+		return true;
 	}
 }
 
@@ -205,7 +206,7 @@ bool ANN_class::Append(CNode& _node)
 	if (node(_node.GetID()) != nullptr)
 	{
 		cout << "Node " + _node.GetID() + " Already exists!" << endl;
-		return false; 
+		return false;
 	}
 	else
 	{
@@ -237,7 +238,7 @@ bool ANN_class::SetPointers()
 		if (node(Links[i].SourceID) != nullptr)
 		{
 			node(Links[i].SourceID)->linksfrom.push_back(&Links[i]);
-			Links[i].SetSource(node(Links[i].SourceID)); 
+			Links[i].SetSource(node(Links[i].SourceID));
 		}
 		else
 			Links[i].SetSource(nullptr);
@@ -248,25 +249,25 @@ bool ANN_class::SetPointers()
 		}
 		else
 			Links[i].SetTarget(nullptr);
-		
+
 	}
-	return true; 
+	return true;
 
 }
 
 CMatrix ANN_class::UpdateDerivatives()
 {
-	CMatrix Gradient(Links.size(), layers[layers.size() - 1].size);
+	CMatrix Gradient(Links.size(), layers[layers.size() - 1].size());
 	for (int i = 0; i < layers.size(); i++)
 	{
 		for (int j = 0; j < layers[i].size(); j++)
-			layers[i][j]->derivatives_vs_weights(); 
+			layers[i][j]->derivatives_vs_weights();
 	}
 	for (int i = 0; i < layers[layers.size() - 1].size(); i++)
 		for (int j = 0; j < Links.size(); j++)
 			Gradient[i] = layers[layers.size() - 1][i]->derivatives_vs_weights();
 
-	return Gradient; 
+	return Gradient;
 }
 
 CVector ANN_class::calc_output_v(const CVector &weights)
@@ -297,7 +298,7 @@ int ANN_class::num_outputs()
 
 int ANN_class::num_weights()
 {
-	return Links.size(); 
+	return Links.size();
 }
 
 

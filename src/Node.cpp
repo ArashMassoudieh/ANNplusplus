@@ -10,7 +10,7 @@ CNode::CNode()
 
 CNode::CNode(string id, activationfunc actfunc)
 {
-	ID = id; 
+	ID = id;
 	activation_function = actfunc;
 }
 
@@ -37,16 +37,16 @@ void CNode::out()
 
 double CNode::getinputval()
 {
-	double sum = 0; 
+	double sum = 0;
 	for (int i = 0; i < linksto.size(); i++)
 	{
 		if (linksto[i]->GetSource()!=nullptr)
-			sum += linksto[i]->GetSource()->output_val * linksto[i]->GetWeight(); 
+			sum += linksto[i]->GetSource()->output_val * linksto[i]->GetWeight();
 		else
 			sum += linksto[i]->GetWeight();
 	}
-	input_val = sum; 
-	return sum; 
+	input_val = sum;
+	return sum;
 }
 
 double CNode::derivative(bool update)
@@ -58,7 +58,7 @@ double CNode::derivative(bool update)
 
 void CNode::set_derivatives_vs_weights()
 {
-	derivative_vs_weights_vals = CVector(parent->num_weights);
+	derivative_vs_weights_vals = CVector(parent->num_weights());
 	derivative(true);
 	for (int i = 0; i < linksto.size(); i++) set_derivatives_vs_weights(i);
 }
@@ -67,7 +67,7 @@ void CNode::set_derivatives_vs_weights(int i)
 {
 	if (IsLinksTo(i))
 	{
-		derivative_vs_weights_vals[i] = derivative() * parent->link(i)->Val(); 
+		derivative_vs_weights_vals[i] = derivative() * parent->link(i)->Val();
 	}
 	else
 	{
@@ -80,8 +80,8 @@ bool CNode::IsLinksTo(int i)
 {
 	for (int j = 0; j < linksto.size(); j++)
 		if (parent->link(i)->GetID() == linksto[j]->GetID())
-			return true; 
-	return false; 
+			return true;
+	return false;
 }
 
 CNode::CNode(const CNode &m)
@@ -89,7 +89,7 @@ CNode::CNode(const CNode &m)
 	input_val = m.input_val;
 	output_val = m.output_val;
 	activation_function = m.activation_function;
-	ID = m.ID; 
+	ID = m.ID;
 	layerno = m.layerno;
 	numinlayer = m.numinlayer;
 
@@ -100,7 +100,7 @@ CNode& CNode::operator=(const CNode &m)
 	input_val = m.input_val;
 	output_val = m.output_val;
 	activation_function = m.activation_function;
-	ID = m.ID; 
+	ID = m.ID;
 	layerno = m.layerno;
 	numinlayer = m.numinlayer;
 	return *this;
