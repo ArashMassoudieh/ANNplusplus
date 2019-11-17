@@ -37,7 +37,7 @@ public:
 	double derivative(bool update = false);
 	ANN_class* Parent() const { return parent; }
 	void SetParent(ANN_class *p) { parent = p; }
-	CVector& derivatives_vs_weights();
+	CVector& derivatives_vs_weights(bool update); 
 private:
 	ANN_class* parent;
 	void set_derivatives_vs_weights();

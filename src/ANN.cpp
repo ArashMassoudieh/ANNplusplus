@@ -22,19 +22,22 @@ int main()
 {
 	vector<int> layers(3);
 	layers[0] = 1;
-	layers[1] = 3;
+	layers[1] = 1;
 	layers[2] = 1;
-	ANN_class ANN(layers,CNode::activationfunc::sigmoid);
+	ANN_class ANN(layers,CNode::activationfunc::one);
 	vector<double> input(1);
 	input[0] = 1;
-	vector<double> out = ANN.calc_output(input);
+	//vector<double> out = ANN.calc_output(input);
 	CVector weights;
 	for (int i = 0; i < ANN.num_weights(); i++)
-		weights.append(0.2*i*pow(-1,i));
+		weights.append(1);
+		//weights.append(0.2*i*pow(-1,i));
 
+	
 	ANN.ApplyWeights(weights);
-	out = ANN.calc_output(input);
-
+	vector<double> out = ANN.calc_output(input);
+	CMatrix X = ANN.UpdateDerivatives(input);
+	CMatrix X1 = ANN.Gradient_direct(input);
 	CBTCSet input_ts(1);
 	for (int i = 0; i < 200; i++)
 		input_ts.BTC[0].append((i-100.0)/100.0);

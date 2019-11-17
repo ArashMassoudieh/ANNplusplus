@@ -56,23 +56,43 @@ double CNode::derivative(bool update)
 	return deriv;
 }
 
+CVector& CNode::derivatives_vs_weights(bool update)
+{
+	if (!update)
+		return derivative_vs_weights_vals;
+	else
+	{
+
+		set_derivatives_vs_weights(); 
+		return derivative_vs_weights_vals;
+	}
+}
+
 void CNode::set_derivatives_vs_weights()
 {
 	derivative_vs_weights_vals = CVector(parent->num_weights());
 	derivative(true);
-	for (int i = 0; i < linksto.size(); i++) set_derivatives_vs_weights(i);
+	derivative_vs_weights_vals = 0;
+	for (int i = 0; i < parent->num_weights(); i++) set_derivatives_vs_weights(i);
 }
 
 void CNode::set_derivatives_vs_weights(int i)
 {
+	
 	if (IsLinksTo(i))
 	{
-		derivative_vs_weights_vals[i] = derivative() * parent->link(i)->Val();
+		derivative_vs_weights_vals[i] = +derivative() * parent->link(i)->Val();
 	}
 	else
 	{
 		for (int j = 0; j < linksto.size(); j++)
-			derivative_vs_weights_vals[i] = derivative() * linksto[j]->GetWeight() * linksto[j]->GetSource()->derivatives_vs_weights()[i];
+		{
+			if (linksto[j]->GetSource() != nullptr)
+				derivative_vs_weights_vals[i] += derivative() * linksto[j]->GetWeight() * linksto[j]->GetSource()->derivatives_vs_weights(false)[i];
+			else
+				derivative_vs_weights_vals[i] += derivative(); 
+
+		}
 	}
 }
 

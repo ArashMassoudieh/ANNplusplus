@@ -6,6 +6,7 @@
 #include "Matrix.h"
 #include "BTCSet.h"
 
+
 using namespace std;
 class ANN_class
 {
@@ -37,10 +38,16 @@ public:
 	bool Append(CNode& node);
 	bool Append(Link& link);
 	bool SetPointers();
+	CMatrix Gradient(const CVector &input);
+	CMatrix Gradient_direct(const CVector& input);
+	CMatrix UpdateDerivatives(const CVector& input);
 private:
 	vector<CNode> Nodes;
 	vector<Link> Links;
 	vector<vector<CNode*>> layers;
-	CMatrix UpdateDerivatives();
+	bool SetNodeDerivates(const CVector &input);
+	void SetLinkNodeParents();
+	double epsilon = 1e-6;
+	
 };
 

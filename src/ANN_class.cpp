@@ -101,6 +101,7 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 			Append(l);
 		}
 	}
+	SetLinkNodeParents();
 	SetPointers();
 
 }
@@ -132,8 +133,8 @@ vector<double> ANN_class::calc_output(const vector<double> &input)
 	}
 
 	vector<double> X(layers[layers.size() - 1].size());
-	for (int i = 1; i < layers[layers.size() - 1].size(); i++)
-		X[i-1] = layers[layers.size() - 1][i]->output_val;
+	for (int i = 0; i < layers[layers.size() - 1].size(); i++)
+		X[i] = layers[layers.size() - 1][i]->output_val;
 
 	return X;
 }
@@ -255,19 +256,74 @@ bool ANN_class::SetPointers()
 
 }
 
-CMatrix ANN_class::UpdateDerivatives()
+CMatrix ANN_class::Gradient(const CVector& input)
 {
-	CMatrix Gradient(Links.size(), layers[layers.size() - 1].size());
+	CMatrix M(num_outputs(), num_weights());
+	for (int i = 0; i < num_layers(); i++)
+	{
+
+	}
+	return M; 
+}
+
+CMatrix ANN_class::Gradient_direct(const CVector& input)
+{
+	
+	CVector weights_0 = weights_to_vector();
+	CVector weights_purt = weights_0; 
+	ApplyWeights(weights_0);
+	CVector F0 = calc_output(input.vec);
+	CMatrix M(num_weights(),num_outputs());
+	for (int i = 0; i < weights_0.getsize(); i++)
+	{
+		weights_purt[i] = weights_0[i] + epsilon;
+		ApplyWeights(weights_purt);
+		CVector F1 = calc_output(input.vec);
+		M[i] = (F1 - F0) / epsilon;
+	}
+	ApplyWeights(weights_0);
+	return Transpose(M); 
+
+}
+
+CMatrix ANN_class::UpdateDerivatives(const CVector &input)
+{
+	SetNodeDerivates(input); 
+	CMatrix Gradient(layers[layers.size() - 1].size(), Links.size());
 	for (int i = 0; i < layers.size(); i++)
 	{
 		for (int j = 0; j < layers[i].size(); j++)
-			layers[i][j]->derivatives_vs_weights();
+			layers[i][j]->derivatives_vs_weights(true);
 	}
 	for (int i = 0; i < layers[layers.size() - 1].size(); i++)
-		for (int j = 0; j < Links.size(); j++)
-			Gradient[i] = layers[layers.size() - 1][i]->derivatives_vs_weights();
+		Gradient[i] = layers[layers.size() - 1][i]->derivatives_vs_weights(true);
 
 	return Gradient;
+}
+
+bool ANN_class::SetNodeDerivates(const CVector& input)
+{
+	if (input.num != num_inputs())
+	{
+		cout << "Input vector size (" + aquiutils::numbertostring(input.num) + ")  is inconsistent with the number of input layers (" + aquiutils::numbertostring(num_inputs()) + ")" << endl; 
+		return false; 
+	}
+	else
+	{
+		calc_output(input.vec);
+		for (int i = 0; i < layers.size(); i++)
+			for (int j = 0; j < layers[i].size(); j++)
+				layers[i][j]->derivative(true); 
+	}
+	return true; 
+}
+
+void ANN_class::SetLinkNodeParents()
+{
+	for (int i = 0; i < Nodes.size(); i++)
+		Nodes[i].SetParent(this);
+	for (int i = 0; i < Links.size(); i++)
+		Links[i].SetParent(this);
 }
 
 CVector ANN_class::calc_output_v(const CVector &weights)
