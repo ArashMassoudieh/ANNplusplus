@@ -106,6 +106,24 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 
 }
 
+double ANN_class::calc_error(CTimeSeriesSet &input,CTimeSeriesSet output)
+{
+    double sum=0;
+    if (input.BTC[0].n != output.BTC[0].n)
+    {
+        errorhandler.AppendError("calc_error",1001,"The number of data points in the input [" + aquiutils::numbertostring(input.BTC[0].n) + "] is not equal to the number of datapoints in the output dataset [" + aquiutils::numbertostring(output.BTC[0].n));
+        return 0;
+    }
+    for (int i=0; i<input.BTC[0].n; i++)
+    {
+        vector<double> input_vec = input.getrow(i);
+        CVector predicted = CVector(calc_output(input_vec));
+        CVector measured = CVector(output.getrow(i));
+        sum += (predicted-measured).norm2();
+    }
+    return sum;
+}
+
 vector<double> ANN_class::calc_output(const vector<double> &input)
 {
 	for (int j = 0; j < layers[0].size(); j++)
@@ -305,7 +323,7 @@ bool ANN_class::SetNodeDerivates(const CVector& input)
 {
 	if (input.num != num_inputs())
 	{
-		cout << "Input vector size (" + aquiutils::numbertostring(input.num) + ")  is inconsistent with the number of input layers (" + aquiutils::numbertostring(num_inputs()) + ")" << endl; 
+        cout << "Input vector size (" + aquiutils::numbertostring(input.num) + ")  is inconsistent with the number of nodes in the input layer (" + aquiutils::numbertostring(num_inputs()) + ")" << endl;
 		return false; 
 	}
 	else

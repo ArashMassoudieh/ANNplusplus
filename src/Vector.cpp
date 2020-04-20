@@ -38,6 +38,13 @@ CVector::CVector(const double x, int n)
 	for (int i=0; i<num; i++) vec[i] = x;
 }
 
+CVector::CVector(const vector<double> &v)
+{
+    num = v.size();
+    vec = v;
+}
+
+
 CVector::CVector(const double x_min, const double x_max, int n)
 {
 	num = n+1;
@@ -50,12 +57,6 @@ CVector::CVector(const CVector &v)
 {
 	num = v.num;
 	vec = v.vec;
-}
-
-CVector::CVector(const vector<double> &v)
-{
-	num = v.size();
-	vec = v;
 }
 
 CVector::CVector(CVector_arma &v)

@@ -3,6 +3,17 @@
 #include <string>
 #include <vector>
 
+#include "Vector.h"
+#include "Vector_arma.h"
+#include "Matrix.h"
+#include "Matrix_arma.h"
+
+
+#ifdef Q_version
+    #include <QStringList>
+#endif
+
+
 using namespace std;
 
 namespace aquiutils
@@ -59,6 +70,15 @@ namespace aquiutils
 	bool And(vector<bool> x);
 	double max(vector<double> x);
 	int max(vector<int> x);
+
+#ifdef Q_version
+    QString vec2Qstring(vector<double> &v);
+    QString vec2Qstring(CVector &v);
+    QString vec2Qstring(CVector_arma &v);
+    QString mat2Qstring(CMatrix_arma &m);
+    QString mat2Qstring(CMatrix &m);
+#endif
+
 };
 
 

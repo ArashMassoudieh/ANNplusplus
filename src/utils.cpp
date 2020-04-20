@@ -3,6 +3,83 @@
 #include <sstream>
 #include <algorithm>
 
+#ifdef Q_version
+QString aquiutils::vec2Qstring(vector<double> &v)
+{
+    QString s;
+    s = "[";
+    for (unsigned int i=0; i<v.size(); i++)
+    {   s += QString::number(v[i]);
+        if (i!=v.size()-1)
+            s += ",";
+    }
+    s += "]";
+    return s;
+}
+
+QString aquiutils::vec2Qstring(CVector &v)
+{
+    QString s;
+    s = "[";
+    for (int i=0; i<v.num; i++)
+    {   s += QString::number(v[i]);
+        if (i!=v.num-1)
+            s += ",";
+    }
+    s += "]";
+    return s;
+}
+
+QString aquiutils::vec2Qstring(CVector_arma &v)
+{
+    QString s;
+    s = "[";
+    for (int i=0; i<v.num; i++)
+    {   s += QString::number(v[i]);
+        if (i!=v.num-1)
+            s += ",";
+    }
+    s += "]";
+    return s;
+}
+
+QString aquiutils::mat2Qstring(CMatrix_arma &m)
+{
+    QString s;
+    s = "[";
+    for (int j=0; j<m.getnumrows(); j++ )
+    {
+        for (int i=0; i<m.getnumcols(); i++)
+        {   s += QString::number(m(j,i));
+            if (i!=m.getnumcols()-1)
+                s += ",";
+        }
+        s += "\n";
+    }
+    s += "]";
+    return s;
+}
+
+QString aquiutils::mat2Qstring(CMatrix &m)
+{
+    QString s;
+    s = "[";
+    for (int j=0; j<m.getnumrows(); j++ )
+    {
+        for (int i=0; i<m.getnumcols(); i++)
+        {   s += QString::number(m[j][i]);
+            if (i!=m.getnumcols()-1)
+                s += ",";
+        }
+        s += "\n";
+    }
+    s += "]";
+    return s;
+}
+
+
+#endif
+
 int aquiutils::lookup(const vector<string> &s, const string &s1)
 {
     for (unsigned int i=0; i<s.size(); i++)
