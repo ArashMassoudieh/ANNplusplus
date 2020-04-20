@@ -581,3 +581,13 @@ int aquiutils::max(vector<int> x)
 	return out;
 
 }
+
+vector<int> aquiutils::random_vector(int min_range, int max_range, unsigned int number)
+{
+    vector<int> out;
+    for (unsigned int i=0; i<number; i++)
+    {
+        out.push_back(int(unitrandom()*(max_range-min_range)+min_range));
+    }
+    return out;
+}

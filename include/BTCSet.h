@@ -59,8 +59,10 @@ public:
 	int lookup(string S);
 	vector<double> getrow(int a);
 	void setname(int i, string name);
-
-	//Sassan
+    CTimeSeriesSet random_draw(int num);
+    CTimeSeriesSet random_draw_plus_last(int num);
+    CTimeSeriesSet random_draw(vector<int> selected);
+    CTimeSeriesSet random_draw_plus_last(vector<int> selected);
 	bool file_not_found=false;
 	CTimeSeries &operator[](int index);
 	CTimeSeries &operator[](string BTCName);

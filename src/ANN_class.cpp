@@ -19,7 +19,7 @@ ANN_class::~ANN_class()
 
 CNode* ANN_class::node(string id)
 {
-	for (int i = 0; i < Nodes.size(); i++)
+    for (unsigned int i = 0; i < Nodes.size(); i++)
 		if (Nodes[i].GetID() == id)
 			return &Nodes[i];
 	return nullptr;
@@ -27,7 +27,7 @@ CNode* ANN_class::node(string id)
 
 Link* ANN_class::link(string id)
 {
-	for (int i = 0; i < Links.size(); i++)
+    for (unsigned int i = 0; i < Links.size(); i++)
 		if (Links[i].GetID() == id)
 			return &Links[i];
 	return nullptr;
@@ -35,7 +35,7 @@ Link* ANN_class::link(string id)
 
 CNode* ANN_class::node(int layer, int num)
 {
-	for (int i = 0; i < Nodes.size(); i++)
+    for (unsigned int i = 0; i < Nodes.size(); i++)
 	{
 		if (Nodes[i].layerno == layer && Nodes[i].numinlayer == num)
 			return &Nodes[i];
@@ -62,7 +62,7 @@ ANN_class::ANN_class(const ANN_class &m)
 
 ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 {
-	int n_layers = n_nodes.size();
+    unsigned long n_layers = n_nodes.size();
 	layers.resize(n_layers);
 	for (unsigned int i = 0; i < n_layers; i++)
 	{
@@ -124,19 +124,36 @@ double ANN_class::calc_error(CTimeSeriesSet &input,CTimeSeriesSet output)
     return sum;
 }
 
+CVector ANN_class::Gradient_error_direct(CTimeSeriesSet &input,CTimeSeriesSet output)
+{
+    Vector w0 = weights_to_vector();
+    CVector gradient;
+    double base_error = calc_error(input,output);
+    for (unsigned int i=0; i<w0.num; i++)
+    {
+        Vector w = w0;
+        w[i] += derivative_purturbation;
+        ApplyWeights(w);
+        double purturbed_error = calc_error(input,output);
+        gradient.append((purturbed_error-base_error)/derivative_purturbation);
+    }
+    ApplyWeights(w0);
+    return gradient;
+}
+
 vector<double> ANN_class::calc_output(const vector<double> &input)
 {
-	for (int j = 0; j < layers[0].size(); j++)
+    for (unsigned int j = 0; j < layers[0].size(); j++)
 	{
 		layers[0][j]->input_val = input[j];
 		layers[0][j]->out();
 	}
-	for (int i = 1; i < layers.size(); i++)
+    for (unsigned int i = 1; i < layers.size(); i++)
 	{
-		for (int j = 0; j < layers[i].size(); j++)
+        for (unsigned int j = 0; j < layers[i].size(); j++)
 		{
 			double sum = 0;
-			for (int k = 0; k < layers[i][j]->linksto.size(); k++)
+            for (unsigned int k = 0; k < layers[i][j]->linksto.size(); k++)
 			{
 				if (layers[i][j]->linksto[k]->GetSource()==nullptr)
 					sum += layers[i][j]->linksto[k]->GetWeight();
@@ -151,7 +168,7 @@ vector<double> ANN_class::calc_output(const vector<double> &input)
 	}
 
 	vector<double> X(layers[layers.size() - 1].size());
-	for (int i = 0; i < layers[layers.size() - 1].size(); i++)
+    for (unsigned int i = 0; i < layers[layers.size() - 1].size(); i++)
 		X[i] = layers[layers.size() - 1][i]->output_val;
 
 	return X;
@@ -166,7 +183,7 @@ bool ANN_class::applyinput(CBTCSet* _input)
 		return false;
 	}
 	else
-		for (int i = 0; i < layers[0].size(); i++)
+        for (unsigned int i = 0; i < layers[0].size(); i++)
 			layers[0][i]->input = &_input->BTC[i];
 }
 
@@ -187,7 +204,7 @@ bool ANN_class::setparams(const CVector &X)
 CVector ANN_class::weights_to_vector()
 {
 	CVector X;
-	for (int i = 0; i < Links.size(); i++)
+    for (unsigned int i = 0; i < Links.size(); i++)
 		X.append(Links[i].GetWeight());
 	return X;
 }
@@ -252,7 +269,7 @@ bool ANN_class::Append(Link& _link)
 
 bool ANN_class::SetPointers()
 {
-	for (int i = 0; i < Links.size(); i++)
+    for (unsigned int i = 0; i < Links.size(); i++)
 	{
 		if (node(Links[i].SourceID) != nullptr)
 		{
@@ -274,10 +291,24 @@ bool ANN_class::SetPointers()
 
 }
 
+double ANN_class::PerformSingleStepStochasticSteepestDescent(unsigned int batch_size)
+{
+    vector<int> selecteddatapoints = aquiutils::random_vector(0,input->BTC[0].n, batch_size);
+    CTimeSeriesSet sampled_input = input->random_draw_plus_last(selecteddatapoints);
+    CTimeSeriesSet sampled_output = training_data.random_draw_plus_last(selecteddatapoints);
+    CVector weights = weights_to_vector();
+    double err0 = calc_error(sampled_input,sampled_output);
+    CVector gradient = Gradient_error_direct(sampled_input,sampled_output);
+    weights -= learning_rate*gradient;
+    ApplyWeights(weights);
+    double err1 = calc_error(sampled_input,sampled_output);
+    return err1;
+}
+
 CMatrix ANN_class::Gradient(const CVector& input)
 {
 	CMatrix M(num_outputs(), num_weights());
-	for (int i = 0; i < num_layers(); i++)
+    for (unsigned int i = 0; i < num_layers(); i++)
 	{
 
 	}

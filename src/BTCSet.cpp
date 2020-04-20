@@ -1009,6 +1009,57 @@ CTimeSeries CTimeSeriesSet::toBTC()
     return TS;
 }
 
+CTimeSeriesSet CTimeSeriesSet::random_draw(int num)
+{
+    CTimeSeriesSet output(nvars);
+    for (int j=0; j<num; j++)
+    {
+        int i = int(unitrandom()*BTC[0].n);
+        CVector extrac = getrow(i);
+        output.append(j,extrac.vec);
+    }
+    return output;
+}
+
+CTimeSeriesSet CTimeSeriesSet::random_draw_plus_last(int num)
+{
+    CTimeSeriesSet output(nvars);
+    CVector extrac = getrow(BTC[0].n - 1);
+    output.append(0,extrac.vec);
+    for (int j=0; j<num; j++)
+    {
+        int i = int(unitrandom()*BTC[0].n);
+        extrac = getrow(i);
+        output.append(j+1,extrac.vec);
+    }
+    return output;
+}
+
+CTimeSeriesSet CTimeSeriesSet::random_draw(vector<int> selected)
+{
+    CTimeSeriesSet output(nvars);
+    for (int j=0; j<selected.size(); j++)
+    {
+        CVector extrac = getrow(selected[j]);
+        output.append(j,extrac.vec);
+    }
+    return output;
+}
+
+CTimeSeriesSet CTimeSeriesSet::random_draw_plus_last(vector<int> selected)
+{
+    CTimeSeriesSet output(nvars);
+    CVector extrac = getrow(BTC[0].n - 1);
+    output.append(0,extrac.vec);
+    for (int j=0; j<selected.size(); j++)
+    {
+        extrac = getrow(selected[j]);
+        output.append(j+1,extrac.vec);
+    }
+    return output;
+}
+
+
 #ifdef QT_version
 void CTimeSeriesSet::compact(QDataStream &data) const
 {

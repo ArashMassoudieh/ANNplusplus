@@ -15,9 +15,9 @@ public:
 	ANN_class(vector<int> n_nodes, CNode::activationfunc act = CNode::activationfunc::sigmoid);
 	~ANN_class();
 	CNode* node(string id);
-	CNode* node(int i) { return &Nodes[i]; }
+    CNode* node(unsigned int i) { return &Nodes[i]; }
 	Link* link(string id);
-	Link* link(int i) { return &Links[i];}
+    Link* link(unsigned int i) { return &Links[i];}
 	CNode* node(int layer, int num);
 	ANN_class& operator=(const ANN_class &m);
 	ANN_class(const ANN_class &m);
@@ -41,8 +41,11 @@ public:
 	bool SetPointers();
 	CMatrix Gradient(const CVector &input);
 	CMatrix Gradient_direct(const CVector& input);
+    CVector Gradient_error_direct(CTimeSeriesSet &input,CTimeSeriesSet output);
 	CMatrix UpdateDerivatives(const CVector& input);
     ErrorHandler* GetErrorHandler() {return &errorhandler;}
+    void SetLearningRate(const double &value) {learning_rate = value;}
+    double PerformSingleStepStochasticSteepestDescent(unsigned int batch_size);
 private:
 	vector<CNode> Nodes;
 	vector<Link> Links;
@@ -51,5 +54,7 @@ private:
 	void SetLinkNodeParents();
 	double epsilon = 1e-6;
     ErrorHandler errorhandler;
+    double derivative_purturbation = 1e-6;
+    double learning_rate;
 };
 

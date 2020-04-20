@@ -52,6 +52,13 @@ void MainWindow::train()
     ANN.training_data = OBS_BTC;
     CBTC(OBS).writefile("observed.txt");
 
+    ANN.SetLearningRate(0.01);
+    for (int i=0; i<10000; i++)
+    {
+        double err = ANN.PerformSingleStepStochasticSteepestDescent(10);
+        ui->textBrowser->append( QString::fromStdString(ANN.weights_to_vector().toString()) + ", Err = " + QString::number(err) );
+    }
+
     weights = 0;
 
     ANN.setparams(weights);

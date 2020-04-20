@@ -7,6 +7,7 @@
 #include "Vector_arma.h"
 #include "Matrix.h"
 #include "Matrix_arma.h"
+#include "NormalDist.h"
 
 
 #ifdef Q_version
@@ -70,6 +71,7 @@ namespace aquiutils
 	bool And(vector<bool> x);
 	double max(vector<double> x);
 	int max(vector<int> x);
+    vector<int> random_vector(int min_range, int max_range, unsigned int number);
 
 #ifdef Q_version
     QString vec2Qstring(vector<double> &v);
