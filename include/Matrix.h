@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
-#ifndef Matrix
-#define Matrix
+#ifndef _MATRIX
+#define _MATRIX
 
 
 #include <vector>

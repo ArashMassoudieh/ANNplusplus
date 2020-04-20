@@ -5,7 +5,7 @@
 #include "Vector.h"
 #include "Matrix.h"
 #include "BTCSet.h"
-
+#include "ErrorHandler.h"
 
 using namespace std;
 class ANN_class
@@ -22,6 +22,7 @@ public:
 	ANN_class& operator=(const ANN_class &m);
 	ANN_class(const ANN_class &m);
 	vector<double> calc_output(const vector<double> &input);
+    double calc_error(CTimeSeriesSet &input,CTimeSeriesSet output);
 	CVector calc_output_v(const CVector &weights);
 	CBTCSet *input;
 	bool applyinput(CBTCSet* _input);
@@ -41,6 +42,7 @@ public:
 	CMatrix Gradient(const CVector &input);
 	CMatrix Gradient_direct(const CVector& input);
 	CMatrix UpdateDerivatives(const CVector& input);
+    ErrorHandler* GetErrorHandler() {return &errorhandler;}
 private:
 	vector<CNode> Nodes;
 	vector<Link> Links;
@@ -48,6 +50,6 @@ private:
 	bool SetNodeDerivates(const CVector &input);
 	void SetLinkNodeParents();
 	double epsilon = 1e-6;
-	
+    ErrorHandler errorhandler;
 };
 

@@ -27,8 +27,8 @@ CVector_arma::CVector_arma(int n)
 
 CVector_arma::CVector_arma(const vector<double> a, int n)
 {
-	num = n;
-	vect = a;
+    num = n;
+    vect = a;
 }
 
 CVector_arma::CVector_arma(const double x, int n)
