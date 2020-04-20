@@ -14,3 +14,5 @@ x64/Debug/
 x64/Release/
 
 ANNpp/ANNpp\.layout
+
+*.o

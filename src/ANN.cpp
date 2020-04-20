@@ -1,3 +1,4 @@
+
 // ANN.cpp : Defines the entry point for the console application.
 //
 
@@ -33,11 +34,13 @@ int main()
 		weights.append(1);
 		//weights.append(0.2*i*pow(-1,i));
 
-	
+
 	ANN.ApplyWeights(weights);
 	vector<double> out = ANN.calc_output(input);
 	CMatrix X = ANN.UpdateDerivatives(input);
 	CMatrix X1 = ANN.Gradient_direct(input);
+	X.writetofile("Jacobian.txt");
+	X1.writetofile("Jacobian_direct.txt");
 	CBTCSet input_ts(1);
 	for (int i = 0; i < 200; i++)
 		input_ts.BTC[0].append((i-100.0)/100.0);
