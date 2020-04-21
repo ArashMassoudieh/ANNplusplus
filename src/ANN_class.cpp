@@ -4,6 +4,8 @@
 #include <vector>
 
 
+
+
 using namespace std;
 
 
@@ -106,25 +108,27 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 
 }
 
-double ANN_class::calc_error(CTimeSeriesSet &input,CTimeSeriesSet output)
+
+double ANN_class::calc_error(CTimeSeriesSet *input,CTimeSeriesSet *output)
 {
     double sum=0;
-    if (input.BTC[0].n != output.BTC[0].n)
+    if (input->BTC[0].n != output->BTC[0].n)
     {
-        errorhandler.AppendError("calc_error",1001,"The number of data points in the input [" + aquiutils::numbertostring(input.BTC[0].n) + "] is not equal to the number of datapoints in the output dataset [" + aquiutils::numbertostring(output.BTC[0].n));
+        errorhandler.AppendError(string("calc_error"),1001,"The number of data points in the input [" + aquiutils::numbertostring(input->BTC[0].n) + "] is not equal to the number of datapoints in the output dataset [" + aquiutils::numbertostring(output->BTC[0].n));
         return 0;
     }
-    for (int i=0; i<input.BTC[0].n; i++)
+    for (int i=0; i<input->BTC[0].n; i++)
     {
-        vector<double> input_vec = input.getrow(i);
+        vector<double> input_vec = input->getrow(i);
         CVector predicted = CVector(calc_output(input_vec));
-        CVector measured = CVector(output.getrow(i));
+        CVector measured = CVector(output->getrow(i));
         sum += (predicted-measured).norm2();
     }
     return sum;
 }
 
-CVector ANN_class::Gradient_error_direct(CTimeSeriesSet &input,CTimeSeriesSet output)
+
+CVector ANN_class::Gradient_error_direct(CTimeSeriesSet *input,CTimeSeriesSet *output)
 {
     Vector w0 = weights_to_vector();
     CVector gradient;
@@ -179,7 +183,7 @@ bool ANN_class::applyinput(CBTCSet* _input)
 {
 	if (layers[0].size() != _input->nvars)
 	{
-		cout << "Number of inputs should be equal to the number of nodes in the first layer!" << endl;
+        errorhandler.AppendError("applyinput",1002, "Number of inputs should be equal to the number of nodes in the first layer!");
 		return false;
 	}
 	else
@@ -191,7 +195,7 @@ bool ANN_class::setparams(const CVector &X)
 {
 	if (X.num != Links.size())
 	{
-		cout << "Vector size must be the same as the number of links!" << endl;
+        errorhandler.AppendError("setparams",1003, "Vector size must be the same as the number of links!");
 		return false;
 	}
 
@@ -211,14 +215,14 @@ CVector ANN_class::weights_to_vector()
 
 bool ANN_class::ApplyWeights(const CVector &weights)
 {
-	if (weights.num != Links.size())
+    if (weights.num != int(Links.size()))
 	{
-		cout << "The size of the weight vector is different than the number of links" << endl;
+        errorhandler.AppendError("ApplyWeights",1004, "The size of the weight vector is different than the number of links");
 		return false;
 	}
 	else
 	{
-		for (int i = 0; i < Links.size(); i++)
+        for (unsigned int i = 0; i < Links.size(); i++)
 			Links[i].SetWeight(weights[i]);
 		return true;
 	}
@@ -241,7 +245,7 @@ bool ANN_class::Append(CNode& _node)
 {
 	if (node(_node.GetID()) != nullptr)
 	{
-		cout << "Node " + _node.GetID() + " Already exists!" << endl;
+        errorhandler.AppendError("Append",1005, "Node " + _node.GetID() + " Already exists!");
 		return false;
 	}
 	else
@@ -256,7 +260,7 @@ bool ANN_class::Append(Link& _link)
 {
 	if (link(_link.GetID()) != nullptr)
 	{
-		cout << "Link " + _link.GetID() + " Already exists!" << endl;
+        errorhandler.AppendError("Append",1006, "Link " + _link.GetID() + " Already exists!");
 		return false;
 	}
 	else
@@ -297,13 +301,25 @@ double ANN_class::PerformSingleStepStochasticSteepestDescent(unsigned int batch_
     CTimeSeriesSet sampled_input = input->random_draw_plus_last(selecteddatapoints);
     CTimeSeriesSet sampled_output = training_data.random_draw_plus_last(selecteddatapoints);
     CVector weights = weights_to_vector();
-    double err0 = calc_error(sampled_input,sampled_output);
-    CVector gradient = Gradient_error_direct(sampled_input,sampled_output);
+    double err0 = calc_error(&sampled_input,&sampled_output);
+    CVector gradient = Gradient_error_direct(&sampled_input,&sampled_output);
     weights -= learning_rate*gradient;
     ApplyWeights(weights);
-    double err1 = calc_error(sampled_input,sampled_output);
+    double err1 = calc_error(&sampled_input,&sampled_output);
     return err1;
 }
+
+double ANN_class::PerformSingleStepSteepestDescent()
+{
+    CVector weights = weights_to_vector();
+    double err0 = calc_error(input,&training_data);
+    CVector gradient = Gradient_error_direct(input,&training_data);
+    weights -= learning_rate*gradient/gradient.norm2();
+    ApplyWeights(weights);
+    double err1 = calc_error(input,&training_data);
+    return err1;
+}
+
 
 CMatrix ANN_class::Gradient(const CVector& input)
 {
@@ -354,7 +370,7 @@ bool ANN_class::SetNodeDerivates(const CVector& input)
 {
 	if (input.num != num_inputs())
 	{
-        cout << "Input vector size (" + aquiutils::numbertostring(input.num) + ")  is inconsistent with the number of nodes in the input layer (" + aquiutils::numbertostring(num_inputs()) + ")" << endl;
+        errorhandler.AppendError("SetNodeDerivates", 1007, "Input vector size (" + aquiutils::numbertostring(input.num) + ")  is inconsistent with the number of nodes in the input layer (" + aquiutils::numbertostring(num_inputs()) + ")");
 		return false; 
 	}
 	else
@@ -369,9 +385,9 @@ bool ANN_class::SetNodeDerivates(const CVector& input)
 
 void ANN_class::SetLinkNodeParents()
 {
-	for (int i = 0; i < Nodes.size(); i++)
+    for (unsigned int i = 0; i < Nodes.size(); i++)
 		Nodes[i].SetParent(this);
-	for (int i = 0; i < Links.size(); i++)
+    for (unsigned int i = 0; i < Links.size(); i++)
 		Links[i].SetParent(this);
 }
 

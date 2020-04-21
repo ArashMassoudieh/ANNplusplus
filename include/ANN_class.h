@@ -1,5 +1,12 @@
 #pragma once
 #include <vector>
+
+//#ifdef Q_version
+//    #include <QDebug>
+//    #include <QString>
+//    #define cout qDebug()
+//    #define string QString
+//#endif
 #include "Node.h"
 #include "Link.h"
 #include "Vector.h"
@@ -22,8 +29,8 @@ public:
 	ANN_class& operator=(const ANN_class &m);
 	ANN_class(const ANN_class &m);
 	vector<double> calc_output(const vector<double> &input);
-    double calc_error(CTimeSeriesSet &input,CTimeSeriesSet output);
-	CVector calc_output_v(const CVector &weights);
+    double calc_error(CTimeSeriesSet *input,CTimeSeriesSet *output);
+    CVector calc_output_v(const CVector &weights);
 	CBTCSet *input;
 	bool applyinput(CBTCSet* _input);
 	bool setparams(const CVector &X);
@@ -41,11 +48,12 @@ public:
 	bool SetPointers();
 	CMatrix Gradient(const CVector &input);
 	CMatrix Gradient_direct(const CVector& input);
-    CVector Gradient_error_direct(CTimeSeriesSet &input,CTimeSeriesSet output);
+    CVector Gradient_error_direct(CTimeSeriesSet *input,CTimeSeriesSet *output);
 	CMatrix UpdateDerivatives(const CVector& input);
     ErrorHandler* GetErrorHandler() {return &errorhandler;}
     void SetLearningRate(const double &value) {learning_rate = value;}
     double PerformSingleStepStochasticSteepestDescent(unsigned int batch_size);
+    double PerformSingleStepSteepestDescent();
 private:
 	vector<CNode> Nodes;
 	vector<Link> Links;

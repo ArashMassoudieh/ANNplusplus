@@ -65,7 +65,7 @@ namespace aquiutils
 	double Heavyside(double x);
 	double Pos(double x);
 	string numbertostring(double x);
-	string tail(std::string const& source, size_t const length);
+    string tail(string const& source, size_t const length);
 	string numbertostring(int x);
 	string tabs(int i);
 	bool And(vector<bool> x);

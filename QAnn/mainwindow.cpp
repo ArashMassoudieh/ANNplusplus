@@ -44,19 +44,22 @@ void MainWindow::train()
         input_ts.BTC[0].append((i-100.0)/100.0);
 
     ANN.input = &input_ts;
-
     CVector OBS = ANN.calc_output_v(weights);
     CBTCSet OBS_BTC;
     OBS_BTC.append(CTimeSeries(OBS));
 
     ANN.training_data = OBS_BTC;
+    weights = 0.2;
+    ANN.ApplyWeights(weights);
+
     CBTC(OBS).writefile("observed.txt");
 
     ANN.SetLearningRate(0.01);
-    for (int i=0; i<10000; i++)
+    for (int i=0; i<1000; i++)
     {
-        double err = ANN.PerformSingleStepStochasticSteepestDescent(10);
-        ui->textBrowser->append( QString::fromStdString(ANN.weights_to_vector().toString()) + ", Err = " + QString::number(err) );
+        double err = ANN.PerformSingleStepStochasticSteepestDescent(20);
+        double errall = ANN.calc_error(&input_ts,&ANN.training_data);
+        ui->textBrowser->append( QString::fromStdString(ANN.weights_to_vector().toString()) + ", Err = " + QString::number(err) + ", Err All = " + QString::number(errall));
     }
 
     weights = 0;
