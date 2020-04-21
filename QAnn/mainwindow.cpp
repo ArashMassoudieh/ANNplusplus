@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "utils.h"
 #include "ML.h"
+#include "plotter.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -41,7 +42,7 @@ void MainWindow::train()
     CMatrix X1 = ANN.Gradient_direct(input);
     CBTCSet input_ts(1);
     for (int i = 0; i < 200; i++)
-        input_ts.BTC[0].append((i-100.0)/100.0);
+        input_ts.BTC[0].append(i,(i-100.0)/100.0);
 
     ANN.input = &input_ts;
     CVector OBS = ANN.calc_output_v(weights);
@@ -55,6 +56,7 @@ void MainWindow::train()
     CBTC(OBS).writefile("observed.txt");
 
     ANN.SetLearningRate(0.01);
+    Plotter *plotter = new Plotter(this);
     for (int i=0; i<1000; i++)
     {
         double err = ANN.PerformSingleStepStochasticSteepestDescent(20);
@@ -62,6 +64,10 @@ void MainWindow::train()
         ui->textBrowser->append( QString::fromStdString(ANN.weights_to_vector().toString()) + ", Err = " + QString::number(err) + ", Err All = " + QString::number(errall));
     }
 
+    CTimeSeries output=ANN.output();
+    plotter->AddData(output);
+    plotter->AddData(ANN.training_data.BTC[0]);
+    plotter->show();
     weights = 0;
 
     ANN.setparams(weights);

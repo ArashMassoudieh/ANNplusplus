@@ -1,10 +1,11 @@
-QT       += core gui
+QT       += core gui printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++14
 
 INCLUDEPATH += ../include
+INCLUDEPATH += ../../qcustomplot/
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -18,6 +19,7 @@ DEFINES += Q_version
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ../../qcustomplot/qcustomplot.cpp \
     ../src/ANN_class.cpp \
     ../src/BTC.cpp \
     ../src/BTCSet.cpp \
@@ -33,11 +35,13 @@ SOURCES += \
     ../src/Vector.cpp \
     ../src/Vector_arma.cpp \
     ../src/errorhandler.cpp \
+    ../src/plotter.cpp \
     ../src/utils.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
+    ../../qcustomplot/qcustomplot.h \
     ../include/ANN_class.h \
     ../include/BTC.h \
     ../include/BTCSet.h \
@@ -53,11 +57,13 @@ HEADERS += \
     ../include/StringOP.h \
     ../include/Vector.h \
     ../include/Vector_arma.h \
+    ../include/plotter.h \
     ../include/utils.h \
     mainwindow.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    plotter.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
