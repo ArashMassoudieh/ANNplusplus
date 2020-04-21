@@ -41,7 +41,7 @@ public:
 	int num_outputs();
 	int num_weights();
 	CBTCSet training_data;
-	CBTC output();
+    CBTCSet output();
 	CVector train(const double &tol);
 	bool Append(CNode& node);
 	bool Append(Link& link);
@@ -54,6 +54,8 @@ public:
     void SetLearningRate(const double &value) {learning_rate = value;}
     double PerformSingleStepStochasticSteepestDescent(unsigned int batch_size);
     double PerformSingleStepSteepestDescent();
+    CTimeSeries *ErrorSeries() {return &error_series;}
+    void AppendErrVal(const double &d) {error_series.append(error_series.n,d);}
 private:
 	vector<CNode> Nodes;
 	vector<Link> Links;
@@ -64,5 +66,6 @@ private:
     ErrorHandler errorhandler;
     double derivative_purturbation = 1e-6;
     double learning_rate;
+    CTimeSeries error_series;
 };
 

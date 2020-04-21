@@ -45,16 +45,18 @@ public:
             Plotter->setObjectName(QStringLiteral("Plotter"));
         Plotter->resize(783, 547);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-        sizePolicy.setHorizontalStretch(20);
-        sizePolicy.setVerticalStretch(20);
+        sizePolicy.setHorizontalStretch(100);
+        sizePolicy.setVerticalStretch(100);
         sizePolicy.setHeightForWidth(Plotter->sizePolicy().hasHeightForWidth());
         Plotter->setSizePolicy(sizePolicy);
+        Plotter->setMinimumSize(QSize(100, 100));
         actionAdd_Data_File = new QAction(Plotter);
         actionAdd_Data_File->setObjectName(QStringLiteral("actionAdd_Data_File"));
         actionLegend = new QAction(Plotter);
         actionLegend->setObjectName(QStringLiteral("actionLegend"));
         centralWidget = new QWidget(Plotter);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        centralWidget->setGeometry(QRect(0, 0, 100, 30));
         horizontalLayout = new QHBoxLayout(centralWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -62,6 +64,7 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
         verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_2);
@@ -76,13 +79,16 @@ public:
         Plotter->setMenuBar(menuBar);
         mainToolBar = new QToolBar(Plotter);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        Plotter->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        mainToolBar->setGeometry(QRect(0, 0, 8, 17));
+        Plotter->addToolBar(mainToolBar);
         statusBar = new QStatusBar(Plotter);
         statusBar->setObjectName(QStringLiteral("statusBar"));
+        statusBar->setGeometry(QRect(0, 0, 3, 22));
         Plotter->setStatusBar(statusBar);
         toolBar = new QToolBar(Plotter);
         toolBar->setObjectName(QStringLiteral("toolBar"));
-        Plotter->addToolBar(Qt::TopToolBarArea, toolBar);
+        toolBar->setGeometry(QRect(0, 0, 73, 32));
+        Plotter->addToolBar(toolBar);
 
         toolBar->addAction(actionLegend);
 

@@ -37,8 +37,10 @@ SOURCES += \
     ../src/errorhandler.cpp \
     ../src/plotter.cpp \
     ../src/utils.cpp \
+    customplotwidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    multiplotwindow.cpp
 
 HEADERS += \
     ../../qcustomplot/qcustomplot.h \
@@ -59,11 +61,16 @@ HEADERS += \
     ../include/Vector_arma.h \
     ../include/plotter.h \
     ../include/utils.h \
-    mainwindow.h
+    customplotwidget.h \
+    mainwindow.h \
+    multiplotwindow.h
 
 FORMS += \
+    customplotwidget.ui \
     mainwindow.ui \
-    plotter.ui
+    multiplotwindow.ui \
+    plotter.ui \
+    plotterwidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

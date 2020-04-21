@@ -302,6 +302,7 @@ double ANN_class::PerformSingleStepStochasticSteepestDescent(unsigned int batch_
     CTimeSeriesSet sampled_output = training_data.random_draw_plus_last(selecteddatapoints);
     CVector weights = weights_to_vector();
     double err0 = calc_error(&sampled_input,&sampled_output);
+    AppendErrVal(err0);
     CVector gradient = Gradient_error_direct(&sampled_input,&sampled_output);
     weights -= learning_rate*gradient;
     ApplyWeights(weights);
@@ -313,6 +314,7 @@ double ANN_class::PerformSingleStepSteepestDescent()
 {
     CVector weights = weights_to_vector();
     double err0 = calc_error(input,&training_data);
+    AppendErrVal(err0);
     CVector gradient = Gradient_error_direct(input,&training_data);
     weights -= learning_rate*gradient/gradient.norm2();
     ApplyWeights(weights);
@@ -423,16 +425,15 @@ int ANN_class::num_weights()
 }
 
 
-CBTC ANN_class::output()
+CBTCSet ANN_class::output()
 {
-	CBTC BTC(num_inputs());
+    CBTCSet outts(num_outputs());
 	for (int i = 0; i < input->BTC[0].n; i++)
 	{
 		CVector out(calc_output(input->getrow(i)));
-		for (int j = 0; j < out.num; j++)
-			BTC.append(input->BTC[0].t[i], out.vec[j]);
+        outts.append(input->BTC[0].t[i], out.vec);
 	}
 
-	return BTC;
+    return outts;
 
 }

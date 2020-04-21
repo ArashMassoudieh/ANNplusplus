@@ -68,10 +68,14 @@ SOURCES       = ../../qcustomplot/qcustomplot.cpp \
 		../src/errorhandler.cpp \
 		../src/plotter.cpp \
 		../src/utils.cpp \
+		../QAnn/customplotwidget.cpp \
 		../QAnn/main.cpp \
-		../QAnn/mainwindow.cpp moc_qcustomplot.cpp \
+		../QAnn/mainwindow.cpp \
+		../QAnn/multiplotwindow.cpp moc_qcustomplot.cpp \
 		moc_plotter.cpp \
-		moc_mainwindow.cpp
+		moc_customplotwidget.cpp \
+		moc_mainwindow.cpp \
+		moc_multiplotwindow.cpp
 OBJECTS       = qcustomplot.o \
 		ANN_class.o \
 		BTC.o \
@@ -90,11 +94,15 @@ OBJECTS       = qcustomplot.o \
 		errorhandler.o \
 		plotter.o \
 		utils.o \
+		customplotwidget.o \
 		main.o \
 		mainwindow.o \
+		multiplotwindow.o \
 		moc_qcustomplot.o \
 		moc_plotter.o \
-		moc_mainwindow.o
+		moc_customplotwidget.o \
+		moc_mainwindow.o \
+		moc_multiplotwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -187,7 +195,9 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../include/Vector_arma.h \
 		../include/plotter.h \
 		../include/utils.h \
-		../QAnn/mainwindow.h ../../qcustomplot/qcustomplot.cpp \
+		../QAnn/customplotwidget.h \
+		../QAnn/mainwindow.h \
+		../QAnn/multiplotwindow.h ../../qcustomplot/qcustomplot.cpp \
 		../src/ANN_class.cpp \
 		../src/BTC.cpp \
 		../src/BTCSet.cpp \
@@ -205,8 +215,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../src/errorhandler.cpp \
 		../src/plotter.cpp \
 		../src/utils.cpp \
+		../QAnn/customplotwidget.cpp \
 		../QAnn/main.cpp \
-		../QAnn/mainwindow.cpp
+		../QAnn/mainwindow.cpp \
+		../QAnn/multiplotwindow.cpp
 QMAKE_TARGET  = QAnn
 DESTDIR       = 
 TARGET        = QAnn
@@ -215,7 +227,7 @@ TARGET        = QAnn
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_plotter.h $(OBJECTS)  
+$(TARGET): ui_customplotwidget.h ui_mainwindow.h ui_multiplotwindow.h ui_plotter.h ui_plotterwidget.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../QAnn/QAnn.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -392,9 +404,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.h ../include/ANN_class.h ../include/BTC.h ../include/BTCSet.h ../include/DistributionNUnif.h ../include/ErrorHandler.h ../include/Link.h ../include/ML.h ../include/Matrix.h ../include/Matrix_arma.h ../include/Node.h ../include/NormalDist.h ../include/QuickSort.h ../include/StringOP.h ../include/Vector.h ../include/Vector_arma.h ../include/plotter.h ../include/utils.h ../QAnn/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.cpp ../src/ANN_class.cpp ../src/BTC.cpp ../src/BTCSet.cpp ../src/DistributionNUnif.cpp ../src/Link.cpp ../src/ML.cpp ../src/Matrix.cpp ../src/Matrix_arma.cpp ../src/Node.cpp ../src/NormalDist.cpp ../src/QuickSort.cpp ../src/StringOP.cpp ../src/Vector.cpp ../src/Vector_arma.cpp ../src/errorhandler.cpp ../src/plotter.cpp ../src/utils.cpp ../QAnn/main.cpp ../QAnn/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../QAnn/mainwindow.ui ../QAnn/plotter.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.h ../include/ANN_class.h ../include/BTC.h ../include/BTCSet.h ../include/DistributionNUnif.h ../include/ErrorHandler.h ../include/Link.h ../include/ML.h ../include/Matrix.h ../include/Matrix_arma.h ../include/Node.h ../include/NormalDist.h ../include/QuickSort.h ../include/StringOP.h ../include/Vector.h ../include/Vector_arma.h ../include/plotter.h ../include/utils.h ../QAnn/customplotwidget.h ../QAnn/mainwindow.h ../QAnn/multiplotwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.cpp ../src/ANN_class.cpp ../src/BTC.cpp ../src/BTCSet.cpp ../src/DistributionNUnif.cpp ../src/Link.cpp ../src/ML.cpp ../src/Matrix.cpp ../src/Matrix_arma.cpp ../src/Node.cpp ../src/NormalDist.cpp ../src/QuickSort.cpp ../src/StringOP.cpp ../src/Vector.cpp ../src/Vector_arma.cpp ../src/errorhandler.cpp ../src/plotter.cpp ../src/utils.cpp ../QAnn/customplotwidget.cpp ../QAnn/main.cpp ../QAnn/mainwindow.cpp ../QAnn/multiplotwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../QAnn/customplotwidget.ui ../QAnn/mainwindow.ui ../QAnn/multiplotwindow.ui ../QAnn/plotter.ui ../QAnn/plotterwidget.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -426,9 +438,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1y -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_qcustomplot.cpp moc_plotter.cpp moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_qcustomplot.cpp moc_plotter.cpp moc_customplotwidget.cpp moc_mainwindow.cpp moc_multiplotwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_qcustomplot.cpp moc_plotter.cpp moc_mainwindow.cpp
+	-$(DEL_FILE) moc_qcustomplot.cpp moc_plotter.cpp moc_customplotwidget.cpp moc_mainwindow.cpp moc_multiplotwindow.cpp
 moc_qcustomplot.cpp: ../../qcustomplot/qcustomplot.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -448,6 +460,20 @@ moc_plotter.cpp: ../include/BTCSet.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/arash/Projects/ANNplusplus/QAnn -I/home/arash/Projects/ANNplusplus/include -I/home/arash/Projects/qcustomplot -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../include/plotter.h -o moc_plotter.cpp
 
+moc_customplotwidget.cpp: ../include/BTCSet.h \
+		../include/BTC.h \
+		../include/QuickSort.h \
+		../include/NormalDist.h \
+		../include/Vector.h \
+		../include/Matrix.h \
+		../include/Matrix_arma.h \
+		../include/Vector_arma.h \
+		../../qcustomplot/qcustomplot.h \
+		../QAnn/customplotwidget.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/arash/Projects/ANNplusplus/QAnn -I/home/arash/Projects/ANNplusplus/include -I/home/arash/Projects/qcustomplot -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../QAnn/customplotwidget.h -o moc_customplotwidget.cpp
+
 moc_mainwindow.cpp: ../include/ANN_class.h \
 		../include/Node.h \
 		../include/BTC.h \
@@ -465,18 +491,35 @@ moc_mainwindow.cpp: ../include/ANN_class.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/arash/Projects/ANNplusplus/QAnn -I/home/arash/Projects/ANNplusplus/include -I/home/arash/Projects/qcustomplot -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../QAnn/mainwindow.h -o moc_mainwindow.cpp
 
+moc_multiplotwindow.cpp: ../QAnn/multiplotwindow.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/arash/Projects/ANNplusplus/QAnn -I/home/arash/Projects/ANNplusplus/include -I/home/arash/Projects/qcustomplot -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtPrintSupport -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../QAnn/multiplotwindow.h -o moc_multiplotwindow.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_plotter.h
+compiler_uic_make_all: ui_customplotwidget.h ui_mainwindow.h ui_multiplotwindow.h ui_plotter.h ui_plotterwidget.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_plotter.h
+	-$(DEL_FILE) ui_customplotwidget.h ui_mainwindow.h ui_multiplotwindow.h ui_plotter.h ui_plotterwidget.h
+ui_customplotwidget.h: ../QAnn/customplotwidget.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../QAnn/customplotwidget.ui -o ui_customplotwidget.h
+
 ui_mainwindow.h: ../QAnn/mainwindow.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../QAnn/mainwindow.ui -o ui_mainwindow.h
 
+ui_multiplotwindow.h: ../QAnn/multiplotwindow.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../QAnn/multiplotwindow.ui -o ui_multiplotwindow.h
+
 ui_plotter.h: ../QAnn/plotter.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../QAnn/plotter.ui -o ui_plotter.h
+
+ui_plotterwidget.h: ../QAnn/plotterwidget.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../QAnn/plotterwidget.ui -o ui_plotterwidget.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -648,6 +691,19 @@ utils.o: ../src/utils.cpp ../include/utils.h \
 		../include/NormalDist.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o utils.o ../src/utils.cpp
 
+customplotwidget.o: ../QAnn/customplotwidget.cpp ../QAnn/customplotwidget.h \
+		../include/BTCSet.h \
+		../include/BTC.h \
+		../include/QuickSort.h \
+		../include/NormalDist.h \
+		../include/Vector.h \
+		../include/Matrix.h \
+		../include/Matrix_arma.h \
+		../include/Vector_arma.h \
+		../../qcustomplot/qcustomplot.h \
+		ui_customplotwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o customplotwidget.o ../QAnn/customplotwidget.cpp
+
 main.o: ../QAnn/main.cpp ../QAnn/mainwindow.h \
 		../include/ANN_class.h \
 		../include/Node.h \
@@ -683,14 +739,24 @@ mainwindow.o: ../QAnn/mainwindow.cpp ../QAnn/mainwindow.h \
 		../../qcustomplot/qcustomplot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QAnn/mainwindow.cpp
 
+multiplotwindow.o: ../QAnn/multiplotwindow.cpp ../QAnn/multiplotwindow.h \
+		ui_multiplotwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o multiplotwindow.o ../QAnn/multiplotwindow.cpp
+
 moc_qcustomplot.o: moc_qcustomplot.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcustomplot.o moc_qcustomplot.cpp
 
 moc_plotter.o: moc_plotter.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_plotter.o moc_plotter.cpp
 
+moc_customplotwidget.o: moc_customplotwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_customplotwidget.o moc_customplotwidget.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_multiplotwindow.o: moc_multiplotwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_multiplotwindow.o moc_multiplotwindow.cpp
 
 ####### Install
 

@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "ML.h"
 #include "plotter.h"
+#include "multiplotwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,7 +25,7 @@ void MainWindow::train()
     layers[0] = 1;
     layers[1] = 1;
     layers[2] = 1;
-    ANN_class ANN(layers,CNode::activationfunc::one);
+    ANN_class ANN(layers,CNode::activationfunc::sigmoid);
     vector<double> input(1);
     input[0] = 1;
 
@@ -59,16 +60,21 @@ void MainWindow::train()
     Plotter *plotter = new Plotter(this);
     for (int i=0; i<1000; i++)
     {
-        double err = ANN.PerformSingleStepStochasticSteepestDescent(20);
+        double err = ANN.PerformSingleStepSteepestDescent();
         double errall = ANN.calc_error(&input_ts,&ANN.training_data);
         ui->textBrowser->append( QString::fromStdString(ANN.weights_to_vector().toString()) + ", Err = " + QString::number(err) + ", Err All = " + QString::number(errall));
     }
 
-    CTimeSeries output=ANN.output();
-    plotter->AddData(output);
-    plotter->AddData(ANN.training_data.BTC[0]);
+    CTimeSeriesSet output=ANN.output();
+    output.setname(0,"predicted");
+    ANN.training_data.setname(0,"mesured");
+    plotter->AddData(*ANN.ErrorSeries());
+    //plotter->AddData(output.BTC[0]);
+    //plotter->AddData(ANN.training_data.BTC[0]);
     plotter->show();
     weights = 0;
+    MultiPlotWindow *multiplot = new MultiPlotWindow(4,this);
+    multiplot->show();
 
     ANN.setparams(weights);
 
