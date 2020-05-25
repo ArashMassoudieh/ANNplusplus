@@ -6,6 +6,7 @@ CONFIG += c++14
 
 INCLUDEPATH += ../include
 INCLUDEPATH += ../../qcustomplot/
+INCLUDEPATH += ../../tiny-dnn/tiny_dnn/
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -13,6 +14,7 @@ INCLUDEPATH += ../../qcustomplot/
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += Q_version
+DEFINES +=CNN_NO_SERIALIZATION
 # You can also make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -40,7 +42,8 @@ SOURCES += \
     customplotwidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    multiplotwindow.cpp
+    multiplotwindow.cpp \
+    ../src/tinydnnwrapper.cpp
 
 HEADERS += \
     ../../qcustomplot/qcustomplot.h \
@@ -63,7 +66,8 @@ HEADERS += \
     ../include/utils.h \
     customplotwidget.h \
     mainwindow.h \
-    multiplotwindow.h
+    multiplotwindow.h \
+    ../include/tinydnnwrapper.h
 
 FORMS += \
     customplotwidget.ui \

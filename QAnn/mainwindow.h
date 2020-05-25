@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "ANN_class.h"
+#include "tinydnnwrapper.h"
 
 #include <QMainWindow>
 
@@ -20,5 +21,6 @@ private:
     Ui::MainWindow *ui;
     ANN_class ANN;
     void train();
+    void traintiny();
 };
 #endif // MAINWINDOW_H

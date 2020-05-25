@@ -10,13 +10,20 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    train();
+    traintiny();
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::traintiny()
+{
+    tinydnnwrapper tdn;
+
+
 }
 
 void MainWindow::train()
