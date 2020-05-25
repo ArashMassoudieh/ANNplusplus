@@ -6,7 +6,7 @@ CONFIG += c++14
 
 INCLUDEPATH += ../include
 INCLUDEPATH += ../../qcustomplot/
-INCLUDEPATH += ../../tiny-dnn/tiny_dnn/
+INCLUDEPATH += ../../tiny-dnn/
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

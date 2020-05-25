@@ -22,7 +22,19 @@ MainWindow::~MainWindow()
 void MainWindow::traintiny()
 {
     tinydnnwrapper tdn;
-
+    vector<unsigned int> config = {1,10,10,1};
+    tdn.createnetwork(config);
+    CTimeSeriesSet Sininput(1);
+    CTimeSeriesSet Sintarget(1);
+    for (double x = -3.1415; x<3.1415; x+=0.1f)
+    {
+        Sininput.BTC[0].append(x,x);
+        Sintarget.BTC[0].append(x,sin(x));
+    }
+    tdn.SetInput(Sininput);
+    tdn.SetTarge(Sintarget);
+    tdn.train();
+    CTimeSeriesSet Predicted=tdn.predicted();
 
 }
 
