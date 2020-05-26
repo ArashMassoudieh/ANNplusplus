@@ -43,7 +43,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     multiplotwindow.cpp \
-    ../src/tinydnnwrapper.cpp
+    ../src/tinydnnwrapper.cpp \
+    runtimewindow.cpp
 
 HEADERS += \
     ../../qcustomplot/qcustomplot.h \
@@ -67,14 +68,17 @@ HEADERS += \
     customplotwidget.h \
     mainwindow.h \
     multiplotwindow.h \
-    ../include/tinydnnwrapper.h
+    ../include/tinydnnwrapper.h \
+    ../include/network.hpp \
+    runtimewindow.h
 
 FORMS += \
     customplotwidget.ui \
     mainwindow.ui \
     multiplotwindow.ui \
     plotter.ui \
-    plotterwidget.ui
+    plotterwidget.ui \
+    runtimewindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -4,6 +4,7 @@
 #include "ML.h"
 #include "plotter.h"
 #include "multiplotwindow.h"
+#include "runtimewindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,6 +22,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::traintiny()
 {
+    RunTimeWindow *rtw = new RunTimeWindow(this);
+    rtw->show();
     tinydnnwrapper tdn;
     vector<unsigned int> config = {1,10,10,1};
     tdn.createnetwork(config);
@@ -33,7 +36,7 @@ void MainWindow::traintiny()
     }
     tdn.SetInput(Sininput);
     tdn.SetTarge(Sintarget);
-    tdn.train();
+    tdn.train(rtw);
     CTimeSeriesSet Predicted=tdn.predicted();
 
 }

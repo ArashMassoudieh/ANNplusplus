@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RunTimeWindow</class>
+ <widget class="QDialog" name="RunTimeWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>617</width>
+    <height>440</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Running Status</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1">
+     <item>
+      <widget class="QTextBrowser" name="textBrowser"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QProgressBar" name="optprogressBar">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButtonStop">
+       <property name="text">
+        <string>Stop Simulation</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ShowDetails">
+       <property name="text">
+        <string>Show details</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTextBrowser" name="textBrowserdetails"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

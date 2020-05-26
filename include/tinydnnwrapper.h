@@ -1,9 +1,14 @@
 #ifndef TINYDNNWRAPPER_H
 #define TINYDNNWRAPPER_H
 
+
+
 #include "tiny_dnn/tiny_dnn.h"
 #include <string>
 #include "BTCSet.h"
+#include "tiny_dnn/util/util.h"
+
+class RunTimeWindow;
 
 using namespace std;
 
@@ -24,7 +29,7 @@ public:
     std::vector<tiny_dnn::vec_t> Input;
     std::vector<tiny_dnn::vec_t> Output;
     double loss();
-    bool train();
+    bool train(RunTimeWindow *rtw=nullptr);
     CTimeSeriesSet predicted();
     bool batchtrain(const std::vector<tiny_dnn::tensor_t> &inputs,
                                     const std::vector<tiny_dnn::tensor_t> &desired_outputs,

@@ -1,6 +1,6 @@
 #include "tinydnnwrapper.h"
 #include <iostream>
-
+#include "runtimewindow.h"
 
 using namespace std;
 tinydnnwrapper::tinydnnwrapper()
@@ -91,9 +91,22 @@ double tinydnnwrapper::loss()
     return net.get_loss<tiny_dnn::mse>(Input, Output);
 }
 
-bool tinydnnwrapper::train()
+bool tinydnnwrapper::train(RunTimeWindow *rtw)
 {
-    return net.fit<tiny_dnn::mse>(opt, Input, Output, batch_size, epochs, []() {}, []() {});
+
+
+    for (int i=0; i<epochs; i+=batch_size)
+    {
+        net.train_one_batch(opt,Input, Output, batch_size);
+        if (i==0)
+        {
+            rtw->SetXRange(0,epochs);
+            rtw->SetYRange(0,loss());
+        }
+        rtw->AddDataPoint(i,loss());
+        rtw->SetProgress(double(i)/double(epochs));
+        QCoreApplication::processEvents();
+    }
 }
 
 CTimeSeriesSet tinydnnwrapper::predicted()
