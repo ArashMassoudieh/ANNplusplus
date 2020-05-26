@@ -20,7 +20,7 @@ public:
     bool addlayer(unsigned int n_source, unsigned int n_nodes, const string &activation_function);
     bool createnetwork(const vector<unsigned int> &nodes);
     size_t batch_size = 16;
-    int epochs        = 2000;
+    int epochs        = 100;
     tiny_dnn::adamax opt;
     bool SetInput(CTimeSeriesSet &input);
     bool SetTarge(CTimeSeriesSet &input);
@@ -28,6 +28,8 @@ public:
     bool AppendtoTarge(CTimeSeriesSet &input);
     std::vector<tiny_dnn::vec_t> Input;
     std::vector<tiny_dnn::vec_t> Output;
+    CTimeSeriesSet InputTimeSeries;
+    CTimeSeriesSet OutputTimeSeries;
     double loss();
     bool train(RunTimeWindow *rtw=nullptr);
     CTimeSeriesSet predicted();

@@ -28,6 +28,7 @@ bool tinydnnwrapper::createnetwork(const vector<unsigned int> &nodes)
 
 bool tinydnnwrapper::SetInput(CTimeSeriesSet &input)
 {
+    InputTimeSeries = input;
     Input.clear();
     for (unsigned int i=0; i<input.BTC[0].n; i++)
     {
@@ -44,6 +45,7 @@ bool tinydnnwrapper::SetInput(CTimeSeriesSet &input)
 
 bool tinydnnwrapper::SetTarge(CTimeSeriesSet &input)
 {
+    OutputTimeSeries = input;
     Output.clear();
     for (unsigned int i=0; i<input.BTC[0].n; i++)
     {
@@ -64,7 +66,8 @@ bool tinydnnwrapper::AppendtoInput(CTimeSeriesSet &input)
         vector<double> values = input.getrow(i);
         tiny_dnn::vec_t t  = {float(input.BTC[0].t[i])};
         tiny_dnn::vec_t val(values.begin(),values.end());
-
+        for (int j=0; j<input.nvars; j++)
+            InputTimeSeries.BTC[j].append(input.BTC[j].t[i],values[j]);
 
 
         Input.push_back(val);
@@ -79,7 +82,8 @@ bool tinydnnwrapper::AppendtoTarge(CTimeSeriesSet &input)
         vector<double> values = input.getrow(i);
         tiny_dnn::vec_t t  = {float(input.BTC[0].t[i])};
         tiny_dnn::vec_t val(values.begin(),values.end());
-
+        for (int j=0; j<input.nvars; j++)
+            OutputTimeSeries.BTC[j].append(input.BTC[j].t[i],values[j]);
 
         Output.push_back(val);
     }
@@ -117,7 +121,7 @@ CTimeSeriesSet tinydnnwrapper::predicted()
         tiny_dnn::vec_t t = {Input[i]};
         tiny_dnn::vec_t fPredicted  = net.predict(t);
         vector<double> value(fPredicted.begin(),fPredicted.end());
-        Predicted.append(t[0],value);
+        Predicted.append(OutputTimeSeries.BTC[0].t[i],value);
     }
     return Predicted;
 }
