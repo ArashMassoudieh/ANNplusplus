@@ -14,6 +14,7 @@
 #include "qmap.h"
 #include "qvariant.h"
 #endif // QT_version
+#include "utils.h"
 
 
 

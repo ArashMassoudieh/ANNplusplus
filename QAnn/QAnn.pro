@@ -7,6 +7,8 @@ CONFIG += c++14
 INCLUDEPATH += ../include
 INCLUDEPATH += ../../qcustomplot/
 INCLUDEPATH += ../../tiny-dnn/
+INCLUDEPATH += ../ODE_model/include/
+
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -22,7 +24,6 @@ DEFINES +=CNN_NO_SERIALIZATION
 
 SOURCES += \
     ../../qcustomplot/qcustomplot.cpp \
-    ../src/ANN_class.cpp \
     ../src/BTC.cpp \
     ../src/BTCSet.cpp \
     ../src/DistributionNUnif.cpp \
@@ -30,13 +31,11 @@ SOURCES += \
     ../src/ML.cpp \
     ../src/Matrix.cpp \
     ../src/Matrix_arma.cpp \
-    ../src/Node.cpp \
     ../src/NormalDist.cpp \
     ../src/QuickSort.cpp \
     ../src/StringOP.cpp \
     ../src/Vector.cpp \
     ../src/Vector_arma.cpp \
-    ../src/errorhandler.cpp \
     ../src/plotter.cpp \
     ../src/utils.cpp \
     customplotwidget.cpp \
@@ -44,7 +43,15 @@ SOURCES += \
     mainwindow.cpp \
     multiplotwindow.cpp \
     ../src/tinydnnwrapper.cpp \
-    runtimewindow.cpp
+    runtimewindow.cpp \
+    ../ODE_model/src/Expression.cpp \
+    ../ODE_model/src/ControlParameter.cpp \
+    ../ODE_model/src/ExternalForcing.cpp \
+    ../ODE_model/src/Object.cpp \
+    ../ODE_model/src/Parameter.cpp \
+    ../ODE_model/src/StateVariable.cpp \
+    ../ODE_model/src/System.cpp \
+    ../ODE_model/src/ErrorHandler.cpp
 
 HEADERS += \
     ../../qcustomplot/qcustomplot.h \
@@ -70,7 +77,8 @@ HEADERS += \
     multiplotwindow.h \
     ../include/tinydnnwrapper.h \
     ../include/network.hpp \
-    runtimewindow.h
+    runtimewindow.h \
+    ../ODE_model/include/Expression.h
 
 FORMS += \
     customplotwidget.ui \

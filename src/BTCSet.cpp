@@ -11,6 +11,7 @@
 #include "qdebug.h"
 #include "qdatastream.h"
 #endif // QT_version
+#include "utils.h"
 
 using namespace std;
 

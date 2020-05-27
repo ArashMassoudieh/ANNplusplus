@@ -8,6 +8,7 @@
 #include <cfloat>
 #include "Vector.h"
 #include "Expression.h"
+#include "utils.h"
 
 
 //////////////////////////////////////////////////////////////////////

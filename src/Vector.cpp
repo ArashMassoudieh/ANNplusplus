@@ -82,7 +82,7 @@ CVector::~CVector()
 
 double& CVector::operator[](int i)
 {
-	double *p = 0;
+    double *p = nullptr;
 	if ((i<num) & (i>-1))
 		return vec[i];
 	else
@@ -91,7 +91,7 @@ double& CVector::operator[](int i)
 
 const double& CVector::operator[](int i) const
 {
-	double *p = 0;
+    double *p = nullptr;
 	if ((i<num) & (i>-1))
 		return vec[i];
 	else
@@ -142,6 +142,9 @@ void CVector::swap(int i, int j)
 	vec[j] = tmp;
 
 }
+
+int CVector::getsize()
+{return num;}
 
 int CVector::getsize() const
 {return num;}

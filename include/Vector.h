@@ -29,6 +29,8 @@ public:
 	CVector(const double x, int n);
     CVector(const double x_min, const double x_max, int n);  //cvector:: is redundant. However, works fine here.
 	CVector(const CVector&);
+    int getsize();
+    int getsize() const;
     double& operator[](int);
     const double& operator[](int i) const;
 	virtual ~CVector();
@@ -42,7 +44,8 @@ public:
 	//mat CVector::operator=(const CVector&);
     CVector& operator+();
     void swap(int , int );
-    int getsize() const;
+
+
     CVector& operator*=(double);
     CVector& operator/=(double);
     CVector& operator+=(const CVector&);
