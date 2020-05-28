@@ -19,6 +19,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
@@ -30,11 +31,14 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
+    QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout;
-    QTextBrowser *textBrowser;
-    QHBoxLayout *horizontalLayout;
-    QPushButton *BatchTrain;
-    QPushButton *stochastic_gradient_descent;
+    QSpacerItem *verticalSpacer_2;
+    QPushButton *pushButtontrain;
+    QPushButton *pushButtonRunODEModel;
+    QSpacerItem *verticalSpacer;
+    QVBoxLayout *verticalLayout_2;
+    QTextBrowser *textBrowser_2;
     QProgressBar *progressBar;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -46,33 +50,46 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        verticalLayout = new QVBoxLayout(centralwidget);
+        horizontalLayout_2 = new QHBoxLayout(centralwidget);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        textBrowser = new QTextBrowser(centralwidget);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        verticalLayout->addWidget(textBrowser);
+        verticalLayout->addItem(verticalSpacer_2);
 
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        BatchTrain = new QPushButton(centralwidget);
-        BatchTrain->setObjectName(QStringLiteral("BatchTrain"));
+        pushButtontrain = new QPushButton(centralwidget);
+        pushButtontrain->setObjectName(QStringLiteral("pushButtontrain"));
 
-        horizontalLayout->addWidget(BatchTrain);
+        verticalLayout->addWidget(pushButtontrain);
 
-        stochastic_gradient_descent = new QPushButton(centralwidget);
-        stochastic_gradient_descent->setObjectName(QStringLiteral("stochastic_gradient_descent"));
+        pushButtonRunODEModel = new QPushButton(centralwidget);
+        pushButtonRunODEModel->setObjectName(QStringLiteral("pushButtonRunODEModel"));
 
-        horizontalLayout->addWidget(stochastic_gradient_descent);
+        verticalLayout->addWidget(pushButtonRunODEModel);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
 
 
-        verticalLayout->addLayout(horizontalLayout);
+        horizontalLayout_2->addLayout(verticalLayout);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        textBrowser_2 = new QTextBrowser(centralwidget);
+        textBrowser_2->setObjectName(QStringLiteral("textBrowser_2"));
+
+        verticalLayout_2->addWidget(textBrowser_2);
 
         progressBar = new QProgressBar(centralwidget);
         progressBar->setObjectName(QStringLiteral("progressBar"));
         progressBar->setValue(0);
 
-        verticalLayout->addWidget(progressBar);
+        verticalLayout_2->addWidget(progressBar);
+
+
+        horizontalLayout_2->addLayout(verticalLayout_2);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -91,8 +108,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
-        BatchTrain->setText(QApplication::translate("MainWindow", "Batch Train", Q_NULLPTR));
-        stochastic_gradient_descent->setText(QApplication::translate("MainWindow", "Stochastic Gradient Descent", Q_NULLPTR));
+        pushButtontrain->setText(QApplication::translate("MainWindow", "Train", Q_NULLPTR));
+        pushButtonRunODEModel->setText(QApplication::translate("MainWindow", "Solve ODE", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -60,32 +60,18 @@
      </layout>
     </item>
     <item>
-     <widget class="QTextBrowser" name="textBrowser"/>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QPushButton" name="BatchTrain">
-        <property name="text">
-         <string>Batch Train</string>
-        </property>
-       </widget>
+       <widget class="QTextBrowser" name="textBrowser_2"/>
       </item>
       <item>
-       <widget class="QPushButton" name="stochastic_gradient_descent">
-        <property name="text">
-         <string>Stochastic Gradient Descent</string>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="value">
+         <number>0</number>
         </property>
        </widget>
       </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QProgressBar" name="progressBar">
-      <property name="value">
-       <number>0</number>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>

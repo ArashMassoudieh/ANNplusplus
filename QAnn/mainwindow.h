@@ -9,6 +9,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+enum class model {fish};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -22,9 +24,13 @@ private:
 
     void train();
     void traintiny();
+    void runODE(model model_number=model::fish);
+
 
 public slots:
     void on_train();
+    void on_runODE();
+
 
 };
 #endif // MAINWINDOW_H
