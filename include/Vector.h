@@ -82,6 +82,8 @@ public:
     CVector sub(int i, int j);
     bool is_finite();
     string toString();
+    CVector Pow(double n);
+    CVector Sqrt();
 
 };
 

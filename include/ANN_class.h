@@ -14,6 +14,14 @@
 #include "BTCSet.h"
 #include "ErrorHandler.h"
 
+struct ann_params
+{
+    double learning_rate = 0.01;
+    double gamma = 0.9;
+    double epsilon = 1e-8;
+};
+
+
 using namespace std;
 class ANN_class
 {
@@ -51,13 +59,14 @@ public:
     CVector Gradient_error_direct(CTimeSeriesSet *input,CTimeSeriesSet *output);
 	CMatrix UpdateDerivatives(const CVector& input);
     ErrorHandler* GetErrorHandler() {return &errorhandler;}
-    void SetLearningRate(const double &value) {learning_rate = value;}
+    void SetLearningRate(const double &value) {twicking_params.learning_rate = value;}
     double PerformSingleStepStochasticSteepestDescent(unsigned int batch_size);
     double PerformSingleStepSteepestDescent();
     CTimeSeries *ErrorSeries() {return &error_series;}
     void AppendErrVal(const double &d) {error_series.append(error_series.n,d);}
 private:
-	vector<CNode> Nodes;
+    ann_params twicking_params;
+    vector<CNode> Nodes;
 	vector<Link> Links;
 	vector<vector<CNode*>> layers;
 	bool SetNodeDerivates(const CVector &input);
@@ -65,7 +74,9 @@ private:
 	double epsilon = 1e-6;
     ErrorHandler errorhandler;
     double derivative_purturbation = 1e-6;
-    double learning_rate;
+
     CTimeSeries error_series;
+    CVector RMSGradient;
+
 };
 

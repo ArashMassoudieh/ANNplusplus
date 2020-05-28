@@ -17,8 +17,11 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -27,8 +30,12 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QHBoxLayout *horizontalLayout;
+    QVBoxLayout *verticalLayout;
     QTextBrowser *textBrowser;
+    QHBoxLayout *horizontalLayout;
+    QPushButton *BatchTrain;
+    QPushButton *stochastic_gradient_descent;
+    QProgressBar *progressBar;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -39,12 +46,33 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        horizontalLayout = new QHBoxLayout(centralwidget);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        verticalLayout = new QVBoxLayout(centralwidget);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         textBrowser = new QTextBrowser(centralwidget);
         textBrowser->setObjectName(QStringLiteral("textBrowser"));
 
-        horizontalLayout->addWidget(textBrowser);
+        verticalLayout->addWidget(textBrowser);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        BatchTrain = new QPushButton(centralwidget);
+        BatchTrain->setObjectName(QStringLiteral("BatchTrain"));
+
+        horizontalLayout->addWidget(BatchTrain);
+
+        stochastic_gradient_descent = new QPushButton(centralwidget);
+        stochastic_gradient_descent->setObjectName(QStringLiteral("stochastic_gradient_descent"));
+
+        horizontalLayout->addWidget(stochastic_gradient_descent);
+
+
+        verticalLayout->addLayout(horizontalLayout);
+
+        progressBar = new QProgressBar(centralwidget);
+        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setValue(0);
+
+        verticalLayout->addWidget(progressBar);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -63,6 +91,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        BatchTrain->setText(QApplication::translate("MainWindow", "Batch Train", Q_NULLPTR));
+        stochastic_gradient_descent->setText(QApplication::translate("MainWindow", "Stochastic Gradient Descent", Q_NULLPTR));
     } // retranslateUi
 
 };

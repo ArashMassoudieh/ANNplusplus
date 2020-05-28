@@ -105,7 +105,7 @@ ANN_class::ANN_class(vector<int> n_nodes, CNode::activationfunc act)
 	}
 	SetLinkNodeParents();
 	SetPointers();
-
+    RMSGradient = CVector(Links.size());
 }
 
 
@@ -142,6 +142,8 @@ CVector ANN_class::Gradient_error_direct(CTimeSeriesSet *input,CTimeSeriesSet *o
         gradient.append((purturbed_error-base_error)/derivative_purturbation);
     }
     ApplyWeights(w0);
+    gradient = gradient/gradient.norm2();
+    RMSGradient = twicking_params.gamma*RMSGradient + (1.0-twicking_params.gamma)*gradient.Pow(2);
     return gradient;
 }
 
@@ -304,7 +306,7 @@ double ANN_class::PerformSingleStepStochasticSteepestDescent(unsigned int batch_
     double err0 = calc_error(&sampled_input,&sampled_output);
     AppendErrVal(err0);
     CVector gradient = Gradient_error_direct(&sampled_input,&sampled_output);
-    weights -= learning_rate*gradient;
+    weights -= twicking_params.learning_rate*(gradient/((RMSGradient+twicking_params.epsilon).Sqrt()));
     ApplyWeights(weights);
     double err1 = calc_error(&sampled_input,&sampled_output);
     return err1;
@@ -316,7 +318,7 @@ double ANN_class::PerformSingleStepSteepestDescent()
     double err0 = calc_error(input,&training_data);
     AppendErrVal(err0);
     CVector gradient = Gradient_error_direct(input,&training_data);
-    weights -= learning_rate*gradient/gradient.norm2();
+    weights -= twicking_params.learning_rate*(gradient/((RMSGradient+twicking_params.epsilon).Sqrt()));
     ApplyWeights(weights);
     double err1 = calc_error(input,&training_data);
     return err1;

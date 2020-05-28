@@ -697,3 +697,19 @@ string CVector::toString()
     out += aquiutils::numbertostring(vec[num-1]) + "]";
     return out;
 }
+
+CVector CVector::Pow(double n)
+{
+    CVector out(num);
+    for (int i=0; i<num; i++)
+        out[i] = pow(vec[i],n);
+    return out;
+}
+
+CVector CVector::Sqrt()
+{
+    CVector out(num);
+    for (int i=0; i<num; i++)
+        out[i] = sqrt(vec[i]);
+    return out;
+}

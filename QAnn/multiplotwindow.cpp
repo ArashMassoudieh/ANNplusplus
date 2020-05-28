@@ -28,7 +28,7 @@ MultiPlotWindow::MultiPlotWindow(int n_panels, QWidget *parent) :
         sizePolicy2.setHeightForWidth(plot->sizePolicy().hasHeightForWidth());
         plot->setSizePolicy(sizePolicy2);
         plot->Plot()->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectAxes | QCP::iSelectLegend | QCP::iSelectPlottables);
-
+        plots.push_back(plot);
 
     }
 

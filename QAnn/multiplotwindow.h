@@ -17,13 +17,13 @@ public:
     explicit MultiPlotWindow(QWidget *parent = nullptr);
     explicit MultiPlotWindow(int n_panels, QWidget *parent = nullptr);
     ~MultiPlotWindow();
-    QVector<CustomPlotWidget*> plot;
+    QVector<CustomPlotWidget*> plots;
     CustomPlotWidget* Plot(int i)
     {
-        if (i>=plot.size())
+        if (i>=plots.size())
             return nullptr;
         else
-            return plot[i];
+            return plots[i];
 
     }
     void AddData(int i, CBTC &BTC)

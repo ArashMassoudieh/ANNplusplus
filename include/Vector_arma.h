@@ -78,6 +78,8 @@ public:
 	bool is_finite();
 	vector<int> get_nan_elements();
 	string toString();
+    CVector_arma Pow(double n);
+    CVector_arma Sqrt();
 };
 
 CVector_arma Log(CVector_arma &);
