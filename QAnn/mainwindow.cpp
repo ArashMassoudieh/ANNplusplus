@@ -11,13 +11,19 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    traintiny();
+    connect(ui->pushButtontrain, SIGNAL(clicked()),this, SLOT(on_train()));
+
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_train()
+{
+    traintiny();
 }
 
 void MainWindow::traintiny()

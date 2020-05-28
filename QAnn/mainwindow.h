@@ -22,5 +22,9 @@ private:
 
     void train();
     void traintiny();
+
+public slots:
+    void on_train();
+
 };
 #endif // MAINWINDOW_H

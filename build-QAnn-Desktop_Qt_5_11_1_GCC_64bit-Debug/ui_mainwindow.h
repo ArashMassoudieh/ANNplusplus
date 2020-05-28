@@ -14,8 +14,11 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextBrowser>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +28,10 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QHBoxLayout *horizontalLayout;
+    QVBoxLayout *verticalLayout;
+    QPushButton *pushButtontrain;
+    QPushButton *pushButtonRunODEModel;
+    QSpacerItem *verticalSpacer;
     QTextBrowser *textBrowser;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -38,6 +45,25 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         horizontalLayout = new QHBoxLayout(centralwidget);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        pushButtontrain = new QPushButton(centralwidget);
+        pushButtontrain->setObjectName(QStringLiteral("pushButtontrain"));
+
+        verticalLayout->addWidget(pushButtontrain);
+
+        pushButtonRunODEModel = new QPushButton(centralwidget);
+        pushButtonRunODEModel->setObjectName(QStringLiteral("pushButtonRunODEModel"));
+
+        verticalLayout->addWidget(pushButtonRunODEModel);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
+
+        horizontalLayout->addLayout(verticalLayout);
+
         textBrowser = new QTextBrowser(centralwidget);
         textBrowser->setObjectName(QStringLiteral("textBrowser"));
 
@@ -60,6 +86,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        pushButtontrain->setText(QApplication::translate("MainWindow", "Train", nullptr));
+        pushButtonRunODEModel->setText(QApplication::translate("MainWindow", "Solve ODE", nullptr));
     } // retranslateUi
 
 };
