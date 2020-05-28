@@ -613,6 +613,25 @@ string CVector_arma::toString()
     return s;
 
 }
+
+CVector_arma CVector_arma::Pow(double n)
+{
+    CVector_arma out(num);
+    for (int i=0; i<num; i++)
+        out[i] = pow(vect[i],n);
+    return out;
+}
+
+CVector_arma CVector_arma::Sqrt()
+{
+    CVector_arma out(num);
+    for (int i=0; i<num; i++)
+        out[i] = sqrt(vect[i]);
+    return out;
+
+
+}
+
 //mat CVector_arma::operator=(const CVector_arma&V)
 //{
 //	mat A(num,1);
