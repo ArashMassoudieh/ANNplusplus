@@ -78,7 +78,8 @@ SOURCES       = ../../qcustomplot/qcustomplot.cpp \
 		../ODE_model/src/Parameter.cpp \
 		../ODE_model/src/StateVariable.cpp \
 		../ODE_model/src/System.cpp \
-		../ODE_model/src/ErrorHandler.cpp moc_qcustomplot.cpp \
+		../ODE_model/src/ErrorHandler.cpp \
+		../ODE_model/src/rewardfunction.cpp moc_qcustomplot.cpp \
 		moc_plotter.cpp \
 		moc_customplotwidget.cpp \
 		moc_mainwindow.cpp \
@@ -113,6 +114,7 @@ OBJECTS       = qcustomplot.o \
 		StateVariable.o \
 		System.o \
 		ErrorHandler.o \
+		rewardfunction.o \
 		moc_qcustomplot.o \
 		moc_plotter.o \
 		moc_customplotwidget.o \
@@ -216,7 +218,16 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../include/tinydnnwrapper.h \
 		../include/network.hpp \
 		../QAnn/runtimewindow.h \
-		../ODE_model/include/Expression.h ../../qcustomplot/qcustomplot.cpp \
+		../ODE_model/include/Expression.h \
+		../ODE_model/src/rewardfunction.h \
+		../ODE_model/include/ControlParameter.h \
+		../ODE_model/include/ErrorHandler.h \
+		../ODE_model/include/ExternalForcing.h \
+		../ODE_model/include/Object.h \
+		../ODE_model/include/Objective_Function.h \
+		../ODE_model/include/rewardfunction.h \
+		../ODE_model/include/StateVariable.h \
+		../ODE_model/include/System.h ../../qcustomplot/qcustomplot.cpp \
 		../src/BTC.cpp \
 		../src/BTCSet.cpp \
 		../src/DistributionNUnif.cpp \
@@ -244,7 +255,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../ODE_model/src/Parameter.cpp \
 		../ODE_model/src/StateVariable.cpp \
 		../ODE_model/src/System.cpp \
-		../ODE_model/src/ErrorHandler.cpp
+		../ODE_model/src/ErrorHandler.cpp \
+		../ODE_model/src/rewardfunction.cpp
 QMAKE_TARGET  = QAnn
 DESTDIR       = 
 TARGET        = QAnn
@@ -428,8 +440,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.h ../include/ANN_class.h ../include/BTC.h ../include/BTCSet.h ../include/DistributionNUnif.h ../include/ErrorHandler.h ../include/Link.h ../include/ML.h ../include/Matrix.h ../include/Matrix_arma.h ../include/Node.h ../include/NormalDist.h ../include/QuickSort.h ../include/StringOP.h ../include/Vector.h ../include/Vector_arma.h ../include/plotter.h ../include/utils.h ../QAnn/customplotwidget.h ../QAnn/mainwindow.h ../QAnn/multiplotwindow.h ../include/tinydnnwrapper.h ../include/network.hpp ../QAnn/runtimewindow.h ../ODE_model/include/Expression.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.cpp ../src/BTC.cpp ../src/BTCSet.cpp ../src/DistributionNUnif.cpp ../src/Link.cpp ../src/ML.cpp ../src/Matrix.cpp ../src/Matrix_arma.cpp ../src/NormalDist.cpp ../src/QuickSort.cpp ../src/StringOP.cpp ../src/Vector.cpp ../src/Vector_arma.cpp ../src/plotter.cpp ../src/utils.cpp ../QAnn/customplotwidget.cpp ../QAnn/main.cpp ../QAnn/mainwindow.cpp ../QAnn/multiplotwindow.cpp ../src/tinydnnwrapper.cpp ../QAnn/runtimewindow.cpp ../ODE_model/src/Expression.cpp ../ODE_model/src/ControlParameter.cpp ../ODE_model/src/ExternalForcing.cpp ../ODE_model/src/Object.cpp ../ODE_model/src/Parameter.cpp ../ODE_model/src/StateVariable.cpp ../ODE_model/src/System.cpp ../ODE_model/src/ErrorHandler.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.h ../include/ANN_class.h ../include/BTC.h ../include/BTCSet.h ../include/DistributionNUnif.h ../include/ErrorHandler.h ../include/Link.h ../include/ML.h ../include/Matrix.h ../include/Matrix_arma.h ../include/Node.h ../include/NormalDist.h ../include/QuickSort.h ../include/StringOP.h ../include/Vector.h ../include/Vector_arma.h ../include/plotter.h ../include/utils.h ../QAnn/customplotwidget.h ../QAnn/mainwindow.h ../QAnn/multiplotwindow.h ../include/tinydnnwrapper.h ../include/network.hpp ../QAnn/runtimewindow.h ../ODE_model/include/Expression.h ../ODE_model/src/rewardfunction.h ../ODE_model/include/ControlParameter.h ../ODE_model/include/ErrorHandler.h ../ODE_model/include/ExternalForcing.h ../ODE_model/include/Object.h ../ODE_model/include/Objective_Function.h ../ODE_model/include/rewardfunction.h ../ODE_model/include/StateVariable.h ../ODE_model/include/System.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.cpp ../src/BTC.cpp ../src/BTCSet.cpp ../src/DistributionNUnif.cpp ../src/Link.cpp ../src/ML.cpp ../src/Matrix.cpp ../src/Matrix_arma.cpp ../src/NormalDist.cpp ../src/QuickSort.cpp ../src/StringOP.cpp ../src/Vector.cpp ../src/Vector_arma.cpp ../src/plotter.cpp ../src/utils.cpp ../QAnn/customplotwidget.cpp ../QAnn/main.cpp ../QAnn/mainwindow.cpp ../QAnn/multiplotwindow.cpp ../src/tinydnnwrapper.cpp ../QAnn/runtimewindow.cpp ../ODE_model/src/Expression.cpp ../ODE_model/src/ControlParameter.cpp ../ODE_model/src/ExternalForcing.cpp ../ODE_model/src/Object.cpp ../ODE_model/src/Parameter.cpp ../ODE_model/src/StateVariable.cpp ../ODE_model/src/System.cpp ../ODE_model/src/ErrorHandler.cpp ../ODE_model/src/rewardfunction.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../QAnn/customplotwidget.ui ../QAnn/mainwindow.ui ../QAnn/multiplotwindow.ui ../QAnn/plotter.ui ../QAnn/plotterwidget.ui ../QAnn/runtimewindow.ui $(DISTDIR)/
 
 
@@ -1420,7 +1432,15 @@ mainwindow.o: ../QAnn/mainwindow.cpp ../QAnn/mainwindow.h \
 		../../qcustomplot/qcustomplot.h \
 		../QAnn/multiplotwindow.h \
 		../QAnn/customplotwidget.h \
-		../QAnn/runtimewindow.h
+		../QAnn/runtimewindow.h \
+		../ODE_model/include/System.h \
+		../ODE_model/include/StateVariable.h \
+		../ODE_model/include/Object.h \
+		../ODE_model/include/Expression.h \
+		../ODE_model/include/ControlParameter.h \
+		../ODE_model/include/ExternalForcing.h \
+		../ODE_model/include/Parameter.h \
+		../ODE_model/include/rewardfunction.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QAnn/mainwindow.cpp
 
 multiplotwindow.o: ../QAnn/multiplotwindow.cpp ../QAnn/multiplotwindow.h \
@@ -1696,6 +1716,7 @@ Expression.o: ../ODE_model/src/Expression.cpp ../ODE_model/include/Expression.h 
 		../ODE_model/include/Parameter.h \
 		../include/BTCSet.h \
 		../ODE_model/include/ErrorHandler.h \
+		../ODE_model/include/rewardfunction.h \
 		../include/utils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Expression.o ../ODE_model/src/Expression.cpp
 
@@ -1746,11 +1767,32 @@ System.o: ../ODE_model/src/System.cpp ../ODE_model/include/System.h \
 		../ODE_model/include/Parameter.h \
 		../include/BTCSet.h \
 		../ODE_model/include/ErrorHandler.h \
+		../ODE_model/include/rewardfunction.h \
 		../include/utils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o System.o ../ODE_model/src/System.cpp
 
 ErrorHandler.o: ../ODE_model/src/ErrorHandler.cpp ../ODE_model/include/ErrorHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ErrorHandler.o ../ODE_model/src/ErrorHandler.cpp
+
+rewardfunction.o: ../ODE_model/src/rewardfunction.cpp ../ODE_model/include/rewardfunction.h \
+		../ODE_model/include/Expression.h \
+		../include/BTC.h \
+		../include/QuickSort.h \
+		../include/NormalDist.h \
+		../include/Vector.h \
+		../include/Matrix.h \
+		../include/Matrix_arma.h \
+		../include/Vector_arma.h \
+		../ODE_model/include/Object.h \
+		../ODE_model/include/System.h \
+		../ODE_model/include/StateVariable.h \
+		../ODE_model/include/ControlParameter.h \
+		../ODE_model/include/ExternalForcing.h \
+		../ODE_model/include/Parameter.h \
+		../include/BTCSet.h \
+		../ODE_model/include/ErrorHandler.h \
+		../include/utils.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rewardfunction.o ../ODE_model/src/rewardfunction.cpp
 
 moc_qcustomplot.o: moc_qcustomplot.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcustomplot.o moc_qcustomplot.cpp
