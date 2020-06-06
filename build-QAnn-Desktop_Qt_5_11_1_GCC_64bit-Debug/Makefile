@@ -78,7 +78,8 @@ SOURCES       = ../../qcustomplot/qcustomplot.cpp \
 		../ODE_model/src/Parameter.cpp \
 		../ODE_model/src/StateVariable.cpp \
 		../ODE_model/src/System.cpp \
-		../ODE_model/src/ErrorHandler.cpp moc_qcustomplot.cpp \
+		../ODE_model/src/ErrorHandler.cpp \
+		../ODE_model/src/rewardfunction.cpp moc_qcustomplot.cpp \
 		moc_plotter.cpp \
 		moc_customplotwidget.cpp \
 		moc_mainwindow.cpp \
@@ -113,6 +114,7 @@ OBJECTS       = qcustomplot.o \
 		StateVariable.o \
 		System.o \
 		ErrorHandler.o \
+		rewardfunction.o \
 		moc_qcustomplot.o \
 		moc_plotter.o \
 		moc_customplotwidget.o \
@@ -332,7 +334,16 @@ DIST          = ../../../Qt/5.11.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../include/tinydnnwrapper.h \
 		../include/network.hpp \
 		../QAnn/runtimewindow.h \
-		../ODE_model/include/Expression.h ../../qcustomplot/qcustomplot.cpp \
+		../ODE_model/include/Expression.h \
+		../ODE_model/src/rewardfunction.h \
+		../ODE_model/include/ControlParameter.h \
+		../ODE_model/include/ErrorHandler.h \
+		../ODE_model/include/ExternalForcing.h \
+		../ODE_model/include/Object.h \
+		../ODE_model/include/Objective_Function.h \
+		../ODE_model/include/rewardfunction.h \
+		../ODE_model/include/StateVariable.h \
+		../ODE_model/include/System.h ../../qcustomplot/qcustomplot.cpp \
 		../src/BTC.cpp \
 		../src/BTCSet.cpp \
 		../src/DistributionNUnif.cpp \
@@ -360,7 +371,8 @@ DIST          = ../../../Qt/5.11.1/gcc_64/mkspecs/features/spec_pre.prf \
 		../ODE_model/src/Parameter.cpp \
 		../ODE_model/src/StateVariable.cpp \
 		../ODE_model/src/System.cpp \
-		../ODE_model/src/ErrorHandler.cpp
+		../ODE_model/src/ErrorHandler.cpp \
+		../ODE_model/src/rewardfunction.cpp
 QMAKE_TARGET  = QAnn
 DESTDIR       = 
 TARGET        = QAnn
@@ -776,8 +788,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.11.1/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.h ../include/ANN_class.h ../include/BTC.h ../include/BTCSet.h ../include/DistributionNUnif.h ../include/ErrorHandler.h ../include/Link.h ../include/ML.h ../include/Matrix.h ../include/Matrix_arma.h ../include/Node.h ../include/NormalDist.h ../include/QuickSort.h ../include/StringOP.h ../include/Vector.h ../include/Vector_arma.h ../include/plotter.h ../include/utils.h ../QAnn/customplotwidget.h ../QAnn/mainwindow.h ../QAnn/multiplotwindow.h ../include/tinydnnwrapper.h ../include/network.hpp ../QAnn/runtimewindow.h ../ODE_model/include/Expression.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.cpp ../src/BTC.cpp ../src/BTCSet.cpp ../src/DistributionNUnif.cpp ../src/Link.cpp ../src/ML.cpp ../src/Matrix.cpp ../src/Matrix_arma.cpp ../src/NormalDist.cpp ../src/QuickSort.cpp ../src/StringOP.cpp ../src/Vector.cpp ../src/Vector_arma.cpp ../src/plotter.cpp ../src/utils.cpp ../QAnn/customplotwidget.cpp ../QAnn/main.cpp ../QAnn/mainwindow.cpp ../QAnn/multiplotwindow.cpp ../src/tinydnnwrapper.cpp ../QAnn/runtimewindow.cpp ../ODE_model/src/Expression.cpp ../ODE_model/src/ControlParameter.cpp ../ODE_model/src/ExternalForcing.cpp ../ODE_model/src/Object.cpp ../ODE_model/src/Parameter.cpp ../ODE_model/src/StateVariable.cpp ../ODE_model/src/System.cpp ../ODE_model/src/ErrorHandler.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.h ../include/ANN_class.h ../include/BTC.h ../include/BTCSet.h ../include/DistributionNUnif.h ../include/ErrorHandler.h ../include/Link.h ../include/ML.h ../include/Matrix.h ../include/Matrix_arma.h ../include/Node.h ../include/NormalDist.h ../include/QuickSort.h ../include/StringOP.h ../include/Vector.h ../include/Vector_arma.h ../include/plotter.h ../include/utils.h ../QAnn/customplotwidget.h ../QAnn/mainwindow.h ../QAnn/multiplotwindow.h ../include/tinydnnwrapper.h ../include/network.hpp ../QAnn/runtimewindow.h ../ODE_model/include/Expression.h ../ODE_model/src/rewardfunction.h ../ODE_model/include/ControlParameter.h ../ODE_model/include/ErrorHandler.h ../ODE_model/include/ExternalForcing.h ../ODE_model/include/Object.h ../ODE_model/include/Objective_Function.h ../ODE_model/include/rewardfunction.h ../ODE_model/include/StateVariable.h ../ODE_model/include/System.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../qcustomplot/qcustomplot.cpp ../src/BTC.cpp ../src/BTCSet.cpp ../src/DistributionNUnif.cpp ../src/Link.cpp ../src/ML.cpp ../src/Matrix.cpp ../src/Matrix_arma.cpp ../src/NormalDist.cpp ../src/QuickSort.cpp ../src/StringOP.cpp ../src/Vector.cpp ../src/Vector_arma.cpp ../src/plotter.cpp ../src/utils.cpp ../QAnn/customplotwidget.cpp ../QAnn/main.cpp ../QAnn/mainwindow.cpp ../QAnn/multiplotwindow.cpp ../src/tinydnnwrapper.cpp ../QAnn/runtimewindow.cpp ../ODE_model/src/Expression.cpp ../ODE_model/src/ControlParameter.cpp ../ODE_model/src/ExternalForcing.cpp ../ODE_model/src/Object.cpp ../ODE_model/src/Parameter.cpp ../ODE_model/src/StateVariable.cpp ../ODE_model/src/System.cpp ../ODE_model/src/ErrorHandler.cpp ../ODE_model/src/rewardfunction.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../QAnn/customplotwidget.ui ../QAnn/mainwindow.ui ../QAnn/multiplotwindow.ui ../QAnn/plotter.ui ../QAnn/plotterwidget.ui ../QAnn/runtimewindow.ui $(DISTDIR)/
 
 
@@ -6635,18 +6647,25 @@ mainwindow.o: ../QAnn/mainwindow.cpp ../QAnn/mainwindow.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qmenu.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qaction.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qactiongroup.h \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QProgressBar \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qprogressbar.h \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QPushButton \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QSpacerItem \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QStatusBar \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qstatusbar.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QTextBrowser \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qtextbrowser.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qtextedit.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qframe.h \
 		../../../Qt/5.11.1/gcc_64/include/QtGui/qtextdocument.h \
 		../../../Qt/5.11.1/gcc_64/include/QtGui/qtextoption.h \
 		../../../Qt/5.11.1/gcc_64/include/QtGui/qtextcursor.h \
 		../../../Qt/5.11.1/gcc_64/include/QtGui/qtextformat.h \
 		../../../Qt/5.11.1/gcc_64/include/QtGui/qpen.h \
+		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QVBoxLayout \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QWidget \
 		../include/utils.h \
 		../../../Qt/5.11.1/gcc_64/include/QtCore/QStringList \
@@ -6889,7 +6908,6 @@ mainwindow.o: ../QAnn/mainwindow.cpp ../QAnn/mainwindow.h \
 		../../../Qt/5.11.1/gcc_64/include/QtGui/qtguiversion.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QtWidgets \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QtWidgetsDepends \
-		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qabstractbutton.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qstyleoption.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qabstractspinbox.h \
@@ -6909,7 +6927,6 @@ mainwindow.o: ../QAnn/mainwindow.cpp ../QAnn/mainwindow.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qcolumnview.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qcombobox.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qcommandlinkbutton.h \
-		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qpushbutton.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qcommonstyle.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qcompleter.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qdatawidgetmapper.h \
@@ -6964,7 +6981,6 @@ mainwindow.o: ../QAnn/mainwindow.cpp ../QAnn/mainwindow.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qmouseeventtransition.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qopenglwidget.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qplaintextedit.h \
-		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qprogressbar.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qprogressdialog.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/qproxystyle.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QCommonStyle \
@@ -7018,7 +7034,14 @@ mainwindow.o: ../QAnn/mainwindow.cpp ../QAnn/mainwindow.h \
 		../QAnn/multiplotwindow.h \
 		../../../Qt/5.11.1/gcc_64/include/QtWidgets/QDialog \
 		../QAnn/customplotwidget.h \
-		../QAnn/runtimewindow.h
+		../QAnn/runtimewindow.h \
+		../ODE_model/include/System.h \
+		../ODE_model/include/StateVariable.h \
+		../ODE_model/include/Object.h \
+		../ODE_model/include/Expression.h \
+		../ODE_model/include/ControlParameter.h \
+		../ODE_model/include/ExternalForcing.h \
+		../ODE_model/include/Parameter.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../QAnn/mainwindow.cpp
 
 multiplotwindow.o: ../QAnn/multiplotwindow.cpp ../QAnn/multiplotwindow.h \
@@ -9027,6 +9050,89 @@ System.o: ../ODE_model/src/System.cpp ../ODE_model/include/System.h \
 
 ErrorHandler.o: ../ODE_model/src/ErrorHandler.cpp ../ODE_model/include/ErrorHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ErrorHandler.o ../ODE_model/src/ErrorHandler.cpp
+
+rewardfunction.o: ../ODE_model/src/rewardfunction.cpp ../ODE_model/include/rewardfunction.h \
+		../ODE_model/include/Expression.h \
+		../include/BTC.h \
+		../include/QuickSort.h \
+		../include/NormalDist.h \
+		../include/Vector.h \
+		../include/Matrix.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/QMap \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qstringview.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qvector.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qset.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/5.11.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../include/Matrix_arma.h \
+		../include/Vector_arma.h \
+		../ODE_model/include/Object.h \
+		../ODE_model/include/System.h \
+		../ODE_model/include/StateVariable.h \
+		../ODE_model/include/ControlParameter.h \
+		../ODE_model/include/ExternalForcing.h \
+		../ODE_model/include/Parameter.h \
+		../include/BTCSet.h \
+		../ODE_model/include/ErrorHandler.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rewardfunction.o ../ODE_model/src/rewardfunction.cpp
 
 moc_qcustomplot.o: moc_qcustomplot.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_qcustomplot.o moc_qcustomplot.cpp

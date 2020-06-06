@@ -14,6 +14,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
@@ -27,12 +28,15 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QHBoxLayout *horizontalLayout;
+    QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout;
+    QSpacerItem *verticalSpacer_2;
     QPushButton *pushButtontrain;
     QPushButton *pushButtonRunODEModel;
     QSpacerItem *verticalSpacer;
-    QTextBrowser *textBrowser;
+    QVBoxLayout *verticalLayout_2;
+    QTextBrowser *textBrowser_2;
+    QProgressBar *progressBar;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -43,10 +47,14 @@ public:
         MainWindow->resize(800, 600);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        horizontalLayout = new QHBoxLayout(centralwidget);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout_2 = new QHBoxLayout(centralwidget);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer_2);
+
         pushButtontrain = new QPushButton(centralwidget);
         pushButtontrain->setObjectName(QStringLiteral("pushButtontrain"));
 
@@ -62,12 +70,23 @@ public:
         verticalLayout->addItem(verticalSpacer);
 
 
-        horizontalLayout->addLayout(verticalLayout);
+        horizontalLayout_2->addLayout(verticalLayout);
 
-        textBrowser = new QTextBrowser(centralwidget);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        textBrowser_2 = new QTextBrowser(centralwidget);
+        textBrowser_2->setObjectName(QStringLiteral("textBrowser_2"));
 
-        horizontalLayout->addWidget(textBrowser);
+        verticalLayout_2->addWidget(textBrowser_2);
+
+        progressBar = new QProgressBar(centralwidget);
+        progressBar->setObjectName(QStringLiteral("progressBar"));
+        progressBar->setValue(0);
+
+        verticalLayout_2->addWidget(progressBar);
+
+
+        horizontalLayout_2->addLayout(verticalLayout_2);
 
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);

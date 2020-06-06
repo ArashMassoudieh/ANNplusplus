@@ -412,12 +412,11 @@ bool System::Solve()
     #endif
     SetAllParents();
     InitiateOutputs();
-    PopulateOutputs();
     PrepareTimeSeries();
     SolverTempVars.dt_base = SimulationParameters.dt0;
     SolverTempVars.dt = SolverTempVars.dt_base;
     SolverTempVars.t = SimulationParameters.tstart;
-
+    PopulateOutputs();
     while (SolverTempVars.t<SimulationParameters.tend+SolverTempVars.dt)
     {
         SolverTempVars.dt = min(SolverTempVars.dt_base,GetMinimumNextTimeStepSize());

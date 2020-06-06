@@ -51,7 +51,8 @@ SOURCES += \
     ../ODE_model/src/Parameter.cpp \
     ../ODE_model/src/StateVariable.cpp \
     ../ODE_model/src/System.cpp \
-    ../ODE_model/src/ErrorHandler.cpp
+    ../ODE_model/src/ErrorHandler.cpp \
+    ../ODE_model/src/rewardfunction.cpp
 
 HEADERS += \
     ../../qcustomplot/qcustomplot.h \
@@ -78,7 +79,16 @@ HEADERS += \
     ../include/tinydnnwrapper.h \
     ../include/network.hpp \
     runtimewindow.h \
-    ../ODE_model/include/Expression.h
+    ../ODE_model/include/Expression.h \
+    ../ODE_model/src/rewardfunction.h \
+    ../ODE_model/include/ControlParameter.h \
+    ../ODE_model/include/ErrorHandler.h \
+    ../ODE_model/include/ExternalForcing.h \
+    ../ODE_model/include/Object.h \
+    ../ODE_model/include/Objective_Function.h \
+    ../ODE_model/include/rewardfunction.h \
+    ../ODE_model/include/StateVariable.h \
+    ../ODE_model/include/System.h
 
 FORMS += \
     customplotwidget.ui \
