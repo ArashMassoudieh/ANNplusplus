@@ -10,6 +10,7 @@
 #include "BTCSet.h"
 #include "ErrorHandler.h"
 #include "rewardfunction.h"
+#include "tinydnnwrapper.h"
 #define CVector_arma CVector
 #define CMatrix_arma CMatrix
 
@@ -29,6 +30,13 @@ struct solversettings
     int NR_niteration_upper=40;
     int NR_niteration_max=100;
     bool makeresultsuniform = false;
+};
+
+struct _RL_params
+{
+    double learning_rate_alpha_prime;
+    double discount_rate_lambda;
+
 };
 
 struct outputs
@@ -84,13 +92,19 @@ class System
         bool AppendExternalForcing(const ExternalForcing &extforce);
         bool AppendParameter(const Parameter &param);
         bool AppendReward(const RewardFunction &rwd);
-        bool OneStepSolve(double dt);
+        bool OneStepSolve();
         double dt() {return SolverTempVars.dt;}
         bool SetProp(const string &s, const double &val);
         ErrorHandler errorhandler;
         outputs Outputs;
         bool Solve();
         void ShowMessage(const string &msg);
+        tinydnnwrapper *ann() {return &tdn;}
+        void UpdateValue();
+        _RL_params rlparams;
+        CVector EvaluateValue(const CVector &state);
+        CVector CurrentState();
+        double GetImmediateReward();
     protected:
 
     private:
@@ -114,6 +128,7 @@ class System
         CVector_arma Jacobian(CVector_arma &V, CVector_arma &F0, int i);
         bool Update();
         double GetMinimumNextTimeStepSize();
+        tinydnnwrapper tdn;
 };
 
 #endif // SYSTEM_H

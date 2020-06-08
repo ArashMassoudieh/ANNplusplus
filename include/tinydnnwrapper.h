@@ -33,6 +33,7 @@ public:
     double loss();
     bool train(RunTimeWindow *rtw=nullptr);
     CTimeSeriesSet predicted();
+    CVector predicted(const CVector &input);
     bool batchtrain(const std::vector<tiny_dnn::tensor_t> &inputs,
                                     const std::vector<tiny_dnn::tensor_t> &desired_outputs,
                                     size_t batch_size,

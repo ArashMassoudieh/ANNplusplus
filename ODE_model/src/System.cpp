@@ -38,23 +38,23 @@ System& System::operator=(const System& rhs)
 
 Object* System::object(const string &s)
 {
-    for (int i=0; i<statevariables.size(); i++)
+    for (unsigned int i=0; i<statevariables.size(); i++)
         if (statevariables[i].GetName() == s)
             return &statevariables[i];
 
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<externalforcings.size(); i++)
         if (externalforcings[i].GetName() == s)
             return &externalforcings[i];
 
-    for (int i=0; i<controlparameters.size(); i++)
+    for (unsigned int i=0; i<controlparameters.size(); i++)
         if (controlparameters[i].GetName() == s)
             return &controlparameters[i];
 
-    for (int i=0; i<parameters.size(); i++)
+    for (unsigned int i=0; i<parameters.size(); i++)
         if (parameters[i].GetName() == s)
             return &parameters[i];
 
-    for (int i=0; i<rewards.size(); i++)
+    for (unsigned int i=0; i<rewards.size(); i++)
         if (rewards[i].GetName() == s)
             return &rewards[i];
 
@@ -63,16 +63,16 @@ Object* System::object(const string &s)
 
 void System::SetAllParents()
 {
-    for (int i=0; i<statevariables.size(); i++)
+    for (unsigned int i=0; i<statevariables.size(); i++)
         statevariables[i].SetParent(this);
 
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<externalforcings.size(); i++)
         externalforcings[i].SetParent(this);
 
-    for (int i=0; i<controlparameters.size(); i++)
+    for (unsigned int i=0; i<controlparameters.size(); i++)
         controlparameters[i].SetParent(this);
 
-    for (int i=0; i<parameters.size(); i++)
+    for (unsigned int i=0; i<parameters.size(); i++)
         parameters[i].SetParent(this);
 
 }
@@ -80,19 +80,19 @@ void System::SetAllParents()
 
 object_type System::GetType(const string &param)
 {
-    for (int i=0; i<statevariables.size(); i++)
+    for (unsigned int i=0; i<statevariables.size(); i++)
         if (statevariables[i].GetName() == param)
             return object_type::state;
 
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<externalforcings.size(); i++)
         if (externalforcings[i].GetName() == param)
             return object_type::exforce;
 
-    for (int i=0; i<controlparameters.size(); i++)
+    for (unsigned int i=0; i<controlparameters.size(); i++)
         if (controlparameters[i].GetName() == param)
             return object_type::control;
 
-    for (int i=0; i<parameters.size(); i++)
+    for (unsigned int i=0; i<parameters.size(); i++)
         if (parameters[i].GetName() == param)
             return object_type::parameter;
 
@@ -101,7 +101,7 @@ object_type System::GetType(const string &param)
 
 StateVariable* System::state(const string &s)
 {
-    for (int i=0; i<statevariables.size(); i++)
+    for (unsigned int i=0; i<statevariables.size(); i++)
         if (statevariables[i].GetName() == s)
             return &statevariables[i];
 
@@ -110,7 +110,7 @@ StateVariable* System::state(const string &s)
 
 ControlParameter* System::control(const string &s)
 {
-    for (int i=0; i<controlparameters.size(); i++)
+    for (unsigned int i=0; i<controlparameters.size(); i++)
         if (controlparameters[i].GetName() == s)
             return &controlparameters[i];
 
@@ -119,7 +119,7 @@ ControlParameter* System::control(const string &s)
 
 ExternalForcing* System::exforce(const string &s)
 {
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<externalforcings.size(); i++)
         if (externalforcings[i].GetName() == s)
             return &externalforcings[i];
     return nullptr;
@@ -127,7 +127,7 @@ ExternalForcing* System::exforce(const string &s)
 
 Parameter* System::parameter(const string &s)
 {
-    for (int i=0; i<parameters.size(); i++)
+    for (unsigned int i=0; i<parameters.size(); i++)
         if (parameters[i].GetName() == s)
             return &parameters[i];
     return nullptr;
@@ -135,7 +135,7 @@ Parameter* System::parameter(const string &s)
 
 RewardFunction* System::reward(const string &s)
 {
-    for (int i=0; i<rewards.size(); i++)
+    for (unsigned int i=0; i<rewards.size(); i++)
         if (rewards[i].GetName() == s)
             return &rewards[i];
     return nullptr;
@@ -234,7 +234,7 @@ bool System::AppendParameter(const Parameter &param)
 }
 
 
-bool System::OneStepSolve(double dt)
+bool System::OneStepSolve()
 {
     CVector_arma X_past = GetStateVariables(Expression::timing::past);
     Renew();
@@ -430,16 +430,16 @@ void System::InitiateOutputs()
 
 void System::PopulateOutputs()
 {
-    for (int i=0; i<statevariables.size(); i++)
+    for (unsigned int i=0; i<statevariables.size(); i++)
         Outputs.AllOutputs[statevariables[i].GetName()].append(SolverTempVars.t,statevariables[i].GetValue());
 
-    for (int i=0; i<controlparameters.size(); i++)
+    for (unsigned int i=0; i<controlparameters.size(); i++)
         Outputs.AllOutputs[controlparameters[i].GetName()].append(SolverTempVars.t,controlparameters[i].GetValue());
 
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<externalforcings.size(); i++)
         Outputs.AllOutputs[externalforcings[i].GetName()].append(SolverTempVars.t,externalforcings[i].Object::GetValue());
 
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<rewards.size(); i++)
         Outputs.AllOutputs[rewards[i].GetName()].append(SolverTempVars.t,rewards[i].Object::GetValue());
 
 }
@@ -476,7 +476,7 @@ bool System::Solve()
         }
         #endif
 
-        bool success = OneStepSolve(SolverTempVars.dt);
+        bool success = OneStepSolve();
         if (!success)
         {
             #ifdef Debug_mode
@@ -527,7 +527,7 @@ double System::GetMinimumNextTimeStepSize()
 {
     double x=1e12;
 
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<externalforcings.size(); i++)
     {
         x = min(x,externalforcings[i].TimeSeries()->interpol_D(this->SolverTempVars.t));
     }
@@ -536,8 +536,43 @@ double System::GetMinimumNextTimeStepSize()
 
 void System::PrepareTimeSeries()
 {
-    for (int i=0; i<externalforcings.size();i++)
+    for (unsigned int i=0; i<externalforcings.size();i++)
     {
         externalforcings[i].TimeSeries()->assign_D();
     }
+}
+
+void System::UpdateValue()
+{
+    CVector state = CurrentState();
+    double reward = GetImmediateReward();
+    double newvalue = rlparams.discount_rate_lambda*EvaluateValue(state)[0] + ;
+
+
+}
+
+double System::GetImmediateReward()
+{
+    double out = 0;
+    for (unsigned int i=0; i<rewards.size(); i++)
+        out += rewards[i].GetValue();
+
+    return out;
+}
+
+CVector System::EvaluateValue(const CVector &state)
+{
+    return tdn.predicted(state);
+}
+
+CVector System::CurrentState()
+{
+    CVector out;
+    for (unsigned int i=0; i<statevariables.size(); i++)
+        out.append(statevariables[i].GetValue());
+
+    for (unsigned int i=0; i<externalforcings.size(); i++)
+        out.append(externalforcings[i].Object::GetValue());
+
+    return out;
 }

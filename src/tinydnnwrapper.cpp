@@ -126,6 +126,21 @@ CTimeSeriesSet tinydnnwrapper::predicted()
     return Predicted;
 }
 
+CVector tinydnnwrapper::predicted(const CVector &input)
+{
+
+
+    tiny_dnn::vec_t t;
+    for (unsigned int i=0; i<input.num; i++)
+        t.push_back(input[i]);
+    tiny_dnn::vec_t fPredicted  = net.predict(t);
+    vector<double> value(fPredicted.begin(),fPredicted.end());
+
+    CVector Predicted(value);
+    return Predicted;
+}
+
+
 bool tinydnnwrapper::batchtrain(const std::vector<tiny_dnn::tensor_t> &inputs,
                                 const std::vector<tiny_dnn::tensor_t> &desired_outputs,
                                 size_t batch_size, int epoch, const bool reset_weights, const int n_threads, const std::vector<tiny_dnn::tensor_t> &t_cost)
