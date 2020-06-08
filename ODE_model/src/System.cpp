@@ -198,7 +198,7 @@ bool System::AppendReward(const RewardFunction &rwd)
     else
     {
         rewards.push_back(rwd);
-        control(rwd.GetName())->SetParent(this);
+        reward(rwd.GetName())->SetParent(this);
         return true;
     }
 }
@@ -496,8 +496,9 @@ bool System::Solve()
             if (SolverTempVars.numiterations<SolverSettings.NR_niteration_lower)
                 SolverTempVars.dt_base = min(SolverTempVars.dt_base/SolverSettings.NR_timestep_reduction_factor,SimulationParameters.dt0*10);
             ShowMessage("t = " + aquiutils::numbertostring(SolverTempVars.t));
-            PopulateOutputs();
             Update();
+            PopulateOutputs();
+
             //UpdateObjectiveFunctions(SolverTempVars.t);
         }
 
@@ -513,6 +514,9 @@ bool System::Update()
 	bool out = true;
 	for (unsigned int i = 0; i < externalforcings.size(); i++)
 		externalforcings[i].UpdateValue(SolverTempVars.t);
+
+    for (unsigned int i = 0; i < rewards.size(); i++)
+        rewards[i].UpdateValue(SolverTempVars.t);
 
 	return out;
 }

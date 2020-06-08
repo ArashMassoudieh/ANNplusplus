@@ -47,12 +47,13 @@ void MainWindow::runODE(model modelID)
         Predator.SetName("Predator");
         Predator.SetValue(0.2,Expression::timing::both);
 
-        Parameter k1, k2, k3, k4, k5;
+        Parameter k1, k2, k3, k4, k5,harvesting_coeff;
         k1.SetName("k1"); k1.SetValue(1,Expression::timing::both); sys->AppendParameter(k1);
         k2.SetName("k2"); k2.SetValue(0.7,Expression::timing::both); sys->AppendParameter(k2);
         k3.SetName("k3"); k3.SetValue(0.05,Expression::timing::both); sys->AppendParameter(k3);
         k4.SetName("k4"); k4.SetValue(0.2,Expression::timing::both); sys->AppendParameter(k4);
         k5.SetName("k5"); k5.SetValue(0.12,Expression::timing::both); sys->AppendParameter(k5);
+        harvesting_coeff.SetName("k_h"); harvesting_coeff.SetValue(0.12,Expression::timing::both); sys->AppendParameter(harvesting_coeff);
 
         ExternalForcing E1;
         E1.SetName("Growthrate");
@@ -61,11 +62,15 @@ void MainWindow::runODE(model modelID)
         sys->AppendState(Predator);
         sys->AppendExternalForcing(E1);
 
-        Expression preyrateofchange("(k1*Prey*Growthrate) - (k2*Prey*Predator) - (k3*Prey) ",sys);
+        Expression preyrateofchange("(k1*Prey*Growthrate) - (k2*Prey*Predator) - (k3*Prey) - (k_h*Prey)",sys);
         Expression predatorrateofchange("(k4*Predator*Prey) - (k5*Predator)",sys);
         sys->state("Prey")->SetRateOfChange(preyrateofchange);
         sys->state("Predator")->SetRateOfChange(predatorrateofchange);
+        RewardFunction R1;
+        R1.SetName("Harvest");
 
+        sys->AppendReward(R1);
+        sys->reward("Harvest")->SetImmediateRewardFunction("k_h*Prey");
         cout<<preyrateofchange.calc(sys,Expression::timing::past)<<endl;
         cout<<predatorrateofchange.calc(sys,Expression::timing::past)<<endl;
         sys->SetProp("tstart",0);
@@ -77,6 +82,7 @@ void MainWindow::runODE(model modelID)
         plt->AddData(sys->Outputs.AllOutputs.BTC[0]);
         plt->AddData(sys->Outputs.AllOutputs.BTC[1]);
         plt->AddData(sys->Outputs.AllOutputs.BTC[2]);
+        plt->AddData(sys->Outputs.AllOutputs.BTC[3]);
         plt->show();
     }
 }

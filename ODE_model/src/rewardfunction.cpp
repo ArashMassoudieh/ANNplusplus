@@ -37,4 +37,13 @@ double RewardFunction::CalculateImmediateReward(const Expression::timing &tm)
     }
 }
 
+void RewardFunction::UpdateValue(double t)
+{
+    SetValue(Object::GetValue(Expression::timing::present),Expression::timing::past);
+    SetValue(GetValue(t),Expression::timing::present);
+}
 
+double RewardFunction::GetValue(double t)
+{
+    return immediatereward.calc(Parent(),Expression::timing::present);
+}

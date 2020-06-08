@@ -16,7 +16,10 @@ class RewardFunction : public Object
         RewardFunction& operator=(const RewardFunction& other);
         Expression &GetExpression() {return immediatereward; }
         double CalculateImmediateReward(const Expression::timing &tm = Expression::timing::present);
-        void SetImmediateRewardFunction(const string &reward) {immediatereward = Expression(reward, Parent());}
+        bool SetImmediateRewardFunction(const string &reward) {immediatereward = Expression(reward, Parent()); return true;}
+        bool SetImmediateRewardFunction(const Expression &reward) {immediatereward = reward; return true;}
+        void UpdateValue(double t);
+        double GetValue(double t);
     protected:
 
     private:
