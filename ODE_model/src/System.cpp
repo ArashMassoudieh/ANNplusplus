@@ -413,16 +413,16 @@ void System::InitiateOutputs()
 {
     Outputs.AllOutputs.clear();
 
-    for (int i=0; i<statevariables.size(); i++)
+    for (unsigned int i=0; i<statevariables.size(); i++)
         Outputs.AllOutputs.append(CBTC(), statevariables[i].GetName());
 
-    for (int i=0; i<controlparameters.size(); i++)
+    for (unsigned int i=0; i<controlparameters.size(); i++)
         Outputs.AllOutputs.append(CBTC(), controlparameters[i].GetName());
 
-    for (int i=0; i<externalforcings.size(); i++)
+    for (unsigned int i=0; i<externalforcings.size(); i++)
         Outputs.AllOutputs.append(CBTC(), externalforcings[i].GetName());
 
-    for (int i=0; i<rewards.size(); i++)
+    for (unsigned int i=0; i<rewards.size(); i++)
         Outputs.AllOutputs.append(CBTC(), rewards[i].GetName());
 
 }
@@ -544,12 +544,32 @@ void System::PrepareTimeSeries()
 
 void System::UpdateValue()
 {
-    rltempvars.state_current = CurrentState();
-    rltempvars.reward_current = GetImmediateReward();
-    double value_past = EvaluateValue(rltempvars.state_past)[0];
-    double value_current = EvaluateValue(rltempvars.state_current)[0];
-    value_current = rlparams.discount_rate_lambda*value_past + rlparams.learning_rate_alpha_prime*(rlparams.discount_rate_lambda*value_current - value_past + rltempvars.reward_current );
-    rltempvars.state_past = rltempvars.state_current;
+    _RL_temp_vars current_state_value;
+    current_state_value.state = CurrentState();
+    current_state_value.reward = GetImmediateReward();
+    double value_past = value_current();
+    double value_current = EvaluateValue(current_state_value.state)[0];
+    current_state_value.reward = GetImmediateReward();
+    current_state_value.value = rlparams.discount_rate_lambda*value_past + rlparams.learning_rate_alpha_prime*(rlparams.discount_rate_lambda*value_current - value_past + current_state_value.reward );
+    rltempvars.push_back(current_state_value);
+
+}
+
+void System::InitiateANN(const vector<unsigned int> hiddenlayers)
+{
+    vector<unsigned int> layers;
+    layers.push_back(NumStates());
+    for (unsigned int i=0; i<hiddenlayers.size(); i++)
+    {
+        layers.push_back(hiddenlayers[i]);
+    }
+    layers.push_back(1);
+    tdn.createnetwork(layers);
+    _RL_temp_vars _state_past;
+    _state_past.state = CVector(NumStates());
+    _state_past.value = 0;
+    _state_past.reward = 0;
+    rltempvars.push_back(_state_past);
 }
 
 double System::GetImmediateReward()
@@ -576,4 +596,43 @@ CVector System::CurrentState()
         out.append(externalforcings[i].Object::GetValue());
 
     return out;
+}
+
+unsigned long System::NumStates()
+{
+    return statevariables.size()+externalforcings.size();
+
+}
+
+CVector& System::state_current()
+{
+    if (rltempvars.size()>0)
+        return rltempvars[rltempvars.size()-1].state;
+}
+CVector& System::state_past()
+{
+    if (rltempvars.size()>1)
+        return rltempvars[rltempvars.size()-2].state;
+
+}
+double& System::reward_current()
+{
+    if (rltempvars.size()>0)
+        return rltempvars[rltempvars.size()-1].reward;
+}
+double& System::reward_past()
+{
+    if (rltempvars.size()>1)
+        return rltempvars[rltempvars.size()-2].reward;
+}
+
+double& System::value_current()
+{
+    if (rltempvars.size()>0)
+        return rltempvars[rltempvars.size()-1].value;
+}
+double& System::value_past()
+{
+    if (rltempvars.size()>1)
+        return rltempvars[rltempvars.size()-1].value;
 }

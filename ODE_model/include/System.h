@@ -40,9 +40,10 @@ struct _RL_params
 
 struct _RL_temp_vars
 {
-    double reward_past = 0;
-    double reward_current = 0;
-    CVector state_current, state_past;
+    double reward=0;
+    double value = 0;
+    CVector state;
+
 };
 
 struct outputs
@@ -107,10 +108,18 @@ class System
         void ShowMessage(const string &msg);
         tinydnnwrapper *ann() {return &tdn;}
         void UpdateValue();
+        void InitiateANN(const vector<unsigned int> hiddenlayers);
         _RL_params rlparams;
-        _RL_temp_vars rltempvars;
+        vector<_RL_temp_vars> rltempvars;
+        CVector& state_current();
+        CVector& state_past();
+        double& value_current();
+        double& value_past();
+        double& reward_current();
+        double& reward_past();
         CVector EvaluateValue(const CVector &state);
         CVector CurrentState();
+        unsigned long NumStates();
         double GetImmediateReward();
     protected:
 
