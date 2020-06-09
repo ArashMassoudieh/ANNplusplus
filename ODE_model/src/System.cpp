@@ -544,18 +544,19 @@ void System::PrepareTimeSeries()
 
 void System::UpdateValue()
 {
-    CVector state = CurrentState();
-    double reward = GetImmediateReward();
-    double newvalue = rlparams.discount_rate_lambda*EvaluateValue(state)[0] + ;
-
-
+    rltempvars.state_current = CurrentState();
+    rltempvars.reward_current = GetImmediateReward();
+    double value_past = EvaluateValue(rltempvars.state_past)[0];
+    double value_current = EvaluateValue(rltempvars.state_current)[0];
+    value_current = rlparams.discount_rate_lambda*value_past + rlparams.learning_rate_alpha_prime*(rlparams.discount_rate_lambda*value_current - value_past + rltempvars.reward_current );
+    rltempvars.state_past = rltempvars.state_current;
 }
 
 double System::GetImmediateReward()
 {
     double out = 0;
     for (unsigned int i=0; i<rewards.size(); i++)
-        out += rewards[i].GetValue();
+        out += rewards[i].GetValue(SolverTempVars.t);
 
     return out;
 }

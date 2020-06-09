@@ -36,7 +36,13 @@ struct _RL_params
 {
     double learning_rate_alpha_prime;
     double discount_rate_lambda;
+};
 
+struct _RL_temp_vars
+{
+    double reward_past = 0;
+    double reward_current = 0;
+    CVector state_current, state_past;
 };
 
 struct outputs
@@ -102,6 +108,7 @@ class System
         tinydnnwrapper *ann() {return &tdn;}
         void UpdateValue();
         _RL_params rlparams;
+        _RL_temp_vars rltempvars;
         CVector EvaluateValue(const CVector &state);
         CVector CurrentState();
         double GetImmediateReward();
