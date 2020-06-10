@@ -24,7 +24,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_train()
 {
-    traintiny();
+    traintiny_incremental();
 }
 
 void MainWindow::on_runODE()
@@ -120,6 +120,50 @@ void MainWindow::traintiny()
     plt->show();
 
 
+}
+
+void MainWindow::traintiny_incremental()
+{
+    RunTimeWindow *rtw = new RunTimeWindow(this);
+    rtw->show();
+    tinydnnwrapper tdn;
+    vector<unsigned int> config = {2,10,10,1};
+    tdn.createnetwork(config);
+    CTimeSeriesSet Sininput(2);
+    CTimeSeriesSet Sintarget(1);
+    int i = 0;
+    for (double x = -1.0; x<=1; x+=0.01f)
+        for (double y = -1.0; y<=1; y+=0.01f)
+            {
+                i++;
+                bool x1 = (x>0)?1:0;
+                bool y1 = (y>0)?1:0;
+                Sininput.BTC[0].append(i,x);
+                Sininput.BTC[1].append(i,y);
+                Sintarget.BTC[0].append(i,x1!=y1);
+            }
+    tdn.SetInput(Sininput);
+    tdn.SetTarge(Sintarget);
+
+    for (unsigned int i=0; i<Sininput.BTC[0].n; i+=tdn.batch_size)
+    {   tdn.trainonebatch(i,tdn.batch_size,rtw);
+        if (i==0)
+        {
+            rtw->SetXRange(0,Sininput.BTC[0].n);
+            rtw->SetYRange(0,tdn.loss());
+        }
+        rtw->AddDataPoint(i,tdn.loss());
+        rtw->SetProgress(double(i)/double(Sininput.BTC[0].n));
+        QCoreApplication::processEvents();
+    }
+
+    Sintarget.setname(0, "Data");
+    CTimeSeriesSet Predicted=tdn.predicted();
+    Predicted.setname(0,"Predicted");
+    Plotter *plt = new Plotter(this);
+    plt->AddData(Sintarget.BTC[0]);
+    plt->AddData(Predicted.BTC[0]);
+    plt->show();
 }
 
 

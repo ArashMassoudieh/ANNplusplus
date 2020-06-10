@@ -120,8 +120,6 @@ double tinydnnwrapper::loss()
 
 bool tinydnnwrapper::train(RunTimeWindow *rtw)
 {
-
-
     for (int i=0; i<epochs; i+=batch_size)
     {
         net.train_one_batch(opt,Input, Output, batch_size);
@@ -139,6 +137,11 @@ bool tinydnnwrapper::train(RunTimeWindow *rtw)
 bool tinydnnwrapper::trainonebatch(vector<state_value_pair> *state_value_pair ,int batch_size, RunTimeWindow *rtw)
 {
     net.train_one_batch(opt,Input, Output, batch_size);
+}
+
+bool tinydnnwrapper::trainonebatch(int start, int batch_size, RunTimeWindow *rtw)
+{
+    net.train_one_batch(opt,Input, Output, batch_size, start);
 }
 
 CTimeSeriesSet tinydnnwrapper::predicted()

@@ -24,6 +24,7 @@ private:
 
     void train();
     void traintiny();
+    void traintiny_incremental();
     void runODE(model model_number=model::fish);
 
 
