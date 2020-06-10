@@ -544,7 +544,7 @@ void System::PrepareTimeSeries()
 
 void System::UpdateValue()
 {
-    _RL_temp_vars current_state_value;
+    state_value_pair current_state_value;
     current_state_value.state = CurrentState();
     current_state_value.reward = GetImmediateReward();
     double value_past = value_current();
@@ -552,6 +552,11 @@ void System::UpdateValue()
     current_state_value.reward = GetImmediateReward();
     current_state_value.value = rlparams.discount_rate_lambda*value_past + rlparams.learning_rate_alpha_prime*(rlparams.discount_rate_lambda*value_current - value_past + current_state_value.reward );
     rltempvars.push_back(current_state_value);
+
+}
+
+void System::TrainANN()
+{
 
 }
 
@@ -565,7 +570,7 @@ void System::InitiateANN(const vector<unsigned int> hiddenlayers)
     }
     layers.push_back(1);
     tdn.createnetwork(layers);
-    _RL_temp_vars _state_past;
+    state_value_pair _state_past;
     _state_past.state = CVector(NumStates());
     _state_past.value = 0;
     _state_past.reward = 0;

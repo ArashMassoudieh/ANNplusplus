@@ -10,6 +10,14 @@
 
 class RunTimeWindow;
 
+struct state_value_pair
+{
+    double reward=0;
+    double value = 0;
+    CVector state;
+};
+
+
 using namespace std;
 
 class tinydnnwrapper
@@ -25,13 +33,16 @@ public:
     bool SetInput(CTimeSeriesSet &input);
     bool SetTarge(CTimeSeriesSet &input);
     bool AppendtoInput(CTimeSeriesSet &input);
+    bool AppendtoInput(CVector &input);
     bool AppendtoTarge(CTimeSeriesSet &input);
+    bool AppendtoTarge(CVector &target);
     std::vector<tiny_dnn::vec_t> Input;
     std::vector<tiny_dnn::vec_t> Output;
     CTimeSeriesSet InputTimeSeries;
     CTimeSeriesSet OutputTimeSeries;
     double loss();
     bool train(RunTimeWindow *rtw=nullptr);
+    bool trainonebatch(vector<state_value_pair> *state_value_pair ,int batch_size, RunTimeWindow *rtw = nullptr);
     CTimeSeriesSet predicted();
     CVector predicted(const CVector &input);
     bool batchtrain(const std::vector<tiny_dnn::tensor_t> &inputs,

@@ -68,10 +68,20 @@ bool tinydnnwrapper::AppendtoInput(CTimeSeriesSet &input)
         tiny_dnn::vec_t val(values.begin(),values.end());
         for (int j=0; j<input.nvars; j++)
             InputTimeSeries.BTC[j].append(input.BTC[j].t[i],values[j]);
-
-
         Input.push_back(val);
     }
+    return true;
+}
+
+bool tinydnnwrapper::AppendtoInput(CVector &input)
+{
+    vector<double> values = input.vec;
+    tiny_dnn::vec_t t  = {float(InputTimeSeries.BTC[0].n)};
+    tiny_dnn::vec_t val(values.begin(),values.end());
+    for (int j=0; j<input.num; j++)
+       InputTimeSeries.BTC[j].append(InputTimeSeries.BTC[0].n,values[j]);
+    Input.push_back(val);
+
     return true;
 }
 
@@ -87,6 +97,19 @@ bool tinydnnwrapper::AppendtoTarge(CTimeSeriesSet &input)
 
         Output.push_back(val);
     }
+    return true;
+}
+
+bool tinydnnwrapper::AppendtoTarge(CVector &target)
+{
+    vector<double> values = target.vec;
+    tiny_dnn::vec_t t  = {float(OutputTimeSeries.BTC[0].n)};
+    tiny_dnn::vec_t val(values.begin(),values.end());
+    for (int j=0; j<target.num; j++)
+       OutputTimeSeries.BTC[j].append(OutputTimeSeries.BTC[0].n,values[j]);
+
+    Output.push_back(val);
+
     return true;
 }
 
@@ -111,6 +134,11 @@ bool tinydnnwrapper::train(RunTimeWindow *rtw)
         rtw->SetProgress(double(i)/double(epochs));
         QCoreApplication::processEvents();
     }
+}
+
+bool tinydnnwrapper::trainonebatch(vector<state_value_pair> *state_value_pair ,int batch_size, RunTimeWindow *rtw)
+{
+    net.train_one_batch(opt,Input, Output, batch_size);
 }
 
 CTimeSeriesSet tinydnnwrapper::predicted()

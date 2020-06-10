@@ -36,15 +36,9 @@ struct _RL_params
 {
     double learning_rate_alpha_prime;
     double discount_rate_lambda;
+    double epoch_size;
 };
 
-struct _RL_temp_vars
-{
-    double reward=0;
-    double value = 0;
-    CVector state;
-
-};
 
 struct outputs
 {
@@ -108,9 +102,10 @@ class System
         void ShowMessage(const string &msg);
         tinydnnwrapper *ann() {return &tdn;}
         void UpdateValue();
+        void TrainANN();
         void InitiateANN(const vector<unsigned int> hiddenlayers);
         _RL_params rlparams;
-        vector<_RL_temp_vars> rltempvars;
+        vector<state_value_pair> rltempvars;
         CVector& state_current();
         CVector& state_past();
         double& value_current();
