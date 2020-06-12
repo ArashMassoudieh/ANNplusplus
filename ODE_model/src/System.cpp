@@ -560,7 +560,7 @@ void System::UpdateValue()
     unsigned long zero = 0;
     if (rltempvars.size()%tdn.batch_size==1)
     {
-        tdn.trainonebatch(std::max(rltempvars.size()-tdn.batch_size,zero),int(tdn.batch_size),rtw);
+        tdn.trainonebatch(std::max(rltempvars.size()-tdn.batch_size-1,zero),int(tdn.batch_size),rtw);
     }
 
 }
@@ -630,24 +630,47 @@ CVector& System::state_past()
         return rltempvars[rltempvars.size()-2].state;
 
 }
-double& System::reward_current()
+double System::reward_current()
 {
     if (rltempvars.size()>0)
         return rltempvars[rltempvars.size()-1].reward;
+    return 0;
 }
-double& System::reward_past()
+double System::reward_past()
 {
     if (rltempvars.size()>1)
         return rltempvars[rltempvars.size()-2].reward;
+    return 0;
 }
 
-double& System::value_current()
+double System::value_current()
 {
     if (rltempvars.size()>0)
         return rltempvars[rltempvars.size()-1].value;
+    return 0;
 }
-double& System::value_past()
+double System::value_past()
 {
     if (rltempvars.size()>1)
         return rltempvars[rltempvars.size()-1].value;
+    return 0;
 }
+
+void System::Write_State_Value_pairs(const string &filename){
+    ofstream file;
+    file.open (filename);
+    for (unsigned int i=0; i<rltempvars.size(); i++)
+    {
+        for (unsigned int j=0; j<rltempvars[i].state.num; j++)
+        {
+            file << rltempvars[i].state[j] << ",";
+        }
+        file << rltempvars[i].value << ",";
+        file << rltempvars[i].reward << endl;
+    }
+
+    file.close();
+
+
+}
+
