@@ -34,8 +34,9 @@ public:
     bool SetTarge(CTimeSeriesSet &input);
     bool AppendtoInput(CTimeSeriesSet &input);
     bool AppendtoInput(CVector &input);
-    bool AppendtoTarge(CTimeSeriesSet &input);
-    bool AppendtoTarge(CVector &target);
+    bool AppendtoTarget(CTimeSeriesSet &input);
+    bool AppendtoTarget(CVector &target);
+    bool AppendtoTarget(double &target);
     std::vector<tiny_dnn::vec_t> Input;
     std::vector<tiny_dnn::vec_t> Output;
     CTimeSeriesSet InputTimeSeries;

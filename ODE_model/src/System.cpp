@@ -552,6 +552,8 @@ void System::UpdateValue()
     current_state_value.reward = GetImmediateReward();
     current_state_value.value = rlparams.discount_rate_lambda*value_past + rlparams.learning_rate_alpha_prime*(rlparams.discount_rate_lambda*value_current - value_past + current_state_value.reward );
     rltempvars.push_back(current_state_value);
+    tdn.AppendtoInput(current_state_value.state);
+    tdn.AppendtoTarget(current_state_value.value);
 
 }
 
