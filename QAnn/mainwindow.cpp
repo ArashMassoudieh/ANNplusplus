@@ -35,6 +35,9 @@ void MainWindow::on_runODE()
 
 void MainWindow::runODE(model modelID)
 {
+    RunTimeWindow *rtw = new RunTimeWindow(this);
+    rtw->show();
+
     ui->textBrowser_2->append("Started Running the model");
     System *sys = new System();
     if (modelID == model::fish)

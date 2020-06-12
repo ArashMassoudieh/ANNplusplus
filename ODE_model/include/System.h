@@ -16,6 +16,8 @@
 
 using namespace std;
 
+class RunTimeWindow;
+
 enum class object_type {state, control, exforce, parameter, not_found};
 
 struct solversettings
@@ -116,6 +118,7 @@ class System
         CVector CurrentState();
         unsigned long NumStates();
         double GetImmediateReward();
+        RunTimeWindow *rtw = nullptr;
     protected:
 
     private:

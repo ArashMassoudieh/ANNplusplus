@@ -154,7 +154,7 @@ bool tinydnnwrapper::trainonebatch(vector<state_value_pair> *state_value_pair ,i
 
 bool tinydnnwrapper::trainonebatch(int start, int batch_size, RunTimeWindow *rtw)
 {
-    net.train_one_batch(opt,Input, Output, batch_size, start);
+    net.train_one_batch(opt,Input, Output, batch_size,start);
 }
 
 CTimeSeriesSet tinydnnwrapper::predicted()

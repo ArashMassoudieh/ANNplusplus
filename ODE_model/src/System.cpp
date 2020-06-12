@@ -3,6 +3,7 @@
 #include "Vector_arma.h"
 #include "Matrix_arma.h"
 #include "utils.h"
+#include "runtimewindow.h"
 
 using namespace std;
 System::System()
@@ -469,12 +470,13 @@ bool System::Solve()
         #ifdef Debug_mode
         ShowMessage(string("t = ") + aquiutils::numbertostring(SolverTempVars.t) + ", dt_base = " + numbertostring(SolverTempVars.dt_base) + ", dt = " + numbertostring(SolverTempVars.dt) + ", SolverTempVars.numiterations =" + numbertostring(SolverTempVars.numiterations));
         #endif // Debug_mode
-        #ifdef QT_version
+
         if (rtw)
         {
-            updateProgress(false);
+            rtw->SetProgress((SolverTempVars.t-SimulationParameters.tstart)/(SimulationParameters.tend-SimulationParameters.tstart));
+            QCoreApplication::processEvents();
         }
-        #endif
+
 
         bool success = OneStepSolve();
         if (!success)
@@ -497,6 +499,7 @@ bool System::Solve()
                 SolverTempVars.dt_base = min(SolverTempVars.dt_base/SolverSettings.NR_timestep_reduction_factor,SimulationParameters.dt0*10);
             ShowMessage("t = " + aquiutils::numbertostring(SolverTempVars.t));
             Update();
+            UpdateValue();
             PopulateOutputs();
 
             //UpdateObjectiveFunctions(SolverTempVars.t);
@@ -554,6 +557,11 @@ void System::UpdateValue()
     rltempvars.push_back(current_state_value);
     tdn.AppendtoInput(current_state_value.state);
     tdn.AppendtoTarget(current_state_value.value);
+    unsigned long zero = 0;
+    if (rltempvars.size()%tdn.batch_size==1)
+    {
+        tdn.trainonebatch(std::max(rltempvars.size()-tdn.batch_size,zero),int(tdn.batch_size),rtw);
+    }
 
 }
 
