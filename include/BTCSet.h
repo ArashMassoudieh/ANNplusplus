@@ -58,6 +58,7 @@ public:
 	void knockout(double t);
 	int lookup(string S);
 	vector<double> getrow(int a);
+    vector<double> getrow(int a) const;
 	void setname(int i, string name);
     CTimeSeriesSet random_draw(int num);
     CTimeSeriesSet random_draw_plus_last(int num);

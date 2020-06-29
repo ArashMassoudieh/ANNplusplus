@@ -54,6 +54,12 @@ public:
                                     const bool reset_weights            = false,
                                     const int n_threads                 = CNN_TASK_SIZE,
                                     const std::vector<tiny_dnn::tensor_t> &t_cost = std::vector<tiny_dnn::tensor_t>());
+    static tiny_dnn::vec_t vec_from_TimeSeries(const CTimeSeries &C);
+    static vector<tiny_dnn::vec_t> vec_from_TimeSeries(const CTimeSeriesSet &C);
+    static CTimeSeries TimeSeries_from_vec(const tiny_dnn::vec_t &v);
+    static CTimeSeriesSet TimeSeriesSet_from_vec(const vector<tiny_dnn::vec_t> &v);
+    static vector<tiny_dnn::vec_t> randomsample(const vector<tiny_dnn::vec_t> &v, int n);
+    static vector<tiny_dnn::vec_t> randomsample(const CTimeSeriesSet &C, int n);
 private:
     tiny_dnn::network<tiny_dnn::sequential> net;
 };

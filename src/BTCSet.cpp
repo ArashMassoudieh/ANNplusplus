@@ -448,6 +448,16 @@ vector<double> CTimeSeriesSet::getrow(int a)
 	return res;
 }
 
+vector<double> CTimeSeriesSet::getrow(int a) const
+{
+
+    vector<double> res(nvars);
+    for (int i = 0; i<nvars; i++)
+        res[i] = BTC[i].C[a];
+
+    return res;
+}
+
 vector<double> CTimeSeriesSet::percentile(double x)
 {
 	vector<double> v;

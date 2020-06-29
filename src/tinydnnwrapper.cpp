@@ -145,16 +145,19 @@ bool tinydnnwrapper::train(RunTimeWindow *rtw)
         rtw->SetProgress(double(i)/double(epochs));
         QCoreApplication::processEvents();
     }
+    return true;
 }
 
 bool tinydnnwrapper::trainonebatch(vector<state_value_pair> *state_value_pair ,int batch_size, RunTimeWindow *rtw)
 {
     net.train_one_batch(opt,Input, Output, batch_size);
+    return true;
 }
 
 bool tinydnnwrapper::trainonebatch(int start, int batch_size, RunTimeWindow *rtw)
 {
     net.train_one_batch(opt,Input, Output, batch_size,start);
+    return true;
 }
 
 CTimeSeriesSet tinydnnwrapper::predicted()
@@ -185,6 +188,8 @@ CVector tinydnnwrapper::predicted(const CVector &input)
 }
 
 
+
+
 bool tinydnnwrapper::batchtrain(const std::vector<tiny_dnn::tensor_t> &inputs,
                                 const std::vector<tiny_dnn::tensor_t> &desired_outputs,
                                 size_t batch_size, int epoch, const bool reset_weights, const int n_threads, const std::vector<tiny_dnn::tensor_t> &t_cost)
@@ -193,4 +198,71 @@ bool tinydnnwrapper::batchtrain(const std::vector<tiny_dnn::tensor_t> &inputs,
     //set_netphase(net_phase::train);
     //net_.setup(reset_weights);
 
+}
+
+
+static tiny_dnn::vec_t vec_from_TimeSeries(const CTimeSeries &C)
+{
+    tiny_dnn::vec_t t;
+    for (unsigned int i=0; i<C.n; i++)
+        t.push_back(C.C[i]);
+
+    return t;
+}
+static vector<tiny_dnn::vec_t> vec_from_TimeSeries(const CTimeSeriesSet &input)
+{
+    vector<tiny_dnn::vec_t> out;
+    for (unsigned int i=0; i<input.BTC[0].n; i++)
+    {
+        vector<double> values = input.getrow(i);
+        tiny_dnn::vec_t t  = {float(input.BTC[0].t[i])};
+        tiny_dnn::vec_t val(values.begin(),values.end());
+        out.push_back(val);
+    }
+    return out;
+}
+
+static CTimeSeries TimeSeries_from_vec(const tiny_dnn::vec_t &v)
+{
+    CTimeSeries out;
+    for (unsigned int i=0; i<v.size(); i++)
+        out.append(i,v[i]);
+
+    return out;
+
+}
+static CTimeSeriesSet TimeSeriesSet_from_vec(const vector<tiny_dnn::vec_t> &v)
+{
+    if (v.size()==0) return CTimeSeriesSet();
+    CTimeSeriesSet out(v[0].size());
+    for (unsigned int i=0; i<v.size(); i++)
+    {
+        vector<double> value(v.begin(),v.end());
+        out.append(i,value);
+    }
+    return out;
+}
+
+static vector<tiny_dnn::vec_t> randomsample(const vector<tiny_dnn::vec_t> &v, int n)
+{
+    vector<tiny_dnn::vec_t> out;
+    for (unsigned int i=0; i<n; i++)
+    {
+        int j = rand()%n;
+        out.push_back(v[j]);
+    }
+    return out;
+}
+static vector<tiny_dnn::vec_t> randomsample(const CTimeSeriesSet &input, int n)
+{
+    vector<tiny_dnn::vec_t> out;
+    for (unsigned int i=0; i<n; i++)
+    {
+        int j = rand()%n;
+        vector<double> values = input.getrow(j);
+        tiny_dnn::vec_t t  = {float(input.BTC[0].t[i])};
+        tiny_dnn::vec_t val(values.begin(),values.end());
+        out.push_back(val);
+    }
+    return out;
 }
