@@ -40,6 +40,7 @@ void MainWindow::runODE(model modelID)
 
     ui->textBrowser_2->append("Started Running the model");
     System *sys = new System();
+    sys->rtw = rtw;
     if (modelID == model::fish)
     {
 
@@ -79,6 +80,10 @@ void MainWindow::runODE(model modelID)
         sys->SetProp("tstart",0);
         sys->SetProp("tend",30);
         sys->SetProp("dt",0.01);
+        vector<unsigned int> hiddenlayers = {3,3};
+        sys->InitiateANN(hiddenlayers);
+        sys->rlparams.discount_rate_lambda = 0.9;
+        sys->rlparams.learning_rate_alpha_prime = 0.1;
         sys->Solve();
         sys->Outputs.AllOutputs.writetofile("Output.txt",true);
         Plotter *plt = new Plotter(this);
@@ -87,6 +92,7 @@ void MainWindow::runODE(model modelID)
         plt->AddData(sys->Outputs.AllOutputs.BTC[2]);
         plt->AddData(sys->Outputs.AllOutputs.BTC[3]);
         plt->show();
+        sys->Write_State_Value_pairs("state_value.txt");
     }
 }
 

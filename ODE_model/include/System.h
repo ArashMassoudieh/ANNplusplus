@@ -110,15 +110,16 @@ class System
         vector<state_value_pair> rltempvars;
         CVector& state_current();
         CVector& state_past();
-        double& value_current();
-        double& value_past();
-        double& reward_current();
-        double& reward_past();
+        double value_current();
+        double value_past();
+        double reward_current();
+        double reward_past();
         CVector EvaluateValue(const CVector &state);
         CVector CurrentState();
         unsigned long NumStates();
         double GetImmediateReward();
         RunTimeWindow *rtw = nullptr;
+        void Write_State_Value_pairs(const string &filename);
     protected:
 
     private:

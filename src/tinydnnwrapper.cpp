@@ -75,6 +75,7 @@ bool tinydnnwrapper::AppendtoInput(CTimeSeriesSet &input)
 
 bool tinydnnwrapper::AppendtoInput(CVector &input)
 {
+    if (InputTimeSeries.nvars==0) InputTimeSeries = CTimeSeriesSet(input.vec.size());
     vector<double> values = input.vec;
     tiny_dnn::vec_t t  = {float(InputTimeSeries.BTC[0].n)};
     tiny_dnn::vec_t val(values.begin(),values.end());
@@ -102,6 +103,7 @@ bool tinydnnwrapper::AppendtoTarget(CTimeSeriesSet &input)
 
 bool tinydnnwrapper::AppendtoTarget(CVector &target)
 {
+    if (OutputTimeSeries.nvars==0) OutputTimeSeries = CTimeSeriesSet(target.vec.size());
     vector<double> values = target.vec;
     tiny_dnn::vec_t t  = {float(OutputTimeSeries.BTC[0].n)};
     tiny_dnn::vec_t val(values.begin(),values.end());
@@ -115,6 +117,7 @@ bool tinydnnwrapper::AppendtoTarget(CVector &target)
 
 bool tinydnnwrapper::AppendtoTarget(double &target)
 {
+    if (OutputTimeSeries.nvars==0) OutputTimeSeries = CTimeSeriesSet(1);
     vector<double> values = {target};
     tiny_dnn::vec_t t  = {float(OutputTimeSeries.BTC[0].n)};
     tiny_dnn::vec_t val(values.begin(),values.end());
